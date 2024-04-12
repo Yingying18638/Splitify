@@ -1,5 +1,7 @@
 import React from "react";
 import LittleHeader from "./LittleHeader";
+import list from "../../assets/list.png";
+
 import {
   Tabs,
   TabsContent,
@@ -34,7 +36,7 @@ const Mainpage = () => {
             <section>
               <article className="flex flex-wrap mt-3">
                 <figure>
-                  <img src="" alt="icon" />
+                  <img src={list} alt="icon" />
                 </figure>
                 <figcaption className="ml-2 w-[200px] md:w-[400px]">
                   <p>青菜</p>
@@ -44,7 +46,7 @@ const Mainpage = () => {
               </article>
               <article className="flex flex-wrap mt-3">
                 <figure>
-                  <img src="" alt="icon" />
+                  <img src={list} alt="icon" />
                 </figure>
                 <figcaption className="ml-2 w-[200px] md:w-[400px]">
                   <p>青菜</p>
@@ -65,3 +67,37 @@ const Mainpage = () => {
 };
 
 export default Mainpage;
+
+/*
+
+<section className="fixed top-96 bg-slate-500">
+          <div>新增花費</div>
+          <div>日期</div>
+          <figure>
+            <img src="" alt="icon" />
+          </figure>
+          <form action="">
+            <label htmlFor="item">項目</label>
+            <input type="text" name="" id="item" />
+            <label htmlFor="amount">金額</label>
+            <input type="text" name="" id="amount" />
+            <label htmlFor="payer">誰付錢</label>
+            <select name="" id="payer">
+              <option value="a">a</option>
+              <option value="b">b</option>
+              <option value="c">c</option>
+            </select>
+            <label htmlFor="participant">分給誰</label>
+            <input type="text" name="" id="participant" />
+            <textarea
+              name=""
+              id=""
+              cols="30"
+              rows="10"
+              placeholder="備註"
+            ></textarea>
+            <Button className="bg-slate-400"> 取消</Button>
+            <Button>儲存</Button>
+          </form>
+        </section>
+*/
