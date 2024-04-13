@@ -3,7 +3,7 @@ import group from "../../assets/group.png";
 import link from "../../assets/link.png";
 import { Button } from "../../components/ui/button";
 
-const LittleHeader = () => {
+const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   return (
     <div className="flex flex-wrap w-full justify-center">
       <div className="w-28  rounded-sm px-3 py-1 text-sm font-medium">
@@ -15,7 +15,14 @@ const LittleHeader = () => {
       <figure className="cursor-pointer">
         <img src={link} alt="link" className="w-[32px]" />
       </figure>
-      <Button className="block mx-2">+</Button>
+      <Button
+        className="block mx-2"
+        onClick={() => {
+          setDisplayAddExpense("block");
+        }}
+      >
+        +
+      </Button>
       <Button>銷帳</Button>
     </div>
   );
