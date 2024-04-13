@@ -1,9 +1,18 @@
 import React, { useState } from "react";
-import LittleHeader from "./LittleHeader";
+// zustand
+import useStore from "../../utility/useStore";
+//image
 import list from "../../assets/list.png";
 import arrow from "../../assets/arrow.png";
+//component
+import LittleHeader from "./LittleHeader";
+import DatePicker from "./DatePicker";
+import MultiSelect from "./Multiselect";
+
+// shadcn ui
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
+import { Button } from "../../components/ui/button";
 import { Checkbox } from "../../components/ui/checkbox";
 import {
   Dialog,
@@ -13,7 +22,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../components/ui/dialog";
-import DatePicker from "./DatePicker";
 import {
   Select,
   SelectContent,
@@ -27,17 +35,32 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
-import { Button } from "../../components/ui/button";
-
 const Mainpage = () => {
   const [displayAddExpense, setDisplayAddExpense] = useState("hidden");
   const [displayPayersOpt, setDisplayPayersOpt] = useState("hidden");
   const [displayParticipantOpt, setDisplayParticipantOpt] = useState("hidden");
-  const [x, setX] = useState(5);
-  const [formData, setFormData] = useState({ participants: "a" });
+  const { expenseData, setExpenseData } = useStore();
   function handleFormSubmit(e) {
     e.preventDefault();
+    console.log(expenseData.item);
     setDisplayAddExpense("hidden");
+    // setExpenseData({});
+  }
+  function handlePayersParticipantsDisplay(e) {
+    if (e.target.id === "participant-arrow") {
+      setDisplayParticipantOpt(
+        displayParticipantOpt === "hidden" ? "block" : "hidden"
+      );
+      setDisplayPayersOpt(displayPayersOpt === "block" ? "hidden" : "hidden");
+      return;
+    }
+    if (e.target.id === "payer-arrow") {
+      setDisplayParticipantOpt(
+        displayParticipantOpt === "block" ? "hidden" : "hidden"
+      );
+      setDisplayPayersOpt(displayPayersOpt === "hidden" ? "block" : "hidden");
+      return;
+    }
   }
   return (
     <>
@@ -114,7 +137,13 @@ const Mainpage = () => {
             <img src={list} alt="icon" className="w-9 h-9 mr-3" />
             <figcaption>
               <label htmlFor="item">項目</label>
-              <Input placeholder="晚餐" id="item" className=""></Input>
+              <Input
+                placeholder="晚餐"
+                id="item"
+                className=""
+                value={expenseData.item}
+                onChange={(e) => setExpenseData({ item: e.target.value })}
+              ></Input>
             </figcaption>
           </figure>
           <figure className="flex items-center">
@@ -136,47 +165,18 @@ const Mainpage = () => {
                 <SelectItem value="C">C</SelectItem>
               </SelectContent>
             </Select>
-            <img src={arrow} alt="arrow" className="w-6 h-6" />
+            <img
+              id="payer-arrow"
+              src={arrow}
+              alt="arrow"
+              className="w-6 h-6"
+              onClick={(e) => handlePayersParticipantsDisplay(e)}
+            />
           </div>
-
-          {/* <Dialog>
-            <DialogTrigger>Open</DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>分給誰</DialogTitle>
-                <DialogDescription>
-                  <Checkbox id=""></Checkbox>
-                  <label htmlFor="">123</label>
-                  <input type="text" />
-                  <input type="text" />
-                  <Checkbox id=""></Checkbox>
-                  <label htmlFor="">456</label>
-                  <Checkbox id=""></Checkbox>
-                  <label htmlFor="">789</label>
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog> */}
-
-          {/* <Popover>
-            <div>
-              <PopoverTrigger>Open</PopoverTrigger>
-            </div>
-            <PopoverContent className="ml-[360px] bg-blue-300">
-              <Checkbox id=""></Checkbox>
-              <label htmlFor="">123</label>
-              <input type="text" />
-              <input type="text" />
-              <Checkbox id=""></Checkbox>
-              <label htmlFor="">456</label>
-              <Checkbox id=""></Checkbox>
-              <label htmlFor="">789</label>
-            </PopoverContent>
-          </Popover> */}
-
           <div className="flex items-center gap-2">
             <label htmlFor="participant">分給誰</label>
-            <Select>
+            <MultiSelect></MultiSelect>
+            {/* <Select>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder={`全部平分${x}人`} />
               </SelectTrigger>
@@ -196,26 +196,17 @@ const Mainpage = () => {
                 <Checkbox id="checkbox-2" name="participants" />
                 <label htmlFor="checkbox-2">c</label>
               </SelectContent>
-            </Select>
-            <img src={arrow} alt="arrow" className="w-6 h-6" />
+            </Select> */}
+            <img
+              src={arrow}
+              alt="arrow"
+              className="w-6 h-6"
+              id="participant-arrow"
+              onClick={(e) => {
+                handlePayersParticipantsDisplay(e);
+              }}
+            />
           </div>
-          {/* <Select id="participant">
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="平分" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="123">
-                123
-                <Checkbox id="checkbox-0" name="participants" checked />
-                <label htmlFor="checkbox-0">a</label>
-                <Checkbox id="checkbox-1" name="participants" />
-                <label htmlFor="checkbox-1">b</label>
-                <Checkbox id="checkbox-2" name="participants" />
-                <label htmlFor="checkbox-2">c</label> 
-              </SelectItem>
-              <SelectItem value="456">456</SelectItem>
-            </SelectContent>
-          </Select> */}
           <label htmlFor="date" className="block">
             日期
           </label>
@@ -227,7 +218,38 @@ const Mainpage = () => {
           <Button type="reset">取消</Button>
           <Button>儲存</Button>
         </form>
-        <div className="fixed bg-blue-200 left-[450px]  w-[360px] h-[500px] p-2">
+        <div
+          className={`fixed ${displayPayersOpt} bg-blue-200 left-[450px]  w-[360px] h-[500px] p-2`}
+        >
+          <p className="text-center">多人付款</p>
+          <div className="flex justify-center ml-[130px] gap-[30px]">
+            <p>金額</p>
+          </div>
+          <div className="flex justify-center items-center mt-2">
+            <Checkbox id=""></Checkbox>
+            <label htmlFor="" className="block w-[150px]">
+              123
+            </label>
+            <Input className="w-24 h-8" placeholder="NT."></Input>
+          </div>
+          <div className="flex justify-center items-center mt-2">
+            <Checkbox id=""></Checkbox>
+            <label htmlFor="" className="block w-[150px]">
+              123
+            </label>
+            <Input className="w-24 h-8" placeholder="NT."></Input>
+          </div>
+          <div className="flex justify-center items-center mt-2">
+            <Checkbox id=""></Checkbox>
+            <label htmlFor="" className="block w-[150px]">
+              123
+            </label>
+            <Input className="w-24 h-8" placeholder="NT."></Input>
+          </div>
+        </div>
+        <div
+          className={`fixed ${displayParticipantOpt} bg-purple-200 left-[450px]  w-[360px] h-[500px] p-2`}
+        >
           <p className="text-center">如何分擔</p>
           <div className="flex justify-center ml-[130px] gap-[30px]">
             <p>份數</p>
