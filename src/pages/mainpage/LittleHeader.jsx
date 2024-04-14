@@ -21,7 +21,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
           setDisplayAddExpense("block");
         }}
       >
-        +
+        + 花費
       </Button>
       <Button>銷帳</Button>
     </div>

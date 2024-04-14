@@ -1,34 +1,13 @@
 import React, { useState } from "react";
-// zustand
+//---------------------- zustand
 import useStore from "../../utility/useStore";
-//image
+//----------------------image
 import list from "../../assets/list.png";
-import arrow from "../../assets/arrow.png";
-//component
+//----------------------component
 import LittleHeader from "./LittleHeader";
-import DatePicker from "./DatePicker";
-import MultiSelect from "./Multiselect";
-
-// shadcn ui
-import { Input } from "../../components/ui/input";
-import { Textarea } from "../../components/ui/textarea";
+import AddExpense from "./AddExpense";
+//---------------------- shadcn ui
 import { Button } from "../../components/ui/button";
-import { Checkbox } from "../../components/ui/checkbox";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../components/ui/select";
 import {
   Tabs,
   TabsContent,
@@ -37,8 +16,7 @@ import {
 } from "../../components/ui/tabs";
 const Mainpage = () => {
   const [displayAddExpense, setDisplayAddExpense] = useState("hidden");
-  const [displayPayersOpt, setDisplayPayersOpt] = useState("hidden");
-  const [displayParticipantOpt, setDisplayParticipantOpt] = useState("hidden");
+  const [displayDetail, setDisplayDetail] = useState("hidden");
   const { expenseData, setExpenseData } = useStore();
   function handleFormSubmit(e) {
     e.preventDefault();
@@ -46,22 +24,7 @@ const Mainpage = () => {
     setDisplayAddExpense("hidden");
     // setExpenseData({});
   }
-  function handlePayersParticipantsDisplay(e) {
-    if (e.target.id === "participant-arrow") {
-      setDisplayParticipantOpt(
-        displayParticipantOpt === "hidden" ? "block" : "hidden"
-      );
-      setDisplayPayersOpt(displayPayersOpt === "block" ? "hidden" : "hidden");
-      return;
-    }
-    if (e.target.id === "payer-arrow") {
-      setDisplayParticipantOpt(
-        displayParticipantOpt === "block" ? "hidden" : "hidden"
-      );
-      setDisplayPayersOpt(displayPayersOpt === "hidden" ? "block" : "hidden");
-      return;
-    }
-  }
+
   return (
     <>
       <main className="p-5 min-h-[1200px]">
@@ -94,17 +57,42 @@ const Mainpage = () => {
               setDisplayAddExpense={setDisplayAddExpense}
             />
             <section>
-              <article className="flex flex-wrap mt-3">
+              <div className="flex flex-wrap mt-3 cursor-pointer">
                 <figure>
                   <img src={list} alt="icon" />
                 </figure>
                 <figcaption className="ml-2 w-[200px] md:w-[400px]">
                   <p>青菜</p>
                   <p>挖泥尼先付300元</p>
+                  <p className="text-xs text-slate-400">2024-4-14</p>
                 </figcaption>
                 <div className="sm:ml-4">NT 300元</div>
+              </div>
+              <article className={`ml-20 w-[320px] ${displayDetail}`}>
+                <div className="flex flex-wrap flex-col mt-3">
+                  <figcaption className="w-[200px] md:w-[400px]">
+                    <p>a欠款100元</p>
+                    <p>b欠款100元</p>
+                  </figcaption>
+
+                  <figure className="flex flex-wrap gap-2">
+                    <div className="text-slate-500 text-sm">
+                      <p className="text-slate-500 text-sm">
+                        挖泥尼在20240414建立
+                      </p>
+                      <p className="text-slate-500 text-sm">
+                        這是挖泥尼的備註，不要加香菜
+                      </p>
+                    </div>
+                    <div className="w-40 h-20 bg-slate-200">圖片</div>
+                  </figure>
+                  <div className="md:self-center">
+                    <Button>編輯</Button>
+                    <Button>刪除</Button>
+                  </div>
+                </div>
               </article>
-              <article className="flex flex-wrap mt-3">
+              {/* <div className="flex flex-wrap mt-3">
                 <figure>
                   <img src={list} alt="icon" />
                 </figure>
@@ -113,7 +101,7 @@ const Mainpage = () => {
                   <p>挖泥尼哇哇嗚哇啊啊哇先付300元</p>
                 </figcaption>
                 <div className="sm:ml-4">NT 300元</div>
-              </article>
+              </div> */}
             </section>
             <p className="text-center">查看已結清紀錄</p>
           </TabsContent>
@@ -126,160 +114,10 @@ const Mainpage = () => {
           </TabsContent>
           {/* <TabsContent value="friend">好友</TabsContent> */}
         </Tabs>
-        <form
-          method="post"
-          encType="multipart/form-data"
-          action=""
-          className={`${displayAddExpense} fixed z-50 top-90 left-20 bg-slate-400 w-[360px] p-3`}
-          onSubmit={(e) => handleFormSubmit(e)}
-        >
-          <figure className="flex items-center">
-            <img src={list} alt="icon" className="w-9 h-9 mr-3" />
-            <figcaption>
-              <label htmlFor="item">項目</label>
-              <Input
-                placeholder="晚餐"
-                id="item"
-                className=""
-                value={expenseData.item}
-                onChange={(e) => setExpenseData({ item: e.target.value })}
-              ></Input>
-            </figcaption>
-          </figure>
-          <figure className="flex items-center">
-            <div className="w-9 h-9 bg-slate-200 mr-3 p-1">NTD</div>
-            <figcaption>
-              <label htmlFor="tw_amount">金額</label>
-              <Input placeholder="500元" id="tw_amount"></Input>
-            </figcaption>
-          </figure>
-          <div className="flex items-center gap-2">
-            <label htmlFor="payer">誰先付</label>
-            <Select id="payer">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="你" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="A">A</SelectItem>
-                <SelectItem value="B">B</SelectItem>
-                <SelectItem value="C">C</SelectItem>
-              </SelectContent>
-            </Select>
-            <img
-              id="payer-arrow"
-              src={arrow}
-              alt="arrow"
-              className="w-6 h-6"
-              onClick={(e) => handlePayersParticipantsDisplay(e)}
-            />
-          </div>
-          <div className="flex items-center gap-2">
-            <label htmlFor="participant">分給誰</label>
-            <MultiSelect></MultiSelect>
-            {/* <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={`全部平分${x}人`} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="even">全部平分</SelectItem>
-                <Checkbox
-                  id="checkbox-0"
-                  name="participants"
-                  checked={formData.participants === "b"}
-                  onChange={(e) => {
-                    console.log(e.target);
-                  }}
-                />
-                <label htmlFor="checkbox-0">a</label>
-                <Checkbox id="checkbox-1" name="participants" />
-                <label htmlFor="checkbox-1">b</label>
-                <Checkbox id="checkbox-2" name="participants" />
-                <label htmlFor="checkbox-2">c</label>
-              </SelectContent>
-            </Select> */}
-            <img
-              src={arrow}
-              alt="arrow"
-              className="w-6 h-6"
-              id="participant-arrow"
-              onClick={(e) => {
-                handlePayersParticipantsDisplay(e);
-              }}
-            />
-          </div>
-          <label htmlFor="date" className="block">
-            日期
-          </label>
-          <DatePicker id="date"></DatePicker>
-          <Textarea placeholder="備註"></Textarea>
-          <label htmlFor="uploadImg">圖片</label>
-          <input type="file" accept=".jpg, .jpeg, .png" id="uploadImg" />
-          <div className="bg-slate-200 w-40 h-20">圖片預覽</div>
-          <Button type="reset">取消</Button>
-          <Button>儲存</Button>
-        </form>
-        <div
-          className={`fixed ${displayPayersOpt} bg-blue-200 left-[450px]  w-[360px] h-[500px] p-2`}
-        >
-          <p className="text-center">多人付款</p>
-          <div className="flex justify-center ml-[130px] gap-[30px]">
-            <p>金額</p>
-          </div>
-          <div className="flex justify-center items-center mt-2">
-            <Checkbox id=""></Checkbox>
-            <label htmlFor="" className="block w-[150px]">
-              123
-            </label>
-            <Input className="w-24 h-8" placeholder="NT."></Input>
-          </div>
-          <div className="flex justify-center items-center mt-2">
-            <Checkbox id=""></Checkbox>
-            <label htmlFor="" className="block w-[150px]">
-              123
-            </label>
-            <Input className="w-24 h-8" placeholder="NT."></Input>
-          </div>
-          <div className="flex justify-center items-center mt-2">
-            <Checkbox id=""></Checkbox>
-            <label htmlFor="" className="block w-[150px]">
-              123
-            </label>
-            <Input className="w-24 h-8" placeholder="NT."></Input>
-          </div>
-        </div>
-        <div
-          className={`fixed ${displayParticipantOpt} bg-purple-200 left-[450px]  w-[360px] h-[500px] p-2`}
-        >
-          <p className="text-center">如何分擔</p>
-          <div className="flex justify-center ml-[130px] gap-[30px]">
-            <p>份數</p>
-            <p>金額</p>
-          </div>
-          <div className="flex justify-center items-center mt-2">
-            <Checkbox id=""></Checkbox>
-            <label htmlFor="" className="block w-[150px]">
-              123
-            </label>
-            <Input className="w-10 h-8" placeholder="1"></Input>
-            <Input className="w-24 h-8" placeholder="NT."></Input>
-          </div>
-          <div className="flex justify-center items-center mt-2">
-            <Checkbox id=""></Checkbox>
-            <label htmlFor="" className="block w-[150px]">
-              123
-            </label>
-            <Input className="w-10 h-8" placeholder="1"></Input>
-            <Input className="w-24 h-8" placeholder="NT."></Input>
-          </div>
-          <div className="flex justify-center items-center mt-2">
-            <Checkbox id=""></Checkbox>
-            <label htmlFor="" className="block w-[150px]">
-              123
-            </label>
-            <Input className="w-10 h-8" placeholder="1"></Input>
-            <Input className="w-24 h-8" placeholder="NT."></Input>
-          </div>
-        </div>
+        <AddExpense
+          displayAddExpense={displayAddExpense}
+          handleFormSubmit={handleFormSubmit}
+        />
       </main>
     </>
   );
