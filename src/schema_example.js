@@ -1,8 +1,11 @@
-import { group } from "console";
-
 const group = {
   groupId: "",
-  users: [{ uid: "", name: "", email: "" }, {}, {}, {}],
+  users: [
+    { uid: "", name: "a", email: "" },
+    { uid: "", name: "b", email: "" },
+    { uid: "", name: "c", email: "" },
+    { uid: "", name: "d", email: "" },
+  ],
   expenses: [
     {
       date: "",
@@ -48,10 +51,10 @@ const group = {
   ],
   paidAmount: [{ from: "a", to: "b", amount: 10, time: "timestamp" }],
   leftAmount: [{ from: "a", to: "b", amount: 90 }],
-  history: [group.expenses, paidAmount],
+  // history: [group.expenses, paidAmount],
 };
 
-const user = {
+const users = {
   uid: "",
   name: "",
   email: "",
@@ -59,3 +62,4 @@ const user = {
   // password:'',
   groupIds: [],
 };
+export { group, users };

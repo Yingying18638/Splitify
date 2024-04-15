@@ -4,7 +4,8 @@ import useStore from "../../utility/useStore";
 //image
 import arrow from "../../assets/arrow.png";
 import list from "../../assets/list.png";
-
+//data structure
+import { group, users } from "../../schema_example";
 // component
 import DatePicker from "./DatePicker";
 import MultiSelect from "./Multiselect";
@@ -23,7 +24,8 @@ import {
 
 const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
   const { expenseData, setExpenseData } = useStore();
-
+  const { payersAndAmounts, participants } = expenseData;
+  // console.log("分擔者", participants);
   const [displayPayersOpt, setDisplayPayersOpt] = useState("hidden");
   const [displayParticipantOpt, setDisplayParticipantOpt] = useState("hidden");
   function handlePayersParticipantsDisplay(e) {
@@ -68,7 +70,10 @@ const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
           <div className="w-9 h-9 bg-slate-200 mr-3 p-1">NTD</div>
           <figcaption>
             <label htmlFor="tw_amount">金額</label>
-            <Input placeholder="500元" id="tw_amount"></Input>
+            <Input
+              placeholder="500元"
+              id="tw_amount" //value={expenseData.tw_amount}
+            ></Input>
           </figcaption>
         </figure>
         <div className="flex items-center gap-2">
@@ -78,9 +83,16 @@ const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
               <SelectValue placeholder="你" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="A">A</SelectItem>
+              {group.users.map(({ name }) => {
+                return (
+                  <SelectItem key={name} value={name}>
+                    {name}
+                  </SelectItem>
+                );
+              })}
+              {/* <SelectItem value="A">A</SelectItem>
               <SelectItem value="B">B</SelectItem>
-              <SelectItem value="C">C</SelectItem>
+              <SelectItem value="C">C</SelectItem> */}
             </SelectContent>
           </Select>
           <img
@@ -143,27 +155,33 @@ const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
         <div className="flex justify-center ml-[130px] gap-[30px]">
           <p>金額</p>
         </div>
-        <div className="flex justify-center items-center mt-2">
-          <Checkbox id=""></Checkbox>
-          <label htmlFor="" className="block w-[150px]">
-            123
-          </label>
-          <Input className="w-24 h-8" placeholder="NT."></Input>
-        </div>
-        <div className="flex justify-center items-center mt-2">
-          <Checkbox id=""></Checkbox>
-          <label htmlFor="" className="block w-[150px]">
-            123
-          </label>
-          <Input className="w-24 h-8" placeholder="NT."></Input>
-        </div>
-        <div className="flex justify-center items-center mt-2">
-          <Checkbox id=""></Checkbox>
-          <label htmlFor="" className="block w-[150px]">
-            123
-          </label>
-          <Input className="w-24 h-8" placeholder="NT."></Input>
-        </div>
+        {group.users.map(({ name }) => {
+          return (
+            <div className="flex justify-center items-center mt-2" key={name}>
+              <input
+                type="checkbox"
+                id={name}
+                checked={payersAndAmounts.find((item) => item.name === name)}
+                onClick={(e) => {
+                  const { id } = e.target;
+                  if (!payersAndAmounts.find((item) => item.name === id)) {
+                    const newArr = [...payersAndAmounts, { name: id }];
+                    setExpenseData({ ...expenseData, newArr });
+                  } else {
+                    const newArr = payersAndAmounts.filter(
+                      (item) => item.name !== id
+                    );
+                    setExpenseData({ ...expenseData, newArr });
+                  }
+                }}
+              ></input>
+              <label htmlFor={name} className="block w-[150px] ml-2">
+                {name}
+              </label>
+              <Input className="w-24 h-8" placeholder="NT."></Input>
+            </div>
+          );
+        })}
       </div>
       <div
         className={`fixed ${displayParticipantOpt} bg-purple-200 left-[450px]  w-[360px] h-[500px] p-2`}
