@@ -2,7 +2,7 @@ import { group } from "console";
 
 const group = {
   groupId: "",
-  users: [{ userId: "", name: "", email: "" }, {}, {}, {}],
+  users: [{ uid: "", name: "", email: "" }, {}, {}, {}],
   expenses: [
     {
       date: "",
@@ -52,7 +52,7 @@ const group = {
 };
 
 const user = {
-  userId: "",
+  uid: "",
   name: "",
   email: "",
   img: "",

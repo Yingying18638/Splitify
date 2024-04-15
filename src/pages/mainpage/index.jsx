@@ -57,6 +57,7 @@ const Mainpage = () => {
               setDisplayAddExpense={setDisplayAddExpense}
             />
             <section>
+              <h2>2024-4-14</h2>
               <div className="flex flex-wrap mt-3 cursor-pointer">
                 <figure>
                   <img src={list} alt="icon" />

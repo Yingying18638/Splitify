@@ -8,6 +8,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Header />}>
+            {/* <Route path="landing" element={<Mainpage />}></Route> */}
             <Route path="main" element={<Mainpage />}></Route>
           </Route>
         </Routes>
