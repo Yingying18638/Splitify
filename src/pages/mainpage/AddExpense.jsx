@@ -4,6 +4,7 @@ import useStore from "../../utility/useStore";
 //image
 import arrow from "../../assets/arrow.png";
 import list from "../../assets/list.png";
+import closeIcon from "../../assets/x.png";
 //data structure
 import { group, users } from "../../schema_example";
 // component
@@ -22,10 +23,14 @@ import {
   SelectValue,
 } from "../../components/ui/select";
 
-const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
-  const { expenseData, setExpenseData } = useStore();
-  const { payersAndAmounts, participants } = expenseData;
-  // console.log("分擔者", participants);
+const AddExpense = ({
+  setDisplayAddExpense,
+  displayAddExpense,
+  handleFormSubmit,
+}) => {
+  const { newExpense, setNewExpense } = useStore();
+  const { morePayers, singlePayerOnly, participants, note, img } = newExpense;
+  const morePayersNames = morePayers ? Object.keys(morePayers) : [];
   const [displayPayersOpt, setDisplayPayersOpt] = useState("hidden");
   const [displayParticipantOpt, setDisplayParticipantOpt] = useState("hidden");
   function handlePayersParticipantsDisplay(e) {
@@ -44,15 +49,31 @@ const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
       return;
     }
   }
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(newExpense);
+    setDisplayAddExpense("hidden");
+    setNewExpense({});
+  }
   return (
     <>
       <form
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense} fixed z-50 top-90 left-20 bg-slate-400 w-[360px] p-3`}
-        onSubmit={(e) => handleFormSubmit(e)}
+        className={`${displayAddExpense} fixed z-50 top-10 left-20 bg-slate-400 w-[360px] p-3`}
+        onSubmit={(e) => handleSubmit(e)}
       >
+        <img
+          src={closeIcon}
+          alt="closeIcon"
+          onClick={() => {
+            setDisplayAddExpense("hidden");
+            setDisplayParticipantOpt("hidden");
+            setDisplayPayersOpt("hidden");
+          }}
+          className="absolute right-2 top-2 cursor-pointer"
+        />
         <figure className="flex items-center">
           <img src={list} alt="icon" className="w-9 h-9 mr-3" />
           <figcaption>
@@ -61,8 +82,8 @@ const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
               placeholder="晚餐"
               id="item"
               className=""
-              value={expenseData.item}
-              onChange={(e) => setExpenseData({ item: e.target.value })}
+              value={newExpense.item}
+              onChange={(e) => setNewExpense({ item: e.target.value })}
             ></Input>
           </figcaption>
         </figure>
@@ -71,8 +92,8 @@ const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
           <figcaption>
             <label htmlFor="tw_amount">金額</label>
             <Input
-              placeholder="500元"
-              id="tw_amount" //value={expenseData.tw_amount}
+              placeholder="500"
+              id="tw_amount" //value={newExpense.tw_amount}
             ></Input>
           </figcaption>
         </figure>
@@ -83,16 +104,13 @@ const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
               <SelectValue placeholder="你" />
             </SelectTrigger>
             <SelectContent>
-              {group.users.map(({ name }) => {
+              {group?.users.map(({ name }) => {
                 return (
                   <SelectItem key={name} value={name}>
                     {name}
                   </SelectItem>
                 );
               })}
-              {/* <SelectItem value="A">A</SelectItem>
-              <SelectItem value="B">B</SelectItem>
-              <SelectItem value="C">C</SelectItem> */}
             </SelectContent>
           </Select>
           <img
@@ -106,27 +124,6 @@ const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
         <div className="flex items-center gap-2">
           <label htmlFor="participant">分給誰</label>
           <MultiSelect></MultiSelect>
-          {/* <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={`全部平分${x}人`} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="even">全部平分</SelectItem>
-                <Checkbox
-                  id="checkbox-0"
-                  name="participants"
-                  checked={formData.participants === "b"}
-                  onChange={(e) => {
-                    console.log(e.target);
-                  }}
-                />
-                <label htmlFor="checkbox-0">a</label>
-                <Checkbox id="checkbox-1" name="participants" />
-                <label htmlFor="checkbox-1">b</label>
-                <Checkbox id="checkbox-2" name="participants" />
-                <label htmlFor="checkbox-2">c</label>
-              </SelectContent>
-            </Select> */}
           <img
             src={arrow}
             alt="arrow"
@@ -141,16 +138,37 @@ const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
           日期
         </label>
         <DatePicker id="date"></DatePicker>
-        <Textarea placeholder="備註"></Textarea>
+        <Textarea
+          placeholder="備註"
+          value={note}
+          onChange={(e) =>
+            setNewExpense({ ...newExpense, note: e.target.value })
+          }
+        ></Textarea>
         <label htmlFor="uploadImg">圖片</label>
         <input type="file" accept=".jpg, .jpeg, .png" id="uploadImg" />
         <div className="bg-slate-200 w-40 h-20">圖片預覽</div>
-        <Button type="reset">取消</Button>
+        <Button
+          type="reset"
+          onClick={() => {
+            setDisplayAddExpense("hidden");
+            setDisplayParticipantOpt("hidden");
+            setDisplayPayersOpt("hidden");
+          }}
+        >
+          取消
+        </Button>
         <Button>儲存</Button>
       </form>
       <div
-        className={`fixed ${displayPayersOpt} bg-blue-200 left-[450px]  w-[360px] h-[500px] p-2`}
+        className={`fixed ${displayPayersOpt} bg-blue-200 left-[450px] top-10 w-[360px] h-[500px] p-2`}
       >
+        <img
+          src={closeIcon}
+          alt="closeIcon"
+          onClick={() => setDisplayPayersOpt("hidden")}
+          className="absolute right-2 top-2 cursor-pointer"
+        />
         <p className="text-center">多人付款</p>
         <div className="flex justify-center ml-[130px] gap-[30px]">
           <p>金額</p>
@@ -161,31 +179,44 @@ const AddExpense = ({ displayAddExpense, handleFormSubmit }) => {
               <input
                 type="checkbox"
                 id={name}
-                checked={payersAndAmounts.find((item) => item.name === name)}
+                checked={morePayersNames?.find((item) => item === name)}
                 onClick={(e) => {
                   const { id } = e.target;
-                  if (!payersAndAmounts.find((item) => item.name === id)) {
-                    const newArr = [...payersAndAmounts, { name: id }];
-                    setExpenseData({ ...expenseData, newArr });
+                  if (!morePayersNames?.find((item) => item === id)) {
+                    const newMorePayers = { ...morePayers, [id]: 0 };
+                    setNewExpense({ ...newExpense, morePayers: newMorePayers });
                   } else {
-                    const newArr = payersAndAmounts.filter(
-                      (item) => item.name !== id
-                    );
-                    setExpenseData({ ...expenseData, newArr });
+                    const { [id]: removed, ...obj } = morePayers;
+                    setNewExpense({ ...newExpense, morePayers: obj });
                   }
                 }}
               ></input>
               <label htmlFor={name} className="block w-[150px] ml-2">
                 {name}
               </label>
-              <Input className="w-24 h-8" placeholder="NT."></Input>
+              <Input
+                className="w-24 h-8"
+                placeholder="NT."
+                value={morePayers?.[name] ? morePayers[name] : ""}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  const newMorePayers = { ...morePayers, [name]: value };
+                  setNewExpense({ ...newExpense, morePayers: newMorePayers });
+                }}
+              ></Input>
             </div>
           );
         })}
       </div>
       <div
-        className={`fixed ${displayParticipantOpt} bg-purple-200 left-[450px]  w-[360px] h-[500px] p-2`}
+        className={`fixed ${displayParticipantOpt} bg-purple-200 left-[450px] top-10 w-[360px] h-[500px] p-2`}
       >
+        <img
+          src={closeIcon}
+          alt="closeIcon"
+          onClick={() => setDisplayParticipantOpt("hidden")}
+          className="absolute right-2 top-2 cursor-pointer"
+        />
         <p className="text-center">如何分擔</p>
         <div className="flex justify-center ml-[130px] gap-[30px]">
           <p>份數</p>

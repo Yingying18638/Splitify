@@ -5,13 +5,21 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../components/ui/popover";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-
 import { cn } from "../../lib/utils";
+import useStore from "../../utility/useStore";
 const DatePicker = () => {
+  const { newExpense, setNewExpense } = useStore();
   const [date, setDate] = useState(new Date());
+  useEffect(() => {
+    setNewExpense({
+      ...newExpense,
+      date: format(date, "yyyy-MM-dd"),
+      // time: format(date, "HH:mm:ss"),
+    });
+  }, [date]);
   return (
     <Popover>
       <PopoverTrigger asChild>

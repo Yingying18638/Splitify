@@ -16,22 +16,22 @@ import {
 } from "../../components/ui/tabs";
 const Mainpage = () => {
   const [displayAddExpense, setDisplayAddExpense] = useState("hidden");
-  const [displayDetail, setDisplayDetail] = useState("hidden");
-  const { expenseData, setExpenseData } = useStore();
+  const [displayDetail, setDisplayDetail] = useState("");
+  const { newExpense, setNewExpense } = useStore();
   function handleFormSubmit(e) {
     e.preventDefault();
-    console.log(expenseData.item);
+    console.log(newExpense);
     setDisplayAddExpense("hidden");
-    // setExpenseData({});
+    setNewExpense({});
   }
 
   return (
     <>
       <main className="p-5 min-h-[1200px]">
-        <div className="bg-green-100 w-40 h-40 fixed top-44 left-6 hidden md:block ">
-          <div>群組</div>
-          {/* <div>好友</div> */}
-        </div>
+        {/* <div className="bg-green-100 w-40 h-40 fixed top-44 left-6 hidden md:block "> */}
+        {/* <div>群組</div> */}
+        {/* <div>好友</div> */}
+        {/* </div> */}
         <Tabs
           defaultValue="account"
           className="w-[360px] md:w-[600px]   mt-20 mx-auto flex flex-col items-center justify-center flex-wrap"
@@ -118,6 +118,7 @@ const Mainpage = () => {
         <AddExpense
           displayAddExpense={displayAddExpense}
           handleFormSubmit={handleFormSubmit}
+          setDisplayAddExpense={setDisplayAddExpense}
         />
       </main>
     </>

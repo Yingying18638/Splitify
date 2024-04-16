@@ -11,22 +11,23 @@ const group = {
       date: "",
       time: "",
       item: "",
-      icon: "", // research
-      payersAndAmounts: [
-        {
-          name: "",
-          foreign_amount: 0,
-          tw_amount: 0,
-          currency: "",
-          exchange_rate: 0,
-        },
-      ],
-      participants: [{ name: "", customized_amount: 0 }],
+      icon: "",
+      total_amount: 0,
+      foreign_amount: 0,
+      currency: "",
+      exchange_rate: 0,
+      singlePayerOnly: "",
+      morePayers: {
+        // a: 150,
+        // b: 150,
+      },
+      participants: [],
       note: "",
-      img: "", // research
+      img: "",
+      bill: {},
     },
   ],
-  bill: { a: -100.0, b: 150.0, d: -250, c: 200 },
+  totalBill: { a: -100.0, b: 150.0, d: -250, c: 200 },
   flow: [
     {
       from: "a",

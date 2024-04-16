@@ -2,25 +2,29 @@ import { create } from "zustand";
 import zukeeper from "zukeeper";
 const useStore = create(
   zukeeper((set) => ({
-    expenseData: {
-      date: "",
-      time: "",
-      item: "",
-      icon: "",
-      payersAndAmounts: [
-        {
-          name: "",
-          foreign_amount: 0,
-          tw_amount: 0,
-          currency: "",
-          exchange_rate: 0,
+    newExpense: [
+      {
+        date: "",
+        time: "",
+        item: "",
+        icon: "",
+        total_amount: 0,
+        foreign_amount: 0,
+        currency: "",
+        exchange_rate: 0,
+        singlePayerOnly: "",
+        morePayers: {
+          //   a: 100,
+          //   b: 100,
         },
-      ],
-      participants: [], //{ name: "" }], //, customized_amount: 0 }],
-      note: "",
-      img: "",
-    },
-    setExpenseData: (data) => set({ expenseData: data }),
+
+        participants: [],
+        note: "",
+        img: "",
+        bill: {},
+      },
+    ],
+    setNewExpense: (data) => set({ newExpense: data }),
   }))
 );
 window.store = useStore;
