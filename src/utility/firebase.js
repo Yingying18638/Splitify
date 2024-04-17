@@ -1,4 +1,5 @@
-// Your web app's Firebase configuration
+import { getStorage } from "firebase/storage";
+import { initializeApp } from "firebase/app";
 const firebaseConfig = {
   apiKey: "AIzaSyDKiHIKL5kVQmNLHDw_WseiTex-xyN0h5U",
   authDomain: "bunbuntest.firebaseapp.com",
@@ -10,3 +11,5 @@ const firebaseConfig = {
 };
 
 export default firebaseConfig;
+const app = initializeApp(firebaseConfig);
+export const storage = getStorage(app);

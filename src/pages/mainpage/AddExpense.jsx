@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useStore from "../../utility/useStore";
-
+import useUploadImg from "../../utility/hooks/useUploadImg";
+import { postData } from "../../utility/postData";
 //image
 import arrow from "../../assets/arrow.png";
 import list from "../../assets/list.png";
@@ -10,6 +11,7 @@ import { group, users } from "../../schema_example";
 // component
 import DatePicker from "./DatePicker";
 import MultiSelect from "./Multiselect";
+import Test from "./Test";
 // shadcn ui
 import { Checkbox } from "../../components/ui/checkbox";
 import { Input } from "../../components/ui/input";
@@ -28,6 +30,15 @@ const AddExpense = ({
   displayAddExpense,
   handleFormSubmit,
 }) => {
+  // upload image
+  const {
+    imageUploaded,
+    setImageUploaded,
+    imageUrl,
+    setImageUrl,
+    uploadImage,
+  } = useUploadImg();
+  // postData();
   const { newExpense, setNewExpense, getNewExpense } = useStore();
   // console.log(getNewExpense());
   const {
@@ -62,8 +73,13 @@ const AddExpense = ({
       return;
     }
   }
+  //---------------temp------------------
+  const groupId = "JR13SgWIQm5UNZFLwBC0";
+  //---------------temp------------------
+
   function handleSubmit(e) {
     e.preventDefault();
+    postData(groupId, newExpense);
     setDisplayAddExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
@@ -72,6 +88,7 @@ const AddExpense = ({
   }
   return (
     <>
+      {/* <Test></Test> */}
       <form
         method="post"
         encType="multipart/form-data"

@@ -22,12 +22,17 @@ const group = {
         // b: 150,
       },
       participants: [],
+      participants_customized: {
+        // a: 120, b: 80, c: 100
+      },
       note: "",
       img: "",
       bill: {},
     },
   ],
-  totalBill: { a: -100.0, b: 150.0, d: -250, c: 200 },
+  totalBill: {
+    //  a: -100.0, b: 150.0, d: -250, c: 200
+  },
   flow: [
     {
       from: "a",
