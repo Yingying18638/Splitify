@@ -6,6 +6,7 @@ const firebaseConfig = {
   storageBucket: "bunbuntest.appspot.com",
   messagingSenderId: "731973272019",
   appId: "1:731973272019:web:ff36f73813342d47176f26",
+  storageBucket: "gs://bunbuntest.appspot.com",
 };
 
 export default firebaseConfig;
