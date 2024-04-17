@@ -39,29 +39,33 @@ const Mainpage = () => {
   return (
     <>
       <main className="p-5 min-h-[1200px]">
-        {/* <div className="bg-green-100 w-40 h-40 fixed top-44 left-6 hidden md:block "> */}
-        {/* <div>群組</div> */}
-        {/* <div>好友</div> */}
-        {/* </div> */}
+        <div className="bg-green-100 w-40 h-full fixed top-0 left-0 hidden md:block ">
+          <nav className="p-10">
+            <div>
+              群組
+              <div className="pt-5 pl-2">group1</div>
+              <div className="pt-5 pl-2">group2</div>
+            </div>
+            <div className="pt-5">
+              好友
+              <div className="pt-5 pl-2">friend1</div>
+              <div className="pt-5 pl-2">friend2</div>
+            </div>
+          </nav>
+        </div>
         <Tabs
           defaultValue="account"
           className="w-[360px] md:w-[600px]   mt-20 mx-auto flex flex-col items-center justify-center flex-wrap"
         >
           <TabsList>
-            <TabsTrigger value="groups" className="w-32 md:hidden">
-              群組
-            </TabsTrigger>
             <TabsTrigger value="account" className="w-32">
               帳目
             </TabsTrigger>
             <TabsTrigger value="calculation" className="w-32">
               結算
             </TabsTrigger>
-            {/* <TabsTrigger value="friend" className="w-32">
-              好友
-            </TabsTrigger> */}
           </TabsList>
-          <TabsContent value="groups">groups.</TabsContent>
+
           <TabsContent value="account">
             <LittleHeader
               displayAddExpense={displayAddExpense}
@@ -106,7 +110,7 @@ const Mainpage = () => {
                   </div>
                 </div>
               </article>
-              {/* <div className="flex flex-wrap mt-3">
+              <div className="flex flex-wrap mt-3">
                 <figure>
                   <img src={list} alt="icon" />
                 </figure>
@@ -115,7 +119,7 @@ const Mainpage = () => {
                   <p>挖泥尼哇哇嗚哇啊啊哇先付300元</p>
                 </figcaption>
                 <div className="sm:ml-4">NT 300元</div>
-              </div> */}
+              </div>
             </section>
             <p className="text-center">查看已結清紀錄</p>
           </TabsContent>
