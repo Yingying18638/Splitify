@@ -28,11 +28,24 @@ const AddExpense = ({
   displayAddExpense,
   handleFormSubmit,
 }) => {
-  const { newExpense, setNewExpense } = useStore();
-  const { morePayers, singlePayerOnly, participants, note, img } = newExpense;
+  const { newExpense, setNewExpense, getNewExpense } = useStore();
+  // console.log(getNewExpense());
+  const {
+    morePayers,
+    total_amount,
+    singlePayerOnly,
+    participants,
+    note,
+    img,
+    participants_customized,
+  } = newExpense;
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
+  const participants_customNames = participants_customized
+    ? Object.keys(participants_customized)
+    : [];
   const [displayPayersOpt, setDisplayPayersOpt] = useState("hidden");
   const [displayParticipantOpt, setDisplayParticipantOpt] = useState("hidden");
+  const [imgSrc, setImgSrc] = useState("");
   function handlePayersParticipantsDisplay(e) {
     if (e.target.id === "participant-arrow") {
       setDisplayParticipantOpt(
@@ -51,9 +64,11 @@ const AddExpense = ({
   }
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(newExpense);
     setDisplayAddExpense("hidden");
+    setDisplayParticipantOpt("hidden");
+    setDisplayPayersOpt("hidden");
     setNewExpense({});
+    console.log(newExpense);
   }
   return (
     <>
@@ -82,8 +97,10 @@ const AddExpense = ({
               placeholder="晚餐"
               id="item"
               className=""
-              value={newExpense.item}
-              onChange={(e) => setNewExpense({ item: e.target.value })}
+              value={getNewExpense().item}
+              onChange={(e) =>
+                setNewExpense({ ...newExpense, item: e.target.value })
+              }
             ></Input>
           </figcaption>
         </figure>
@@ -93,20 +110,29 @@ const AddExpense = ({
             <label htmlFor="tw_amount">金額</label>
             <Input
               placeholder="500"
-              id="tw_amount" //value={newExpense.tw_amount}
+              id="tw_amount" //
+              value={total_amount || ""}
+              onChange={(e) =>
+                setNewExpense({ ...newExpense, total_amount: e.target.value })
+              }
             ></Input>
           </figcaption>
         </figure>
         <div className="flex items-center gap-2">
           <label htmlFor="payer">誰先付</label>
-          <Select id="payer">
+          <Select
+            id="payer"
+            onValueChange={(value) =>
+              setNewExpense({ ...newExpense, singlePayerOnly: value })
+            }
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="你" />
             </SelectTrigger>
             <SelectContent>
               {group?.users.map(({ name }) => {
                 return (
-                  <SelectItem key={name} value={name}>
+                  <SelectItem name="payer" key={name} value={name}>
                     {name}
                   </SelectItem>
                 );
@@ -146,8 +172,23 @@ const AddExpense = ({
           }
         ></Textarea>
         <label htmlFor="uploadImg">圖片</label>
-        <input type="file" accept=".jpg, .jpeg, .png" id="uploadImg" />
-        <div className="bg-slate-200 w-40 h-20">圖片預覽</div>
+        <input
+          type="file"
+          accept=".jpg, .jpeg, .png"
+          id="uploadImg"
+          // className="hidden"
+          onChange={(e) => {
+            if (e.target.files[0]) {
+              console.log(e.target.files);
+              const src = URL.createObjectURL(e.target.files[0]);
+              setImgSrc(src);
+              console.log(src);
+            }
+          }}
+        />
+        <div className="bg-slate-200 w-40 h-30">
+          <img src={imgSrc} alt="圖片預覽" className="w-25" />
+        </div>
         <Button
           type="reset"
           onClick={() => {
@@ -222,30 +263,44 @@ const AddExpense = ({
           <p>份數</p>
           <p>金額</p>
         </div>
-        <div className="flex justify-center items-center mt-2">
-          <Checkbox id=""></Checkbox>
-          <label htmlFor="" className="block w-[150px]">
-            123
-          </label>
-          <Input className="w-10 h-8" placeholder="1"></Input>
-          <Input className="w-24 h-8" placeholder="NT."></Input>
-        </div>
-        <div className="flex justify-center items-center mt-2">
-          <Checkbox id=""></Checkbox>
-          <label htmlFor="" className="block w-[150px]">
-            123
-          </label>
-          <Input className="w-10 h-8" placeholder="1"></Input>
-          <Input className="w-24 h-8" placeholder="NT."></Input>
-        </div>
-        <div className="flex justify-center items-center mt-2">
-          <Checkbox id=""></Checkbox>
-          <label htmlFor="" className="block w-[150px]">
-            123
-          </label>
-          <Input className="w-10 h-8" placeholder="1"></Input>
-          <Input className="w-24 h-8" placeholder="NT."></Input>
-        </div>
+        {group.users.map(({ name }) => {
+          return (
+            <div className="flex justify-center items-center mt-2" key={name}>
+              <input
+                type="checkbox"
+                id={name}
+                checked={participants_customNames?.find(
+                  (item) => item === name
+                )}
+                onClick={(e) => {
+                  const { id } = e.target;
+                  if (!participants_customNames?.find((item) => item === id)) {
+                    const newParticipantsCustom = {
+                      ...participants_customized,
+                      [id]: 0,
+                    };
+                    setNewExpense({
+                      ...newExpense,
+                      participants_customized: newParticipantsCustom,
+                    });
+                  } else {
+                    const { [id]: removed, ...obj } = participants_customized;
+                    setNewExpense({
+                      ...newExpense,
+                      participants_customized: obj,
+                    });
+                  }
+                }}
+              ></input>
+              {/* <Checkbox id={name}></Checkbox> */}
+              <label htmlFor={name} className="block w-[150px] ml-2">
+                {name}
+              </label>
+              <Input className="w-10 h-8" placeholder="1"></Input>
+              <Input className="w-24 h-8" placeholder="NT."></Input>
+            </div>
+          );
+        })}
       </div>
     </>
   );

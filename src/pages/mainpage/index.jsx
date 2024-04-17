@@ -17,13 +17,24 @@ import {
 const Mainpage = () => {
   const [displayAddExpense, setDisplayAddExpense] = useState("hidden");
   const [displayDetail, setDisplayDetail] = useState("");
-  const { newExpense, setNewExpense } = useStore();
-  function handleFormSubmit(e) {
-    e.preventDefault();
-    console.log(newExpense);
-    setDisplayAddExpense("hidden");
-    setNewExpense({});
-  }
+  const [imgSrc, setImgSrc] = useState("");
+  const {
+    newExpense,
+    setNewExpense,
+    displayPayersOpt,
+    setDisplayPayersOpt,
+    displayParticipantOpt,
+    setDisplayParticipantOpt,
+  } = useStore();
+
+  // function handleFormSubmit(e) {
+  //   e.preventDefault();
+  //   setDisplayAddExpense("hidden");
+  //   setDisplayParticipantOpt("hidden");
+  //   setDisplayPayersOpt("hidden");
+  //   setNewExpense({});
+  //   console.log(newExpense);
+  // }
 
   return (
     <>
@@ -85,7 +96,9 @@ const Mainpage = () => {
                         這是挖泥尼的備註，不要加香菜
                       </p>
                     </div>
-                    <div className="w-40 h-20 bg-slate-200">圖片</div>
+                    <div className="w-40 h-20 bg-slate-200">
+                      {/* <img src={} alt="圖片" /> */}
+                    </div>
                   </figure>
                   <div className="md:self-center">
                     <Button>編輯</Button>
@@ -117,7 +130,7 @@ const Mainpage = () => {
         </Tabs>
         <AddExpense
           displayAddExpense={displayAddExpense}
-          handleFormSubmit={handleFormSubmit}
+          // handleFormSubmit={handleFormSubmit}
           setDisplayAddExpense={setDisplayAddExpense}
         />
       </main>

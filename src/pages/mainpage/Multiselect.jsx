@@ -13,7 +13,7 @@ const Multiselect = () => {
   // console.log("selected", selected);
 
   useEffect(() => {
-    const newArr = selected.map((item) => ({ name: item.value }));
+    const newArr = selected.map((item) => item.value);
     setNewExpense({
       ...newExpense,
       participants: newArr,
