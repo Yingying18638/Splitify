@@ -5,13 +5,11 @@ import useStore from "../../utility/useStore";
 const options = group?.users.map(({ name }) => {
   return { label: name, value: name };
 });
+
 const Multiselect = () => {
   const { newExpense, setNewExpense } = useStore();
   const { participants } = newExpense;
   const [selected, setSelected] = useState([]);
-  // console.log("分擔者", participants);
-  // console.log("selected", selected);
-
   useEffect(() => {
     const newArr = selected.map((item) => item.value);
     setNewExpense({

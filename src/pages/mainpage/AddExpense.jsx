@@ -11,7 +11,6 @@ import { group, users } from "../../schema_example";
 // component
 import DatePicker from "./DatePicker";
 import MultiSelect from "./Multiselect";
-import Test from "./Test";
 // shadcn ui
 import { Checkbox } from "../../components/ui/checkbox";
 import { Input } from "../../components/ui/input";
@@ -23,13 +22,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
 } from "../../components/ui/select";
 
-const AddExpense = ({
-  setDisplayAddExpense,
-  displayAddExpense,
-  handleFormSubmit,
-}) => {
+const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   // upload image
   const {
     imageUploaded,
@@ -39,8 +36,7 @@ const AddExpense = ({
     uploadImage,
   } = useUploadImg();
   // postData();
-  const { newExpense, setNewExpense, getNewExpense } = useStore();
-  // console.log(getNewExpense());
+  const { newExpense, setNewExpense, resetNewExpense } = useStore();
   const {
     morePayers,
     total_amount,
@@ -51,6 +47,29 @@ const AddExpense = ({
     participants_customized,
   } = newExpense;
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
+  // calculate share to amount
+  const [shareObj, setShareObj] = useState({
+    a: "",
+    b: "",
+    c: "",
+    d: "",
+  });
+
+  // ----------------切成function-----------------------------
+  function getAmountArr(personAmountObj) {
+    return Object.values(personAmountObj);
+  }
+  function getAmountGap(amountArr) {
+    const cusAmountTotal = amountArr.reduce((acc, cur) => acc + cur, 0);
+    return total_amount - cusAmountTotal;
+  }
+  const cusAmountArr = getAmountArr(participants_customized);
+  const payersAmountArr = getAmountArr(morePayers);
+  const payersAmountTotal = payersAmountArr.reduce((acc, cur) => acc + cur, 0);
+  const cusAmountGap = getAmountGap(cusAmountArr);
+  const payersAmountGap = getAmountGap(payersAmountArr);
+  // ----------------切成function-----------------------------
+
   const participants_customNames = participants_customized
     ? Object.keys(participants_customized)
     : [];
@@ -83,12 +102,11 @@ const AddExpense = ({
     setDisplayAddExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
-    setNewExpense({});
+    resetNewExpense();
     console.log(newExpense);
   }
   return (
     <>
-      {/* <Test></Test> */}
       <form
         method="post"
         encType="multipart/form-data"
@@ -114,7 +132,7 @@ const AddExpense = ({
               placeholder="晚餐"
               id="item"
               className=""
-              value={getNewExpense().item}
+              value={newExpense.item}
               onChange={(e) =>
                 setNewExpense({ ...newExpense, item: e.target.value })
               }
@@ -129,24 +147,32 @@ const AddExpense = ({
               placeholder="500"
               id="tw_amount" //
               value={total_amount || ""}
-              onChange={(e) =>
-                setNewExpense({ ...newExpense, total_amount: e.target.value })
-              }
+              onChange={(e) => {
+                const { value } = e.target;
+                const num = parseInt(value);
+                if (isNaN(num) && value !== "") return;
+                setNewExpense({
+                  ...newExpense,
+                  total_amount: num ? num : 0,
+                });
+              }}
             ></Input>
           </figcaption>
         </figure>
         <div className="flex items-center gap-2">
           <label htmlFor="payer">誰先付</label>
           <Select
+            value={singlePayerOnly || ""}
             id="payer"
-            onValueChange={(value) =>
-              setNewExpense({ ...newExpense, singlePayerOnly: value })
-            }
+            onValueChange={(value) => {
+              setNewExpense({ ...newExpense, singlePayerOnly: value });
+            }}
           >
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="你" />
+              <SelectValue placeholder="誰？" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="">
+              <SelectScrollUpButton />
               {group?.users.map(({ name }) => {
                 return (
                   <SelectItem name="payer" key={name} value={name}>
@@ -154,6 +180,15 @@ const AddExpense = ({
                   </SelectItem>
                 );
               })}
+              <SelectItem
+                name="payer"
+                key="others"
+                value="多人付款"
+                className={payersAmountTotal !== 0 ? "" : "hidden"}
+              >
+                多人付款
+              </SelectItem>
+              <SelectScrollDownButton />
             </SelectContent>
           </Select>
           <img
@@ -164,7 +199,13 @@ const AddExpense = ({
             onClick={(e) => handlePayersParticipantsDisplay(e)}
           />
         </div>
-        <div className="flex items-center gap-2">
+        <p
+          className={`text-red-500 ${cusAmountGap !== 0 && singlePayerOnly === "多人付款" ? "" : "hidden"}`}
+        >
+          此分帳尚未完成
+        </p>
+
+        <div className="flex items-center gap-2 ">
           <label htmlFor="participant">分給誰</label>
           <MultiSelect></MultiSelect>
           <img
@@ -177,6 +218,8 @@ const AddExpense = ({
             }}
           />
         </div>
+        <div className="relative bg-white w-28 bottom-8 left-16">自訂分款</div>
+
         <label htmlFor="date" className="block">
           日期
         </label>
@@ -204,7 +247,7 @@ const AddExpense = ({
           }}
         />
         <div className="bg-slate-200 w-40 h-30">
-          <img src={imgSrc} alt="圖片預覽" className="w-25" />
+          {/* {imgSrc ? <img src={imgSrc} alt="圖片預覽" className="w-25" /> : ""} */}
         </div>
         <Button
           type="reset"
@@ -212,11 +255,18 @@ const AddExpense = ({
             setDisplayAddExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
+            resetNewExpense();
           }}
         >
           取消
         </Button>
-        <Button>儲存</Button>
+        <Button
+          disabled={
+            cusAmountGap !== 0 && singlePayerOnly === "多人付款" ? true : false
+          }
+        >
+          儲存
+        </Button>
       </form>
       <div
         className={`fixed ${displayPayersOpt} bg-blue-200 left-[450px] top-10 w-[360px] h-[500px] p-2`}
@@ -228,6 +278,12 @@ const AddExpense = ({
           className="absolute right-2 top-2 cursor-pointer"
         />
         <p className="text-center">多人付款</p>
+        <p
+          className={`text-right mr-6 ${payersAmountGap === 0 ? "" : "text-red-500"}`}
+        >
+          剩餘金額 {payersAmountGap} 元
+        </p>
+
         <div className="flex justify-center ml-[130px] gap-[30px]">
           <p>金額</p>
         </div>
@@ -258,8 +314,17 @@ const AddExpense = ({
                 value={morePayers?.[name] ? morePayers[name] : ""}
                 onChange={(e) => {
                   const { value } = e.target;
-                  const newMorePayers = { ...morePayers, [name]: value };
-                  setNewExpense({ ...newExpense, morePayers: newMorePayers });
+                  const num = parseInt(value);
+                  if (isNaN(num) && value !== "") return;
+                  const newMorePayers = {
+                    ...morePayers,
+                    [name]: num ? num : 0,
+                  };
+                  setNewExpense({
+                    ...newExpense,
+                    morePayers: newMorePayers,
+                    singlePayerOnly: "多人付款",
+                  });
                 }}
               ></Input>
             </div>
@@ -276,6 +341,11 @@ const AddExpense = ({
           className="absolute right-2 top-2 cursor-pointer"
         />
         <p className="text-center">如何分擔</p>
+        <p
+          className={`text-right mr-6 ${cusAmountGap === 0 ? "" : "text-red-500"}`}
+        >
+          剩餘金額 {cusAmountGap} 元
+        </p>
         <div className="flex justify-center ml-[130px] gap-[30px]">
           <p>份數</p>
           <p>金額</p>
@@ -294,7 +364,7 @@ const AddExpense = ({
                   if (!participants_customNames?.find((item) => item === id)) {
                     const newParticipantsCustom = {
                       ...participants_customized,
-                      [id]: 0,
+                      [id]: "",
                     };
                     setNewExpense({
                       ...newExpense,
@@ -313,8 +383,71 @@ const AddExpense = ({
               <label htmlFor={name} className="block w-[150px] ml-2">
                 {name}
               </label>
-              <Input className="w-10 h-8" placeholder="1"></Input>
-              <Input className="w-24 h-8" placeholder="NT."></Input>
+              <Input
+                className="w-10 h-8"
+                // placeholder="1"
+                value={shareObj[name]}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  const num = parseInt(value);
+                  // if (isNaN(num) && value !== "") return;
+                  const newShareObj = { ...shareObj, [name]: num ? num : 0 };
+                  setShareObj(newShareObj);
+                  console.log(newShareObj, "我是新的");
+                  const isNameNotExist = !participants_customNames?.find(
+                    (item) => item === name
+                  );
+                  if (isNameNotExist) {
+                    const newParticipantsCustom = {
+                      ...participants_customized,
+                      [name]: "",
+                    };
+                    setNewExpense({
+                      ...newExpense,
+                      participants_customized: newParticipantsCustom,
+                    });
+                  }
+                  // if (shareObj[name]) {
+                  //does anybody Have Share
+                  const shareTotal = Object.values(newShareObj).reduce(
+                    (acc, cur) => acc + cur,
+                    0
+                  );
+                  const amountObj = {};
+                  for (const [key, share] of Object.entries(newShareObj)) {
+                    const amount = (share / shareTotal) * total_amount;
+                    amountObj[key] = Math.round(amount);
+                  }
+                  console.log(amountObj, "我有更新嗎");
+                  setNewExpense({
+                    ...newExpense,
+                    participants_customized: { ...amountObj },
+                    // {
+                    //   ...participants_customized,
+                    //   [name]: amountObj[key],
+                    // },
+                  });
+                  // }
+                }}
+              ></Input>
+              <Input
+                className="w-24 h-8"
+                placeholder="NT."
+                value={participants_customized[name] || ""}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  const num = parseInt(value);
+                  if (isNaN(num) && value !== "") return;
+
+                  setNewExpense({
+                    ...newExpense,
+                    participants_customized: {
+                      ...participants_customized,
+                      [name]: num ? num : 0,
+                    },
+                  });
+                }}
+              ></Input>
             </div>
           );
         })}
