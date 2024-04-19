@@ -66,6 +66,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   const cusAmountArr = getAmountArr(participants_customized);
   const payersAmountArr = getAmountArr(morePayers);
   const payersAmountTotal = payersAmountArr.reduce((acc, cur) => acc + cur, 0);
+  const cusAmountTotal = cusAmountArr.reduce((acc, cur) => acc + cur, 0);
   const cusAmountGap = getAmountGap(cusAmountArr);
   const payersAmountGap = getAmountGap(payersAmountArr);
   // ----------------切成function-----------------------------
@@ -200,7 +201,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           />
         </div>
         <p
-          className={`text-red-500 ${cusAmountGap !== 0 && singlePayerOnly === "多人付款" ? "" : "hidden"}`}
+          className={`text-red-500 ${payersAmountGap !== 0 && singlePayerOnly === "多人付款" ? "" : "hidden"}`}
         >
           此分帳尚未完成
         </p>
@@ -218,8 +219,16 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             }}
           />
         </div>
-        <div className="relative bg-white w-28 bottom-8 left-16">自訂分款</div>
-
+        {/* <div
+          className={`${cusAmountTotal ? "" : "hidden"} relative bg-white w-28 bottom-8 left-16`}
+        >
+          自訂分款
+        </div> */}
+        <p
+          className={`text-red-500 ${cusAmountGap !== 0 && cusAmountTotal !== 0 ? "" : "hidden"}`}
+        >
+          此分帳尚未完成
+        </p>
         <label htmlFor="date" className="block">
           日期
         </label>
@@ -262,7 +271,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         </Button>
         <Button
           disabled={
-            cusAmountGap !== 0 && singlePayerOnly === "多人付款" ? true : false
+            (payersAmountGap !== 0 && singlePayerOnly === "多人付款") ||
+            (cusAmountGap !== 0 && cusAmountTotal !== 0)
+              ? true
+              : false
           }
         >
           儲存
@@ -355,6 +367,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             <div className="flex justify-center items-center mt-2" key={name}>
               <input
                 type="checkbox"
+                // id={`participant_${name}`}
                 id={name}
                 checked={participants_customNames?.find(
                   (item) => item === name
@@ -380,7 +393,11 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                 }}
               ></input>
               {/* <Checkbox id={name}></Checkbox> */}
-              <label htmlFor={name} className="block w-[150px] ml-2">
+              <label
+                // htmlFor={`participant_${name}`}
+                htmlFor={name}
+                className="block w-[150px] ml-2"
+              >
                 {name}
               </label>
               <Input
@@ -391,7 +408,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                   const { value } = e.target;
                   const num = parseInt(value);
                   // if (isNaN(num) && value !== "") return;
-                  const newShareObj = { ...shareObj, [name]: num ? num : 0 };
+                  const newShareObj = { ...shareObj, [name]: num ? num : "" };
                   setShareObj(newShareObj);
                   console.log(newShareObj, "我是新的");
                   const isNameNotExist = !participants_customNames?.find(
@@ -413,10 +430,13 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                     (acc, cur) => acc + cur,
                     0
                   );
+                  console.log(shareTotal, "sharetotal");
                   const amountObj = {};
                   for (const [key, share] of Object.entries(newShareObj)) {
                     const amount = (share / shareTotal) * total_amount;
-                    amountObj[key] = Math.round(amount);
+                    amountObj[key] = Math.round(amount)
+                      ? Math.round(amount)
+                      : 0;
                   }
                   console.log(amountObj, "我有更新嗎");
                   setNewExpense({
@@ -438,7 +458,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                   const { value } = e.target;
                   const num = parseInt(value);
                   if (isNaN(num) && value !== "") return;
-
+                  setShareObj({ ...shareObj, [name]: "" });
                   setNewExpense({
                     ...newExpense,
                     participants_customized: {
