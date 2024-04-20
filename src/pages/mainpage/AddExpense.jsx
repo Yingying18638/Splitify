@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+//functions and hooks
+import React, { useEffect, useState } from "react";
 import useStore from "../../utility/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
 import { postData } from "../../utility/postData";
+import calcPaymentAverage from "../../utility/calcPaymentAverage";
+import calcFlow from "../../utility/calcFlow";
+import calcBills from "../../utility/calcBills";
+import calcSingleAve from "../../utility/calcSingleAve";
 //image
 import arrow from "../../assets/arrow.png";
 import list from "../../assets/list.png";
 import closeIcon from "../../assets/x.png";
-//data structure
-import { group, users } from "../../schema_example";
 // component
 import DatePicker from "./DatePicker";
 import MultiSelect from "./Multiselect";
 // shadcn ui
-import { Checkbox } from "../../components/ui/checkbox";
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { Textarea } from "../../components/ui/textarea";
@@ -36,7 +38,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     uploadImage,
   } = useUploadImg();
   // postData();
-  const { newExpense, setNewExpense, resetNewExpense } = useStore();
+  const { newExpense, setNewExpense, resetNewExpense, group, setGroup } =
+    useStore();
+  const { expenses, users } = group;
   const {
     morePayers,
     total_amount,
@@ -77,6 +81,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   const [displayPayersOpt, setDisplayPayersOpt] = useState("hidden");
   const [displayParticipantOpt, setDisplayParticipantOpt] = useState("hidden");
   const [imgSrc, setImgSrc] = useState("");
+  const [isGroupCalcNeeded, setIsGroupCalcNeeded] = useState(true);
   function handlePayersParticipantsDisplay(e) {
     if (e.target.id === "participant-arrow") {
       setDisplayParticipantOpt(
@@ -96,10 +101,47 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   //---------------temp------------------
   const groupId = "JR13SgWIQm5UNZFLwBC0";
   //---------------temp------------------
+  useEffect(() => {
+    function handleGroupCalc() {
+      console.log("starting group calculation");
+      // 0. start group calc or not
+      // 3. 計算付款&平均
+      const { payment, average } = calcPaymentAverage(expenses, users);
+      const { totalBill } = calcBills(payment, average, users);
+      const flow = calcFlow(totalBill);
+      // 4. totalBill, flow 塞入group
+      // if (isGroupCalcNeeded === false) return;
+      setGroup({
+        ...group,
+        totalBill,
+        flow,
+      });
+      // 5. close group calc
+      setIsGroupCalcNeeded(false);
+    }
+    handleGroupCalc();
+  }, [expenses, users, isGroupCalcNeeded]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    postData(groupId, newExpense);
+    // 0. 檢查分擔是否均為空白
+    // const isDistributionEmpty =
+    //   participants.length === 0 && cusAmountTotal === 0;
+    // if (isDistributionEmpty) {
+    //   const usersArr = users.map((user) => user.name);
+    //   setNewExpense({ ...newExpense, participants: usersArr });
+    // }
+    // 1. newExpense 算出ave
+    const ave = calcSingleAve(newExpense);
+    setNewExpense({ ...newExpense, ave });
+    // 1.1 start GroupCalc
+    setIsGroupCalcNeeded(true);
+    // 2. newExpense 塞入group expenses, setGroup (觸發useEffect)
+    // setGroup((prev) => ({ ...prev, expenses: [...prev.expenses, newExpense] }));
+    setGroup({ ...group, expenses: [...group.expenses, newExpense] });
+    //加入img
+    //整筆group更新到火基地
+    // postData(groupId, newExpense);
     setDisplayAddExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
@@ -122,6 +164,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setDisplayAddExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
+            resetNewExpense();
           }}
           className="absolute right-2 top-2 cursor-pointer"
         />
@@ -134,6 +177,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               id="item"
               className=""
               value={newExpense.item}
+              // required
               onChange={(e) =>
                 setNewExpense({ ...newExpense, item: e.target.value })
               }
@@ -145,6 +189,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           <figcaption>
             <label htmlFor="tw_amount">金額</label>
             <Input
+              required
               placeholder="500"
               id="tw_amount" //
               value={total_amount || ""}
@@ -165,6 +210,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           <Select
             value={singlePayerOnly || ""}
             id="payer"
+            required
             onValueChange={(value) => {
               setNewExpense({ ...newExpense, singlePayerOnly: value });
             }}
@@ -174,7 +220,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             </SelectTrigger>
             <SelectContent className="">
               <SelectScrollUpButton />
-              {group?.users.map(({ name }) => {
+              {group?.users?.map(({ name }) => {
                 return (
                   <SelectItem name="payer" key={name} value={name}>
                     {name}
@@ -280,7 +326,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           儲存
         </Button>
       </form>
-      <div
+      <section
         className={`fixed ${displayPayersOpt} bg-blue-200 left-[450px] top-10 w-[360px] h-[500px] p-2`}
       >
         <img
@@ -299,7 +345,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         <div className="flex justify-center ml-[130px] gap-[30px]">
           <p>金額</p>
         </div>
-        {group.users.map(({ name }) => {
+        {group?.users?.map(({ name }) => {
           return (
             <div className="flex justify-center items-center mt-2" key={name}>
               <input
@@ -342,8 +388,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             </div>
           );
         })}
-      </div>
-      <div
+      </section>
+      <section
         className={`fixed ${displayParticipantOpt} bg-purple-200 left-[450px] top-10 w-[360px] h-[500px] p-2`}
       >
         <img
@@ -362,7 +408,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           <p>份數</p>
           <p>金額</p>
         </div>
-        {group.users.map(({ name }) => {
+        {group?.users?.map(({ name }) => {
           return (
             <div className="flex justify-center items-center mt-2" key={name}>
               <input
@@ -433,10 +479,11 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                   console.log(shareTotal, "sharetotal");
                   const amountObj = {};
                   for (const [key, share] of Object.entries(newShareObj)) {
-                    const amount = (share / shareTotal) * total_amount;
-                    amountObj[key] = Math.round(amount)
-                      ? Math.round(amount)
-                      : 0;
+                    const amount = (share / shareTotal) * total_amount || 0;
+                    // amountObj[key] = amount;
+                    amountObj[key] = Math.round(amount);
+                    // ? Math.round(amount)
+                    // : 0;
                   }
                   console.log(amountObj, "我有更新嗎");
                   setNewExpense({
@@ -471,7 +518,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             </div>
           );
         })}
-      </div>
+      </section>
     </>
   );
 };

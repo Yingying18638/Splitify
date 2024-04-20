@@ -27,15 +27,6 @@ const Mainpage = () => {
     setDisplayParticipantOpt,
   } = useStore();
 
-  // function handleFormSubmit(e) {
-  //   e.preventDefault();
-  //   setDisplayAddExpense("hidden");
-  //   setDisplayParticipantOpt("hidden");
-  //   setDisplayPayersOpt("hidden");
-  //   setNewExpense({});
-  //   console.log(newExpense);
-  // }
-
   return (
     <>
       <main className="p-5 min-h-[1200px]">
@@ -134,7 +125,6 @@ const Mainpage = () => {
         </Tabs>
         <AddExpense
           displayAddExpense={displayAddExpense}
-          // handleFormSubmit={handleFormSubmit}
           setDisplayAddExpense={setDisplayAddExpense}
         />
       </main>
