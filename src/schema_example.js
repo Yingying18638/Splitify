@@ -27,7 +27,7 @@ const group = {
       },
       note: "",
       img: "",
-      bill: {},
+      ave: {},
     },
   ],
   totalBill: {

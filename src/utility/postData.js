@@ -13,6 +13,7 @@ import firebaseConfig from "./firebase";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // temp
+
 const groupId = "JR13SgWIQm5UNZFLwBC0";
 const example_expense = "example";
 //
@@ -27,9 +28,20 @@ async function postData(groupId, newExpense) {
   });
 }
 // postData(groupId);
-// async function addGroup() {
+// async function addGroupId(docRef) {
 //   const newGroupRef = doc(collection(db, "groups"));
-
-//   const docRef = await addDoc(collection(db, "groups"), group);
+//   const {id}=newGroupRef
+//   const docSnap = await getDoc(newGroupRef);
+//   const oldData = docSnap?.data();
+//   await updateDoc(newGroupRef, {...oldData, groupId: id })
 // }
-export { postData };
+// addGroupId();
+async function addGroupAndUpdateID(groupData) {
+  const newGroupRef = doc(collection(db, "groups"));
+  await addDoc(collection(db, "groups"), groupData);
+  const { id } = newGroupRef;
+  const docSnap = await getDoc(newGroupRef);
+  const oldData = docSnap?.data();
+  await updateDoc(newGroupRef, { ...oldData, groupId: id });
+}
+export { postData, addGroupAndUpdateID };
