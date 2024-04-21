@@ -134,7 +134,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     e.preventDefault();
     // 1. newExpense 算出ave
     const ave = calcSingleAve(newExpense);
-    setNewExpense({ ...newExpense, ave });
+    console.log(ave, "ave");
+    setsomeNewExpense(ave, "ave");
+    // setNewExpense({ ...newExpense, ave });
     // 1.1 start GroupCalc
     setIsGroupCalcNeeded(true);
     // 2. newExpense 塞入group expenses, setGroup (觸發useEffect)
@@ -348,7 +350,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           <p>金額</p>
         </div>
         {group?.users?.map(({ name }) => {
-          console.log(morePayersNames?.find((item) => item === name));
           return (
             <div
               className="flex justify-center items-center mt-2 relative"
