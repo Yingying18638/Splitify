@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 const INITIANL_NEWEXPENSE = {
   date: "",
   time: "",
@@ -14,6 +15,7 @@ const INITIANL_NEWEXPENSE = {
     //   b: 100,
   },
   participants: [
+    123,
     // "a", "b", "c"
   ],
   participants_customized: {

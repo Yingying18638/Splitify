@@ -27,6 +27,7 @@ import {
   SelectScrollUpButton,
   SelectScrollDownButton,
 } from "../../components/ui/select";
+import { set } from "date-fns";
 
 const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   // upload image
@@ -60,16 +61,18 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
 
   // ----------------切成function-----------------------------
   function getAmountArr(personAmountObj) {
+    if (!personAmountObj) return;
     return Object.values(personAmountObj);
   }
   function getAmountGap(amountArr) {
-    const cusAmountTotal = amountArr.reduce((acc, cur) => acc + cur, 0);
+    if (!amountArr) return;
+    const cusAmountTotal = amountArr?.reduce((acc, cur) => acc + cur, 0);
     return total_amount - cusAmountTotal;
   }
   const cusAmountArr = getAmountArr(participants_customized);
   const payersAmountArr = getAmountArr(morePayers);
-  const payersAmountTotal = payersAmountArr.reduce((acc, cur) => acc + cur, 0);
-  const cusAmountTotal = cusAmountArr.reduce((acc, cur) => acc + cur, 0);
+  const payersAmountTotal = payersAmountArr?.reduce((acc, cur) => acc + cur, 0);
+  const cusAmountTotal = cusAmountArr?.reduce((acc, cur) => acc + cur, 0);
   const cusAmountGap = getAmountGap(cusAmountArr);
   const payersAmountGap = getAmountGap(payersAmountArr);
   // ----------------切成function-----------------------------
@@ -102,18 +105,18 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   //---------------temp------------------
   useEffect(() => {
     function handleGroupCalc() {
+      // 0. start group calc or not
       if (expenses.length === 0) return;
       console.log("starting group calculation");
-      // 0. start group calc or not
       // 3. 計算付款&平均
       const { payment, average } = calcPaymentAverage(expenses, users);
       const { totalBill } = calcBills(payment, average, users);
       const flow = calcFlow(totalBill);
-      // 4. totalBill, flow 塞入group
       // if (isGroupCalcNeeded === false) return;
       const newGroupData = { ...group, totalBill, flow };
+      // 4. totalBill, flow 塞入group
       // 4.1 整筆group更新到火基地
-      updateGroupData(groupId, newGroupData);
+      // updateGroupData(groupId, newGroupData);
       setGroup(newGroupData);
       // 5. close group calc
       setIsGroupCalcNeeded(false);
@@ -201,7 +204,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             id="payer"
             required
             onValueChange={(value) => {
-              setNewExpense({ ...newExpense, singlePayerOnly: value });
+              if (value !== "多人付款") {
+                setNewExpense({ ...newExpense, morePayers: {} });
+              }
+              setNewExpense((prev) => ({ ...prev, singlePayerOnly: value }));
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -337,10 +343,13 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         {group?.users?.map(({ name }) => {
           return (
             <div className="flex justify-center items-center mt-2" key={name}>
-              <input
+              {/* <input
                 type="checkbox"
                 id={name}
-                checked={morePayersNames?.find((item) => item === name)}
+                checked={
+                  morePayersNames?.find((item) => item === name) &&
+                  morePayers[name]
+                }
                 onClick={(e) => {
                   const { id } = e.target;
                   if (!morePayersNames?.find((item) => item === id)) {
@@ -351,7 +360,17 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                     setNewExpense({ ...newExpense, morePayers: obj });
                   }
                 }}
-              ></input>
+              ></input> */}
+              <div
+                className={`${
+                  morePayersNames?.find((item) => item === name) &&
+                  morePayers[name]
+                    ? ""
+                    : "hidden"
+                } fixed right-[330px]`}
+              >
+                v
+              </div>
               <label htmlFor={name} className="block w-[150px] ml-2">
                 {name}
               </label>
@@ -397,16 +416,21 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           <p>份數</p>
           <p>金額</p>
         </div>
-        {group?.users?.map(({ name }) => {
+        {group?.users?.map(({ name }, index) => {
+          console.log(cusAmountArr);
           return (
-            <div className="flex justify-center items-center mt-2" key={name}>
-              <input
+            <div
+              className="flex justify-center gap-1 items-center mt-2"
+              key={name}
+            >
+              {/* <input
                 type="checkbox"
                 // id={`participant_${name}`}
                 id={name}
-                checked={participants_customNames?.find(
-                  (item) => item === name
-                )}
+                checked={
+                  participants_customNames?.find((item) => item === name) &&
+                  cusAmountArr[index]
+                }
                 onClick={(e) => {
                   const { id } = e.target;
                   if (!participants_customNames?.find((item) => item === id)) {
@@ -426,7 +450,17 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                     });
                   }
                 }}
-              ></input>
+              ></input> */}
+              <div
+                className={`${
+                  participants_customNames?.find((item) => item === name) &&
+                  cusAmountArr[index]
+                    ? ""
+                    : "hidden"
+                } fixed right-[350px]`}
+              >
+                v
+              </div>
               {/* <Checkbox id={name}></Checkbox> */}
               <label
                 // htmlFor={`participant_${name}`}
