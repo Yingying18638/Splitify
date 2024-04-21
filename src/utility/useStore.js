@@ -15,7 +15,6 @@ const INITIANL_NEWEXPENSE = {
     //   b: 100,
   },
   participants: [
-    123,
     // "a", "b", "c"
   ],
   participants_customized: {
@@ -29,6 +28,11 @@ const useStore = create(
   immer((set) => ({
     newExpense: INITIANL_NEWEXPENSE,
     setNewExpense: (data) => set({ newExpense: data }),
+    setsomeNewExpense: (value, property) =>
+      set((state) => {
+        state[property] = value;
+      }),
+
     resetNewExpense: () =>
       set({
         newExpense: INITIANL_NEWEXPENSE,
