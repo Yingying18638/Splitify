@@ -348,8 +348,12 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           <p>金額</p>
         </div>
         {group?.users?.map(({ name }) => {
+          console.log(morePayersNames?.find((item) => item === name));
           return (
-            <div className="flex justify-center items-center mt-2" key={name}>
+            <div
+              className="flex justify-center items-center mt-2 relative"
+              key={name}
+            >
               {/* <input
                 type="checkbox"
                 id={name}
@@ -374,7 +378,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                   morePayers[name]
                     ? ""
                     : "hidden"
-                } fixed right-[450px]`}
+                } absolute right-[300px] z-30`}
               >
                 v
               </div>
@@ -424,10 +428,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           <p>金額</p>
         </div>
         {group?.users?.map(({ name }, index) => {
-          console.log(cusAmountArr);
           return (
             <div
-              className="flex justify-center gap-1 items-center mt-2"
+              className="flex justify-center gap-1 items-center mt-2 relative"
               key={name}
             >
               {/* <input
@@ -464,7 +467,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                   cusAmountArr[index]
                     ? ""
                     : "hidden"
-                } fixed right-[450px]`}
+                } absolute right-[300px]`}
               >
                 v
               </div>
@@ -500,10 +503,12 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                       participants_customized: newParticipantsCustom,
                     });
                   }
-                  // if (shareObj[name]) {
                   //does anybody Have Share
                   const shareTotal = Object.values(newShareObj).reduce(
-                    (acc, cur) => acc + cur,
+                    (acc, cur) => {
+                      if (cur === "") return acc;
+                      return acc + cur;
+                    },
                     0
                   );
                   console.log(shareTotal, "sharetotal");
@@ -519,10 +524,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                   setNewExpense({
                     ...newExpense,
                     participants_customized: { ...amountObj },
-                    // {
-                    //   ...participants_customized,
-                    //   [name]: amountObj[key],
-                    // },
                   });
                   // }
                 }}
