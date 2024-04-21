@@ -15,6 +15,7 @@ const DatePicker = () => {
   const [date, setDate] = useState(new Date());
   useEffect(() => {
     setsomeNewExpense(format(date, "yyyy-MM-dd"), "date");
+    setsomeNewExpense(date.getTime(), "time");
     // setNewExpense({
     //   ...newExpense,
     //   date: format(date, "yyyy-MM-dd"),
