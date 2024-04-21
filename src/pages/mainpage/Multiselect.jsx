@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import useStore from "../../utility/useStore";
 const Multiselect = () => {
-  const { newExpense, setNewExpense, group } = useStore();
+  const { newExpense, setNewExpense, group, setsomeNewExpense } = useStore();
   const { participants_customized, participants } = newExpense;
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
@@ -11,13 +11,11 @@ const Multiselect = () => {
 
   useEffect(() => {
     const newArr = selected?.map((item) => item.value);
-    console.log(newArr, "newArr", selected, "selected");
-    console.log(participants);
-    setNewExpense({
-      ...newExpense,
-      participants: newArr,
-    });
-    console.log(newExpense, "newExpense");
+    setsomeNewExpense(newArr, "participants");
+    // setNewExpense({
+    //   ...newExpense,
+    //   participants: newArr,
+    // });
   }, [selected]);
   // useEffect(() => {
   //   // setSelected([]);
