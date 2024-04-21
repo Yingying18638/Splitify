@@ -38,8 +38,14 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     setImageUrl,
     uploadImage,
   } = useUploadImg();
-  const { newExpense, setNewExpense, resetNewExpense, group, setGroup } =
-    useStore();
+  const {
+    newExpense,
+    setNewExpense,
+    resetNewExpense,
+    group,
+    setGroup,
+    setsomeNewExpense,
+  } = useStore();
   const { expenses, users } = group;
   const {
     morePayers,
@@ -205,14 +211,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             required
             onValueChange={(value) => {
               if (value !== "多人付款") {
-                setNewExpense({
-                  ...newExpense,
-                  morePayers: {},
-                  singlePayerOnly: value,
-                });
-              } else {
-                setNewExpense({ ...newExpense, singlePayerOnly: value });
+                setNewExpense({ ...newExpense, morePayers: {} });
               }
+              // setNewExpense({ ...newExpense, singlePayerOnly: value });
+              setsomeNewExpense(value, "singlePayerOnly");
             }}
           >
             <SelectTrigger className="w-[180px]">
