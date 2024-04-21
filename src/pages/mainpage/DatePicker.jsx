@@ -14,8 +14,10 @@ const DatePicker = () => {
   const { newExpense, setNewExpense } = useStore();
   const [date, setDate] = useState(new Date());
   useEffect(() => {
+    const arr = [1, 2, 3];
     setNewExpense({
       ...newExpense,
+      participants: arr,
       date: format(date, "yyyy-MM-dd"),
       // time: format(date, "HH:mm:ss"),
     });

@@ -15,7 +15,6 @@ const INITIANL_NEWEXPENSE = {
     //   b: 100,
   },
   participants: [
-    123,
     // "a", "b", "c"
   ],
   participants_customized: {

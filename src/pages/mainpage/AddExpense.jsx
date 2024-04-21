@@ -205,9 +205,14 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             required
             onValueChange={(value) => {
               if (value !== "多人付款") {
-                setNewExpense({ ...newExpense, morePayers: {} });
+                setNewExpense({
+                  ...newExpense,
+                  morePayers: {},
+                  singlePayerOnly: value,
+                });
+              } else {
+                setNewExpense({ ...newExpense, singlePayerOnly: value });
               }
-              setNewExpense((prev) => ({ ...prev, singlePayerOnly: value }));
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -367,7 +372,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                   morePayers[name]
                     ? ""
                     : "hidden"
-                } fixed right-[330px]`}
+                } fixed right-[450px]`}
               >
                 v
               </div>
@@ -412,7 +417,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         >
           剩餘金額 {cusAmountGap} 元
         </p>
-        <div className="flex justify-center ml-[130px] gap-[30px]">
+        <div className="flex justify-center ml-[90px] gap-[30px]">
           <p>份數</p>
           <p>金額</p>
         </div>
@@ -457,7 +462,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                   cusAmountArr[index]
                     ? ""
                     : "hidden"
-                } fixed right-[350px]`}
+                } fixed right-[450px]`}
               >
                 v
               </div>
@@ -465,7 +470,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               <label
                 // htmlFor={`participant_${name}`}
                 htmlFor={name}
-                className="block w-[150px] ml-2"
+                className="block w-[100px] ml-2"
               >
                 {name}
               </label>
