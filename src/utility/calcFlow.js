@@ -16,14 +16,14 @@ function calcFlowDetail(totalBill) {
   });
   const positives = amounts.filter((item) => item >= 0);
   const negatives = amounts.filter((item) => item < 0);
-  const flowMatrix = Array.from({ length: positives.length }, () =>
-    Array.from({ length: negatives.length }, () => 0)
+  const flowMatrix = Array.from({ length: negatives.length }, () =>
+    Array.from({ length: positives.length }, () => 0)
   );
 
   let p = 0;
   let n = 0;
-  while (p < positives.length || n < negatives.length) {
-    if (!flowMatrix[n][p]) break;
+  while (p < positives.length && n < negatives.length) {
+    if (!flowMatrix[n][p] && flowMatrix[n][p] !== 0) break;
     if (positives[p] === 0) {
       p++;
       continue;
