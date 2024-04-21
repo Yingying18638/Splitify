@@ -30,9 +30,8 @@ const useStore = create(
     setNewExpense: (data) => set({ newExpense: data }),
     setsomeNewExpense: (value, property) =>
       set((state) => {
-        state[property] = value;
+        state.newExpense[property] = value;
       }),
-
     resetNewExpense: () =>
       set({
         newExpense: INITIANL_NEWEXPENSE,

@@ -213,7 +213,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               if (value !== "多人付款") {
                 setNewExpense({ ...newExpense, morePayers: {} });
               }
-              setsomeNewExpense(value, singlePayerOnly);
+              // setNewExpense({ ...newExpense, singlePayerOnly: value });
+              setsomeNewExpense(value, "singlePayerOnly");
             }}
           >
             <SelectTrigger className="w-[180px]">

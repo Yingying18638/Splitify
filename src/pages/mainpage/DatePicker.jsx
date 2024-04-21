@@ -11,14 +11,15 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "../../lib/utils";
 import useStore from "../../utility/useStore";
 const DatePicker = () => {
-  const { newExpense, setNewExpense } = useStore();
+  const { newExpense, setNewExpense, setsomeNewExpense } = useStore();
   const [date, setDate] = useState(new Date());
   useEffect(() => {
-    setNewExpense({
-      ...newExpense,
-      date: format(date, "yyyy-MM-dd"),
-      // time: format(date, "HH:mm:ss"),
-    });
+    setsomeNewExpense(format(date, "yyyy-MM-dd"), "date");
+    // setNewExpense({
+    //   ...newExpense,
+    //   date: format(date, "yyyy-MM-dd"),
+    // time: format(date, "HH:mm:ss"),
+    // });
   }, [date]);
   return (
     <Popover>
