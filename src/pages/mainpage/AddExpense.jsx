@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import useStore from "../../utility/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
-import { postData } from "../../utility/postData";
+import { updateGroupData } from "../../utility/handleFirestore";
 import calcPaymentAverage from "../../utility/calcPaymentAverage";
 import calcFlow from "../../utility/calcFlow";
 import calcBills from "../../utility/calcBills";
@@ -37,7 +37,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     setImageUrl,
     uploadImage,
   } = useUploadImg();
-  // postData();
   const { newExpense, setNewExpense, resetNewExpense, group, setGroup } =
     useStore();
   const { expenses, users } = group;
@@ -103,6 +102,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   //---------------temp------------------
   useEffect(() => {
     function handleGroupCalc() {
+      if (expenses.length === 0) return;
       console.log("starting group calculation");
       // 0. start group calc or not
       // 3. 計算付款&平均
@@ -111,11 +111,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
       const flow = calcFlow(totalBill);
       // 4. totalBill, flow 塞入group
       // if (isGroupCalcNeeded === false) return;
-      setGroup({
-        ...group,
-        totalBill,
-        flow,
-      });
+      const newGroupData = { ...group, totalBill, flow };
+      // 4.1 整筆group更新到火基地
+      updateGroupData(groupId, newGroupData);
+      setGroup(newGroupData);
       // 5. close group calc
       setIsGroupCalcNeeded(false);
     }
@@ -124,24 +123,14 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // 0. 檢查分擔是否均為空白
-    // const isDistributionEmpty =
-    //   participants.length === 0 && cusAmountTotal === 0;
-    // if (isDistributionEmpty) {
-    //   const usersArr = users.map((user) => user.name);
-    //   setNewExpense({ ...newExpense, participants: usersArr });
-    // }
     // 1. newExpense 算出ave
     const ave = calcSingleAve(newExpense);
     setNewExpense({ ...newExpense, ave });
     // 1.1 start GroupCalc
     setIsGroupCalcNeeded(true);
     // 2. newExpense 塞入group expenses, setGroup (觸發useEffect)
-    // setGroup((prev) => ({ ...prev, expenses: [...prev.expenses, newExpense] }));
     setGroup({ ...group, expenses: [...group.expenses, newExpense] });
     //加入img
-    //整筆group更新到火基地
-    // postData(groupId, newExpense);
     setDisplayAddExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");

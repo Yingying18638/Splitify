@@ -40,28 +40,28 @@ const useStore = create((set) => ({
       // { uid: "", name: "e", email: "" },
     ],
     expenses: [
-      {
-        date: "",
-        time: "",
-        item: "",
-        icon: "",
-        total_amount: 0,
-        foreign_amount: 0,
-        currency: "",
-        exchange_rate: 0,
-        singlePayerOnly: "",
-        morePayers: {
-          // a: 150,
-          // b: 150,
-        },
-        participants: [],
-        participants_customized: {
-          // a: 120, b: 80, c: 100
-        },
-        note: "",
-        img: "",
-        bill: {},
-      },
+      // {
+      //   date: "",
+      //   time: "",
+      //   item: "",
+      //   icon: "",
+      //   total_amount: 0,
+      //   foreign_amount: 0,
+      //   currency: "",
+      //   exchange_rate: 0,
+      //   singlePayerOnly: "",
+      //   morePayers: {
+      //     // a: 150,
+      //     // b: 150,
+      //   },
+      //   participants: [],
+      //   participants_customized: {
+      //     // a: 120, b: 80, c: 100
+      //   },
+      //   note: "",
+      //   img: "",
+      //   bill: {},
+      // },
     ],
     totalBill: {
       //  a: -100.0, b: 150.0, d: -250, c: 200

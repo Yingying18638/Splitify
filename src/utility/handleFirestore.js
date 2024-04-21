@@ -9,7 +9,6 @@ import {
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./firebase";
-// import { group } from "../schema_example";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // temp
@@ -17,17 +16,19 @@ const db = getFirestore(app);
 const groupId = "JR13SgWIQm5UNZFLwBC0";
 const example_expense = "example";
 //
-async function postData(groupId, newExpense) {
-  const groupRef = doc(db, "groups", groupId);
-  const docSnap = await getDoc(groupRef);
-  console.log(docSnap?.data());
-  const oldData = docSnap?.data();
-  await updateDoc(groupRef, {
-    ...oldData,
-    expenses: [...oldData.expenses, newExpense],
-  });
+async function updateGroupData(groupId, newGroupData) {
+  try {
+    const groupRef = doc(db, "groups", groupId);
+    //   const docSnap = await getDoc(groupRef);
+    //   console.log(docSnap?.data());
+    //   const oldData = docSnap?.data();
+    const { expenses, totalBill, flow } = newGroupData;
+    const fieldToSet = { expenses: [...expenses], totalBill, flow: [...flow] };
+    await setDoc(groupRef, fieldToSet, { merge: true });
+  } catch (err) {
+    console.log(err, "上傳失敗");
+  }
 }
-// postData(groupId);
 // async function addGroupId(docRef) {
 //   const newGroupRef = doc(collection(db, "groups"));
 //   const {id}=newGroupRef
@@ -44,4 +45,4 @@ async function addGroupAndUpdateID(groupData) {
   const oldData = docSnap?.data();
   await updateDoc(newGroupRef, { ...oldData, groupId: id });
 }
-export { postData, addGroupAndUpdateID };
+export { updateGroupData, addGroupAndUpdateID };

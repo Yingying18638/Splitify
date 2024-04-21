@@ -1,6 +1,4 @@
 //------input: expenseData, users
-//---------effect: setNewExpense(participants) if empty
-//--------------better practice?????
 //------output: payment, average
 function calcPaymentAverage(expenseData, users) {
   const usersArr = users.map((user) => user.name);
