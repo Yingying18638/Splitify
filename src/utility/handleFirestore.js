@@ -1,4 +1,7 @@
 import {
+  query,
+  where,
+  onSnapshot,
   addDoc,
   collection,
   getFirestore,
@@ -9,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./firebase";
+import { useEffect, useState } from "react";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // temp
@@ -19,12 +23,13 @@ const example_expense = "example";
 async function updateGroupData(groupId, newGroupData) {
   try {
     const groupRef = doc(db, "groups", groupId);
-    //   const docSnap = await getDoc(groupRef);
-    //   console.log(docSnap?.data());
-    //   const oldData = docSnap?.data();
+    const docSnap = await getDoc(groupRef);
+    const oldData = docSnap?.data();
     const { expenses, totalBill, flow } = newGroupData;
-    const fieldToSet = { expenses: [...expenses], totalBill, flow: [...flow] };
-    await setDoc(groupRef, fieldToSet, { merge: true });
+    // const groupToSet = { ...oldData, expenses, totalBill, flow };
+    // const fieldToSet = { expenses: [...expenses], totalBill, flow: [...flow] };
+    // await setDoc(groupRef, fieldToSet, { merge: true });
+    await setDoc(groupRef, newGroupData);
   } catch (err) {
     console.log(err, "上傳失敗");
   }
@@ -45,4 +50,19 @@ async function addGroupAndUpdateID(groupData) {
   const oldData = docSnap?.data();
   await updateDoc(newGroupRef, { ...oldData, groupId: id });
 }
-export { updateGroupData, addGroupAndUpdateID };
+export { updateGroupData, addGroupAndUpdateID, useGetDetail };
+
+function useGetDetail(groupId, setterFunction) {
+  // const [first, setfirst] = useState(second);
+  useEffect(() => {
+    //監聽group資料
+    //設state
+    const docRef = doc(db, "groups", groupId);
+    const unsubscribe = onSnapshot(docRef, (doc) => {
+      const data = doc.data();
+      setterFunction(data);
+      console.log("Current data: ", data);
+    });
+    return () => unsubscribe();
+  }, [groupId]);
+}
