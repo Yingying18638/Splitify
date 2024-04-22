@@ -1,8 +1,8 @@
 //functions and hooks
 import React, { useEffect, useState } from "react";
-import useStore from "../../utility/useStore";
+import useStore from "../../utility/hooks/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
-import { updateGroupData } from "../../utility/handleFirestore";
+import { updateGroupData, useGetDetail } from "../../utility/handleFirestore";
 import calcPaymentAverage from "../../utility/calcPaymentAverage";
 import calcFlow from "../../utility/calcFlow";
 import calcBills from "../../utility/calcBills";
@@ -27,7 +27,6 @@ import {
   SelectScrollUpButton,
   SelectScrollDownButton,
 } from "../../components/ui/select";
-import { set } from "date-fns";
 
 const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   // upload image
@@ -112,6 +111,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   }
   //---------------temp------------------
   const groupId = "JR13SgWIQm5UNZFLwBC0";
+  useGetDetail(groupId, setGroup);
+
   //---------------temp------------------
   useEffect(() => {
     function handleGroupCalc() {
@@ -124,9 +125,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
       const flow = calcFlow(totalBill);
       // if (isGroupCalcNeeded === false) return;
       const newGroupData = { ...group, totalBill, flow };
+      console.log(newGroupData, "newGroupData");
       // 4. totalBill, flow 塞入group
       // 4.1 整筆group更新到火基地
-      // updateGroupData(groupId, newGroupData);
+      updateGroupData(groupId, newGroupData);
       setGroup(newGroupData);
       // 5. close group calc
       setIsGroupCalcNeeded(false);
@@ -146,7 +148,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     // 1.1 start GroupCalc
     setIsGroupCalcNeeded(true);
     // 2. newExpense 塞入group expenses, setGroup (觸發useEffect)
-    setGroup({ ...group, expenses: [...group.expenses, expenseToAdd] });
+    const abc = { ...group, expenses: [...group.expenses, expenseToAdd] };
+    // console.log(abc, "abc");
+    setGroup(abc);
     //加入img
     setDisplayAddExpense("hidden");
     setDisplayParticipantOpt("hidden");
@@ -368,24 +372,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               className="flex justify-center items-center mt-2 relative"
               key={name}
             >
-              {/* <input
-                type="checkbox"
-                id={name}
-                checked={
-                  morePayersNames?.find((item) => item === name) &&
-                  morePayers[name]
-                }
-                onClick={(e) => {
-                  const { id } = e.target;
-                  if (!morePayersNames?.find((item) => item === id)) {
-                    const newMorePayers = { ...morePayers, [id]: 0 };
-                    setNewExpense({ ...newExpense, morePayers: newMorePayers });
-                  } else {
-                    const { [id]: removed, ...obj } = morePayers;
-                    setNewExpense({ ...newExpense, morePayers: obj });
-                  }
-                }}
-              ></input> */}
               <div
                 className={`${
                   morePayersNames?.find((item) => item === name) &&
@@ -447,34 +433,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               className="flex justify-center gap-1 items-center mt-2 relative"
               key={name}
             >
-              {/* <input
-                type="checkbox"
-                // id={`participant_${name}`}
-                id={name}
-                checked={
-                  participants_customNames?.find((item) => item === name) &&
-                  cusAmountArr[index]
-                }
-                onClick={(e) => {
-                  const { id } = e.target;
-                  if (!participants_customNames?.find((item) => item === id)) {
-                    const newParticipantsCustom = {
-                      ...participants_customized,
-                      [id]: "",
-                    };
-                    setNewExpense({
-                      ...newExpense,
-                      participants_customized: newParticipantsCustom,
-                    });
-                  } else {
-                    const { [id]: removed, ...obj } = participants_customized;
-                    setNewExpense({
-                      ...newExpense,
-                      participants_customized: obj,
-                    });
-                  }
-                }}
-              ></input> */}
               <div
                 className={`${
                   participants_customNames?.find((item) => item === name) &&
@@ -567,5 +525,4 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     </>
   );
 };
-
 export default AddExpense;

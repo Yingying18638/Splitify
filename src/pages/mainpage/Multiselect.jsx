@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
-import useStore from "../../utility/useStore";
+import useStore from "../../utility/hooks/useStore";
 const Multiselect = ({ setSelected, selected, options }) => {
   const { newExpense, setNewExpense, group, setsomeNewExpense } = useStore();
   const { participants_customized, participants } = newExpense;

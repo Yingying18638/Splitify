@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "../../lib/utils";
-import useStore from "../../utility/useStore";
+import useStore from "../../utility/hooks/useStore";
 const DatePicker = () => {
   const { newExpense, setNewExpense, setsomeNewExpense, group } = useStore();
   const { expenses } = group;
