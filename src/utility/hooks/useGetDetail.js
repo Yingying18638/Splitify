@@ -6,4 +6,3 @@ export default function useGetDetail() {
     //設state
   }, []);
 }
-//從state取得detail資料

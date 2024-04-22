@@ -64,6 +64,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     c: "",
     d: "",
   });
+  const options = group?.users?.map(({ name }) => {
+    return { label: name, value: name };
+  });
+  const [selected, setSelected] = useState(options);
 
   // ----------------切成function-----------------------------
   function getAmountArr(personAmountObj) {
@@ -134,18 +138,21 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     e.preventDefault();
     // 1. newExpense 算出ave
     const ave = calcSingleAve(newExpense);
-    console.log(ave, "ave");
+    const expenseToAdd = { ...newExpense, ave };
     setsomeNewExpense(ave, "ave");
-    // setNewExpense({ ...newExpense, ave });
+    // const now = new Date().getTime();
+    // console.log(now);
+    // setsomeNewExpense(now, "time");
     // 1.1 start GroupCalc
     setIsGroupCalcNeeded(true);
     // 2. newExpense 塞入group expenses, setGroup (觸發useEffect)
-    setGroup({ ...group, expenses: [...group.expenses, newExpense] });
+    setGroup({ ...group, expenses: [...group.expenses, expenseToAdd] });
     //加入img
     setDisplayAddExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
     resetNewExpense();
+    setSelected(options);
     console.log(newExpense);
   }
   return (
@@ -165,6 +172,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
             resetNewExpense();
+            setSelected(options);
           }}
           className="absolute right-2 top-2 cursor-pointer"
         />
@@ -258,7 +266,11 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
 
         <div className="flex items-center gap-2 ">
           <label htmlFor="participant">分給誰</label>
-          <MultiSelect></MultiSelect>
+          <MultiSelect
+            selected={selected}
+            setSelected={setSelected}
+            options={options}
+          ></MultiSelect>
           <img
             src={arrow}
             alt="arrow"
@@ -315,6 +327,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
             resetNewExpense();
+            setSelected(options);
           }}
         >
           取消
