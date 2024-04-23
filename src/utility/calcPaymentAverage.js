@@ -1,7 +1,8 @@
 //------input: expenseData, users
 //------output: payment, average
 function calcPaymentAverage(expenseData, users) {
-  const usersArr = users.map((user) => user.name);
+  if (!expenseData.length || !users.length) return;
+  const usersArr = users?.map((user) => user.name);
   const payment = [];
   const average = [];
   expenseData?.forEach(
@@ -20,7 +21,9 @@ function calcPaymentAverage(expenseData, users) {
         payment.push({ [singlePayerOnly]: total_amount });
         //其他補零
         const usersLeft = usersArr.filter((item) => item !== singlePayerOnly);
-        usersLeft.forEach((item) => (payment[index][item] = 0));
+        usersLeft.forEach((item) => {
+          payment[index] = { ...payment[index], [item]: 0 };
+        });
       } else {
         payment.push(morePayers);
         //其他補零
@@ -28,7 +31,9 @@ function calcPaymentAverage(expenseData, users) {
         const usersLeft = usersArr.filter(
           (item) => !payersNames.includes(item)
         );
-        usersLeft.forEach((item) => (payment[index][item] = 0));
+        usersLeft.forEach((item) => {
+          payment[index] = { ...payment[index], [item]: 0 };
+        });
       }
       console.log("payment", payment);
       // average
@@ -53,7 +58,10 @@ function calcPaymentAverage(expenseData, users) {
       //人數不符要補零
       if (namesOfAve.length !== usersArr.length) {
         const usersLeft = usersArr.filter((item) => !namesOfAve.includes(item));
-        usersLeft.forEach((item) => (average[index][item] = 0));
+        // usersLeft.forEach((item) => (average[index][item] = 0));
+        usersLeft.forEach((item) => {
+          payment[index] = { ...average[index], [item]: 0 };
+        });
       }
       console.log("average", average);
     }

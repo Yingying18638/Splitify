@@ -32,7 +32,7 @@ const INITIANL_GROUP = {
     { uid: "", name: "b", email: "" },
     { uid: "", name: "c", email: "" },
     { uid: "", name: "d", email: "" },
-    // { uid: "", name: "e", email: "" },
+    { uid: "", name: "e", email: "" },
   ],
   expenses: [
     // {
@@ -83,8 +83,12 @@ const INITIANL_GROUP = {
     //   amount: 200,
     // },
   ],
-  paidAmount: [{ from: "a", to: "b", amount: 10, time: "timestamp" }],
-  leftAmount: [{ from: "a", to: "b", amount: 90 }],
+  paidAmount: [
+    // { from: "a", to: "b", amount: 10, time: "timestamp" }
+  ],
+  leftAmount: [
+    // { from: "a", to: "b", amount: 90 }
+  ],
   history: [],
 };
 const useStore = create(

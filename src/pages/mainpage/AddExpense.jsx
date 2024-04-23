@@ -57,16 +57,15 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   } = newExpense;
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
   // calculate share to amount
-  const [shareObj, setShareObj] = useState({
-    a: "",
-    b: "",
-    c: "",
-    d: "",
-  });
+  const usersObj = users?.reduce((acc, user) => {
+    acc[user.name] = "";
+    return acc;
+  }, {});
+  const [shareObj, setShareObj] = useState(usersObj || {});
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
   });
-  const [selected, setSelected] = useState(options);
+  const [selected, setSelected] = useState(options || []);
 
   // ----------------切成function-----------------------------
   function getAmountArr(personAmountObj) {

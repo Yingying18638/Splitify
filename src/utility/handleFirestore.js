@@ -53,7 +53,6 @@ async function addGroupAndUpdateID(groupData) {
 export { updateGroupData, addGroupAndUpdateID, useGetDetail };
 
 function useGetDetail(groupId, setterFunction) {
-  // const [first, setfirst] = useState(second);
   useEffect(() => {
     //監聽group資料
     //設state

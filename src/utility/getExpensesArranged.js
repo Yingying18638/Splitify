@@ -16,9 +16,7 @@ function getExpensesArranged(expenses) {
     return acc;
   }, {});
   const groupedExpensesArr = Object.entries(groupedExpensesObj);
-  const expensesArrToRender = groupedExpensesArr.sort(
-    (a, b) => b.date - a.date
-  );
+  const expensesArrToRender = groupedExpensesArr.sort((a, b) => b[0] - a[0]);
   return expensesArrToRender;
 }
 export default getExpensesArranged;
