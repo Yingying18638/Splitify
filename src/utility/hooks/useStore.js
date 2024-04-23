@@ -25,6 +25,7 @@ const INITIANL_NEWEXPENSE = {
   ave: {},
 };
 const INITIANL_GROUP = {
+  groupName: "FEbatch#23",
   groupId: "",
   users: [
     { uid: "", name: "a", email: "" },

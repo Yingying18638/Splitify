@@ -1,16 +1,18 @@
 import React from "react";
-import group from "../../assets/group.png";
+import groupImg from "../../assets/group.png";
 import link from "../../assets/link.png";
 import { Button } from "../../components/ui/button";
-
+import useStore from "../../utility/hooks/useStore";
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
+  const { group } = useStore();
+  const { groupName } = group;
   return (
     <div className="flex flex-wrap w-full justify-center">
       <div className="w-28  rounded-sm px-3 py-1 text-sm font-medium">
-        Group1
+        {groupName}
       </div>
       <figure className="cursor-pointer mx-2">
-        <img src={group} alt="group" />
+        <img src={groupImg} alt="group" />
       </figure>
       <figure className="cursor-pointer">
         <img src={link} alt="link" className="w-[32px]" />

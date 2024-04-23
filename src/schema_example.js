@@ -1,5 +1,6 @@
 const group = {
   groupId: "",
+  groupName: "FEbatch#23",
   users: [
     { uid: "", name: "a", email: "" },
     { uid: "", name: "b", email: "" },
