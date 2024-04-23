@@ -27,24 +27,23 @@ const DetailedExpenses = ({
               const isSinglePayer = singlePayerOnly !== "多人付款";
               const payersPair = morePayers && Object.entries(morePayers);
               return (
-                <fieldset
-                  key={time}
-                  id={time}
-                  onClick={() => {
-                    if (displayDetail?.[time] === "block") {
-                      setDisplayDetail({
-                        ...displayDetail,
-                        [time]: "hidden",
-                      });
-                    } else {
-                      setDisplayDetail({
-                        ...displayDetail,
-                        [time]: "block",
-                      });
-                    }
-                  }}
-                >
-                  <div className="flex flex-wrap mt-3 cursor-pointer">
+                <fieldset key={time} id={time}>
+                  <div
+                    className="flex flex-wrap mt-3 cursor-pointer"
+                    onClick={() => {
+                      if (displayDetail?.[time] === "block") {
+                        setDisplayDetail({
+                          ...displayDetail,
+                          [time]: "hidden",
+                        });
+                      } else {
+                        setDisplayDetail({
+                          ...displayDetail,
+                          [time]: "block",
+                        });
+                      }
+                    }}
+                  >
                     <figure>
                       <img src={list} alt="icon" />
                     </figure>
@@ -69,6 +68,7 @@ const DetailedExpenses = ({
                       <figcaption className="w-[200px] md:w-[400px]">
                         {ave &&
                           Object.entries(ave).map(([name, amount]) => {
+                            if (amount === 0) return;
                             return (
                               <p key={name}>
                                 {name}應負擔{amount}元

@@ -14,6 +14,8 @@ import closeIcon from "../../assets/x.png";
 // component
 import DatePicker from "./DatePicker";
 import MultiSelect from "./Multiselect";
+import PayersOption from "./PayersOption";
+import ParticipantsOptions from "./ParticipantsOptions";
 // shadcn ui
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
@@ -56,12 +58,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     participants_customized,
   } = newExpense;
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
-  // calculate share to amount
-  const usersObj = users?.reduce((acc, user) => {
-    acc[user.name] = "";
-    return acc;
-  }, {});
-  const [shareObj, setShareObj] = useState(usersObj || {});
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
   });
@@ -164,7 +160,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense} fixed z-50 top-10 left-20 bg-slate-400 w-[360px] p-3`}
+        className={`${displayAddExpense}  fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-slate-400 h-full w-full sm:w-[360px] sm:h-[800px] p-3`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <img
@@ -346,181 +342,19 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           儲存
         </Button>
       </form>
-      <section
-        className={`fixed ${displayPayersOpt} bg-blue-200 left-[450px] top-10 w-[360px] h-[500px] p-2`}
-      >
-        <img
-          src={closeIcon}
-          alt="closeIcon"
-          onClick={() => setDisplayPayersOpt("hidden")}
-          className="absolute right-2 top-2 cursor-pointer"
-        />
-        <p className="text-center">多人付款</p>
-        <p
-          className={`text-right mr-6 ${payersAmountGap === 0 ? "" : "text-red-500"}`}
-        >
-          剩餘金額 {payersAmountGap} 元
-        </p>
-
-        <div className="flex justify-center ml-[130px] gap-[30px]">
-          <p>金額</p>
-        </div>
-        {group?.users?.map(({ name }) => {
-          return (
-            <div
-              className="flex justify-center items-center mt-2 relative"
-              key={name}
-            >
-              <div
-                className={`${
-                  morePayersNames?.find((item) => item === name) &&
-                  morePayers[name]
-                    ? ""
-                    : "hidden"
-                } absolute right-[300px] z-30`}
-              >
-                v
-              </div>
-              <label htmlFor={name} className="block w-[150px] ml-2">
-                {name}
-              </label>
-              <Input
-                className="w-24 h-8"
-                placeholder="NT."
-                value={morePayers?.[name] ? morePayers[name] : ""}
-                onChange={(e) => {
-                  const { value } = e.target;
-                  const num = parseInt(value);
-                  if (isNaN(num) && value !== "") return;
-                  const newMorePayers = {
-                    ...morePayers,
-                    [name]: num ? num : 0,
-                  };
-                  setNewExpense({
-                    ...newExpense,
-                    morePayers: newMorePayers,
-                    singlePayerOnly: "多人付款",
-                  });
-                }}
-              ></Input>
-            </div>
-          );
-        })}
-      </section>
-      <section
-        className={`fixed ${displayParticipantOpt} bg-purple-200 left-[450px] top-10 w-[360px] h-[500px] p-2`}
-      >
-        <img
-          src={closeIcon}
-          alt="closeIcon"
-          onClick={() => setDisplayParticipantOpt("hidden")}
-          className="absolute right-2 top-2 cursor-pointer"
-        />
-        <p className="text-center">如何分擔</p>
-        <p
-          className={`text-right mr-6 ${cusAmountGap === 0 ? "" : "text-red-500"}`}
-        >
-          剩餘金額 {cusAmountGap} 元
-        </p>
-        <div className="flex justify-center ml-[90px] gap-[30px]">
-          <p>份數</p>
-          <p>金額</p>
-        </div>
-        {group?.users?.map(({ name }, index) => {
-          return (
-            <div
-              className="flex justify-center gap-1 items-center mt-2 relative"
-              key={name}
-            >
-              <div
-                className={`${
-                  participants_customNames?.find((item) => item === name) &&
-                  cusAmountArr[index]
-                    ? ""
-                    : "hidden"
-                } absolute right-[300px]`}
-              >
-                v
-              </div>
-              {/* <Checkbox id={name}></Checkbox> */}
-              <label
-                // htmlFor={`participant_${name}`}
-                htmlFor={name}
-                className="block w-[100px] ml-2"
-              >
-                {name}
-              </label>
-              <Input
-                className="w-10 h-8"
-                // placeholder="1"
-                value={shareObj[name]}
-                onChange={(e) => {
-                  const { value } = e.target;
-                  const num = parseInt(value);
-                  // if (isNaN(num) && value !== "") return;
-                  const newShareObj = { ...shareObj, [name]: num ? num : "" };
-                  setShareObj(newShareObj);
-                  console.log(newShareObj, "我是新的");
-                  const isNameNotExist = !participants_customNames?.find(
-                    (item) => item === name
-                  );
-                  if (isNameNotExist) {
-                    const newParticipantsCustom = {
-                      ...participants_customized,
-                      [name]: "",
-                    };
-                    setNewExpense({
-                      ...newExpense,
-                      participants_customized: newParticipantsCustom,
-                    });
-                  }
-                  //does anybody Have Share
-                  const shareTotal = Object.values(newShareObj).reduce(
-                    (acc, cur) => {
-                      if (cur === "") return acc;
-                      return acc + cur;
-                    },
-                    0
-                  );
-                  console.log(shareTotal, "sharetotal");
-                  const amountObj = {};
-                  for (const [key, share] of Object.entries(newShareObj)) {
-                    const amount = (share / shareTotal) * total_amount || 0;
-                    // amountObj[key] = amount;
-                    amountObj[key] = Math.round(amount);
-                    // ? Math.round(amount)
-                    // : 0;
-                  }
-                  console.log(amountObj, "我有更新嗎");
-                  setNewExpense({
-                    ...newExpense,
-                    participants_customized: { ...amountObj },
-                  });
-                  // }
-                }}
-              ></Input>
-              <Input
-                className="w-24 h-8"
-                placeholder="NT."
-                value={participants_customized[name] || ""}
-                onChange={(e) => {
-                  const { value } = e.target;
-                  const num = parseInt(value);
-                  if (isNaN(num) && value !== "") return;
-                  setShareObj({ ...shareObj, [name]: "" });
-                  setNewExpense({
-                    ...newExpense,
-                    participants_customized: {
-                      ...participants_customized,
-                      [name]: num ? num : 0,
-                    },
-                  });
-                }}
-              ></Input>
-            </div>
-          );
-        })}
-      </section>
+      <PayersOption
+        displayPayersOpt={displayPayersOpt}
+        setDisplayPayersOpt={setDisplayPayersOpt}
+        payersAmountGap={payersAmountGap}
+        morePayersNames={morePayersNames}
+      />
+      <ParticipantsOptions
+        displayParticipantOpt={displayParticipantOpt}
+        setDisplayParticipantOpt={setDisplayParticipantOpt}
+        cusAmountGap={cusAmountGap}
+        cusAmountArr={cusAmountArr}
+        participants_customNames={participants_customNames}
+      />
     </>
   );
 };
