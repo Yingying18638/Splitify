@@ -3,10 +3,6 @@ import React, { useEffect, useState } from "react";
 import useStore from "../../utility/hooks/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
 import { updateGroupData, useGetDetail } from "../../utility/handleFirestore";
-import calcPaymentAverage from "../../utility/calcPaymentAverage";
-import calcFlow from "../../utility/calcFlow";
-import calcBills from "../../utility/calcBills";
-import calcSingleAve from "../../utility/calcSingleAve";
 //image
 import arrow from "../../assets/arrow.png";
 import list from "../../assets/list.png";
@@ -29,41 +25,36 @@ import {
   SelectScrollUpButton,
   SelectScrollDownButton,
 } from "../../components/ui/select";
-
-const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
-  // upload image
-  const {
-    imageUploaded,
-    setImageUploaded,
-    imageUrl,
-    setImageUrl,
-    uploadImage,
-  } = useUploadImg();
-  const {
-    newExpense,
-    setNewExpense,
-    resetNewExpense,
-    group,
-    setGroup,
-    setsomeNewExpense,
-  } = useStore();
+const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
+  //取得原有資料，setState
+  //date同步問題？？
+  //送出時計算
+  //firestore更新
+  const { editExpense, setEditExpense, resetEditExpense, group } = useStore();
   const { expenses, users } = group;
-  const {
-    morePayers,
-    total_amount,
-    singlePayerOnly,
-    participants,
-    note,
-    img,
-    participants_customized,
-  } = newExpense;
+  //   const {
+  //     morePayers,
+  //     total_amount,
+  //     singlePayerOnly,
+  //     participants,
+  //     note,
+  //     img,
+  //     participants_customized,
+  //   } = editExpense;
+  const morePayers = editExpense?.morePayers;
+  const total_amount = editExpense?.total_amount;
+  const singlePayerOnly = editExpense?.singlePayerOnly;
+  const participants = editExpense?.participants;
+  const note = editExpense?.note;
+  const participants_customized = editExpense?.participants_customized;
+  // const morePayers = editExpense?.morePayers;
+  console.log(editExpense);
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
   });
   const [selected, setSelected] = useState(options || []);
-
-  // ----------------切成function-----------------------------
+  // ----------------function and variables-----------------------------
   function getAmountArr(personAmountObj) {
     if (!personAmountObj) return;
     return Object.values(personAmountObj);
@@ -79,8 +70,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   const cusAmountTotal = cusAmountArr?.reduce((acc, cur) => acc + cur, 0);
   const cusAmountGap = getAmountGap(cusAmountArr);
   const payersAmountGap = getAmountGap(payersAmountArr);
-  // ----------------切成function-----------------------------
-
   const participants_customNames = participants_customized
     ? Object.keys(participants_customized)
     : [];
@@ -103,50 +92,47 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
       return;
     }
   }
-  //---------------temp------------------
   const groupId = "JR13SgWIQm5UNZFLwBC0";
-  useGetDetail(groupId, setGroup);
 
-  //---------------temp------------------
   useEffect(() => {
     function handleGroupCalc() {
       // 0. start group calc or not
       if (expenses.length === 0) return;
       console.log("starting group calculation");
       // 3. 計算付款&平均
-      const { payment, average } = calcPaymentAverage(expenses, users);
-      const { totalBill } = calcBills(payment, average, users);
-      const flow = calcFlow(totalBill);
-      const newGroupData = { ...group, totalBill, flow };
-      console.log(newGroupData, "newGroupData");
+      //   const { payment, average } = calcPaymentAverage(expenses, users);
+      //   const { totalBill } = calcBills(payment, average, users);
+      //   const flow = calcFlow(totalBill);
+      //   const newGroupData = { ...group, totalBill, flow };
+      //   console.log(newGroupData, "newGroupData");
       // 4. totalBill, flow 塞入group
       // 4.1 整筆group更新到火基地
-      updateGroupData(groupId, newGroupData);
-      setGroup(newGroupData);
+      //   updateGroupData(groupId, newGroupData);
+      //   setGroup(newGroupData);
     }
     handleGroupCalc();
   }, [expenses, users]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    // 1. newExpense 算出ave
-    const ave = calcSingleAve(newExpense);
-    const expenseToAdd = { ...newExpense, ave };
-    setsomeNewExpense(ave, "ave");
+    // 1. editExpense 算出ave
+    const ave = calcSingleAve(editExpense);
+    const expenseToAdd = { ...editExpense, ave };
+    // setsomeNewExpense(ave, "ave");
     // const now = new Date().getTime();
     // console.log(now);
     // setsomeNewExpense(now, "time");
-    // 2. newExpense 塞入group expenses, setGroup (觸發useEffect)
+    // 2. editExpense 塞入group expenses, setGroup (觸發useEffect)
     const abc = { ...group, expenses: [...group.expenses, expenseToAdd] };
     // console.log(abc, "abc");
-    setGroup(abc);
+    // setGroup(abc);
     //加入img
-    setDisplayAddExpense("hidden");
+    setDisplayEditExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
-    resetNewExpense();
+    // resetEditExpense();
     setSelected(options);
-    console.log(newExpense);
+    console.log(editExpense);
   }
   return (
     <>
@@ -154,18 +140,18 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense}  fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-slate-400 h-full w-full sm:w-[360px] sm:h-[800px] p-3`}
+        className={`${displayEditExpense}  fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-slate-400 h-full w-full sm:w-[360px] sm:h-[800px] p-3`}
         onSubmit={(e) => handleSubmit(e)}
       >
-        <h1 className="text-center">新增花費</h1>
+        <h1 className="text-center">編輯花費</h1>
         <img
           src={closeIcon}
           alt="closeIcon"
           onClick={() => {
-            setDisplayAddExpense("hidden");
+            setDisplayEditExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
-            resetNewExpense();
+            resetEditExpense();
             setSelected(options);
           }}
           className="absolute right-2 top-2 cursor-pointer"
@@ -178,10 +164,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               placeholder="晚餐"
               id="item"
               className=""
-              value={newExpense.item}
+              value={editExpense.item}
               // required
               onChange={(e) =>
-                setNewExpense({ ...newExpense, item: e.target.value })
+                setEditExpense({ ...editExpense, item: e.target.value })
               }
             ></Input>
           </figcaption>
@@ -199,8 +185,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                 const { value } = e.target;
                 const num = parseInt(value);
                 if (isNaN(num) && value !== "") return;
-                setNewExpense({
-                  ...newExpense,
+                setEditExpense({
+                  ...editExpense,
                   total_amount: num ? num : 0,
                 });
               }}
@@ -215,9 +201,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             required
             onValueChange={(value) => {
               if (value !== "多人付款") {
-                setNewExpense({ ...newExpense, morePayers: {} });
+                setEditExpense({ ...editExpense, morePayers: {} });
               }
-              // setNewExpense({ ...newExpense, singlePayerOnly: value });
+              // setEditExpense({ ...editExpense, singlePayerOnly: value });
               setsomeNewExpense(value, "singlePayerOnly");
             }}
           >
@@ -275,11 +261,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             }}
           />
         </div>
-        {/* <div
-          className={`${cusAmountTotal ? "" : "hidden"} relative bg-white w-28 bottom-8 left-16`}
-        >
-          自訂分款
-        </div> */}
         <p
           className={`text-red-500 ${cusAmountGap !== 0 && cusAmountTotal !== 0 ? "" : "hidden"}`}
         >
@@ -293,7 +274,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           placeholder="備註"
           value={note}
           onChange={(e) =>
-            setNewExpense({ ...newExpense, note: e.target.value })
+            setEditExpense({ ...editExpense, note: e.target.value })
           }
         ></Textarea>
         <label htmlFor="uploadImg">圖片</label>
@@ -317,10 +298,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         <Button
           type="reset"
           onClick={() => {
-            setDisplayAddExpense("hidden");
+            setDisplayEditExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
-            resetNewExpense();
+            resetEditExpense();
             setSelected(options);
           }}
         >
@@ -353,4 +334,5 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     </>
   );
 };
-export default AddExpense;
+
+export default EditExpense;

@@ -1,11 +1,30 @@
 import React from "react";
 import { Button } from "../../components/ui/button";
 import list from "../../assets/list.png";
+import { parseISO } from "date-fns";
+import useStore from "../../utility/hooks/useStore";
 const DetailedExpenses = ({
   expensesArrToRender,
   setDisplayDetail,
   displayDetail,
+  displayEditExpense,
+  setDisplayEditExpense,
 }) => {
+  const groupId = "JR13SgWIQm5UNZFLwBC0";
+  const { editExpense, setEditExpense, group, setDate } = useStore();
+  const { expenses } = group;
+  function handleEditExpense(expenseTime) {
+    const expenseToEdit = expenses.filter(
+      (item) => item.time === expenseTime
+    )[0];
+    setEditExpense(expenseToEdit);
+    const dateString = expenseToEdit.date;
+    const parsedDate = parseISO(dateString);
+    const unixTimestamp = parsedDate.getTime();
+    console.log(unixTimestamp);
+    setDate(unixTimestamp);
+    setDisplayEditExpense("block");
+  }
   return (
     <>
       {expensesArrToRender.map(([date, expenses]) => {
@@ -48,7 +67,7 @@ const DetailedExpenses = ({
                       <img src={list} alt="icon" />
                     </figure>
                     <figcaption className="ml-2 w-[200px] md:w-[400px]">
-                      <p>{item}</p>
+                      <p>{time}</p>
                       <p>
                         {isSinglePayer
                           ? `${singlePayerOnly}先付${total_amount}元`
@@ -89,7 +108,9 @@ const DetailedExpenses = ({
                         </div>
                       </figure>
                       <div className="md:self-center">
-                        <Button>編輯</Button>
+                        <Button onClick={() => handleEditExpense(time)}>
+                          編輯
+                        </Button>
                         <Button>刪除</Button>
                       </div>
                     </div>

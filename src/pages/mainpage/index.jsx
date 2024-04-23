@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-//---------------------- zustand
+//---------------------- functions and hooks --------------------------------
 import useStore from "../../utility/hooks/useStore";
 import getExpensesArranged from "../../utility/getExpensesArranged";
-//----------------------component
+//----------------------component------------------------------------------------
 import LittleHeader from "./LittleHeader";
 import AddExpense from "./AddExpense";
 import DetailedExpenses from "./DetailedExpenses";
-//---------------------- shadcn ui
+import EditExpense from "./EditExpense";
+
+//---------------------- shadcn ui------------------------------------------------
 import {
   Tabs,
   TabsContent,
@@ -22,12 +24,28 @@ const Mainpage = () => {
     return acc;
   }, {});
   const [displayAddExpense, setDisplayAddExpense] = useState("hidden");
+  const [displayEditExpense, setDisplayEditExpense] = useState("hidden");
   const [displayDetail, setDisplayDetail] = useState(initialDetailDisplay);
   const [imgSrc, setImgSrc] = useState("");
   const expensesArrToRender = getExpensesArranged(expenses);
   return (
     <>
       <main className="p-5">
+        <div className="bg-green-100 w-40 h-full fixed  top-0 left-0 hidden md:block ">
+          <nav className="pt-20 pl-10">
+            <div>
+              群組
+              <div className="pt-5 pl-2">group1</div>
+              <div className="pt-5 pl-2">group2</div>
+            </div>
+            <div className="pt-5">
+              好友
+              <div className="pt-5 pl-2">friend1</div>
+              <div className="pt-5 pl-2">friend2</div>
+            </div>
+          </nav>
+        </div>
+
         <Tabs
           defaultValue="account"
           className="w-[360px] md:w-[600px] mt-20 mx-auto flex flex-col items-center justify-center flex-wrap"
@@ -49,6 +67,8 @@ const Mainpage = () => {
               expensesArrToRender={expensesArrToRender}
               displayDetail={displayDetail}
               setDisplayDetail={setDisplayDetail}
+              displayEditExpense={displayEditExpense}
+              setDisplayEditExpense={setDisplayEditExpense}
             />
           </TabsContent>
           <TabsContent value="calculation">
@@ -63,6 +83,10 @@ const Mainpage = () => {
         <AddExpense
           displayAddExpense={displayAddExpense}
           setDisplayAddExpense={setDisplayAddExpense}
+        />
+        <EditExpense
+          displayEditExpense={displayEditExpense}
+          setDisplayEditExpense={setDisplayEditExpense}
         />
       </main>
     </>
