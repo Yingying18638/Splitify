@@ -15,7 +15,7 @@ const DatePicker = () => {
   const { expenses } = group;
   const [date, setDate] = useState(new Date());
   useEffect(() => {
-    setsomeNewExpense(format(date, "yyyy-MM-dd"), "date");
+    setsomeNewExpense(format(date, "yyyyMMdd"), "date");
     setsomeNewExpense(Date.now(), "time");
     console.log("time changes");
   }, [date, group]);

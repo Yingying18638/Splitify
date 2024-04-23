@@ -5,7 +5,7 @@ function getExpensesArranged(expenses) {
   const temp = [...expenses];
   const sortedExpenses = temp.sort((a, b) => b.time - a.time);
   //依照date分類
-  const groupedExpenses = sortedExpenses.reduce((acc, cur) => {
+  const groupedExpensesObj = sortedExpenses.reduce((acc, cur) => {
     const { date } = cur;
     if (!acc[date]) {
       acc[date] = [];
@@ -15,6 +15,10 @@ function getExpensesArranged(expenses) {
     }
     return acc;
   }, {});
-  return groupedExpenses;
+  const groupedExpensesArr = Object.entries(groupedExpensesObj);
+  const expensesArrToRender = groupedExpensesArr.sort(
+    (a, b) => b.date - a.date
+  );
+  return expensesArrToRender;
 }
 export default getExpensesArranged;
