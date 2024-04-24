@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import groupImg from "../../assets/group.png";
 import link from "../../assets/link.png";
 import { Button } from "../../components/ui/button";
@@ -6,8 +6,8 @@ import useStore from "../../utility/hooks/useStore";
 import { updateGroupData } from "../../utility/handleFirestore";
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   const { group, setGroup } = useStore();
-  const { groupName, expenses, groupId } = group;
-
+  const { groupName, expenses } = group;
+  const groupId = "R9jYevBIidQsWX4tR3PW";
   function handleClear() {
     // 清空expenses, totalBill, flow
     const newGroupData = { ...group, totalBill: {}, flow: [], expenses: [] };
