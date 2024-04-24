@@ -7,7 +7,7 @@ import LittleHeader from "./LittleHeader";
 import AddExpense from "./AddExpense";
 import DetailedExpenses from "./DetailedExpenses";
 import EditExpense from "./EditExpense";
-
+import Result from "./Result";
 //---------------------- shadcn ui------------------------------------------------
 import {
   Tabs,
@@ -76,7 +76,7 @@ const Mainpage = () => {
               displayAddExpense={displayAddExpense}
               setDisplayAddExpense={setDisplayAddExpense}
             />
-            calculation.
+            <Result></Result>
           </TabsContent>
           {/* <TabsContent value="friend">好友</TabsContent> */}
         </Tabs>

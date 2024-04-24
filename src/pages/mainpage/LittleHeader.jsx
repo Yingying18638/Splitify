@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import groupImg from "../../assets/group.png";
 import link from "../../assets/link.png";
 import { Button } from "../../components/ui/button";
 import useStore from "../../utility/hooks/useStore";
+import { updateGroupData } from "../../utility/handleFirestore";
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
-  const { group } = useStore();
-  const { groupName } = group;
+  const { group, setGroup } = useStore();
+  const { groupName, expenses, groupId } = group;
+
+  function handleClear() {
+    // 清空expenses, totalBill, flow
+    const newGroupData = { ...group, totalBill: {}, flow: [], expenses: [] };
+    // 4. totalBill, flow 塞入group
+    // 4.1 整筆group更新到火基地
+
+    updateGroupData(groupId, newGroupData);
+    // setGroup(newGroupData);
+  }
   return (
     <div className="flex flex-wrap w-full justify-center">
       <div className="w-28  rounded-sm px-3 py-1 text-sm font-medium">
@@ -25,7 +36,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
       >
         + 花費
       </Button>
-      <Button>銷帳</Button>
+      <Button onClick={handleClear}>銷帳</Button>
     </div>
   );
 };
