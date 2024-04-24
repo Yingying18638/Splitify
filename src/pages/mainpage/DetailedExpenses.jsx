@@ -3,6 +3,7 @@ import { Button } from "../../components/ui/button";
 import list from "../../assets/list.png";
 import { parseISO, format } from "date-fns";
 import useStore from "../../utility/hooks/useStore";
+import { updateGroupData, useGetDetail } from "../../utility/handleFirestore";
 const DetailedExpenses = ({
   expensesArrToRender,
   setDisplayDetail,
@@ -11,22 +12,41 @@ const DetailedExpenses = ({
   setDisplayEditExpense,
 }) => {
   const groupId = "R9jYevBIidQsWX4tR3PW";
-  const { newExpense, setNewExpense, group, setDate, setSelected } = useStore();
+  const {
+    newExpense,
+    setNewExpense,
+    group,
+    setGroup,
+    setDate,
+    setSelected,
+    shareObj,
+    setShareObj,
+  } = useStore();
   const { expenses } = group;
+  const usersObj = group.users?.reduce((acc, user) => {
+    acc[user.name] = "";
+    return acc;
+  }, {});
   function handleEditExpense(expenseTime) {
     const expenseToEdit = expenses.filter(
       (item) => item.time === expenseTime
     )[0];
     setNewExpense(expenseToEdit);
     const { participants, date } = expenseToEdit;
-    const parsedDate = parseISO(date);
+    const parsedDate = date && parseISO(date);
     const unixTimestamp = parsedDate.getTime();
     setDate(unixTimestamp);
     const optionsSelected = participants?.map((item) => {
       return { label: item, value: item };
     });
     setSelected(optionsSelected);
+    setShareObj(usersObj);
     setDisplayEditExpense("block");
+  }
+  async function handleDeleteExpense(expenseTime) {
+    const expensesRemain = expenses.filter((item) => item.time !== expenseTime);
+    await updateGroupData(groupId, { ...group, expenses: expensesRemain });
+    alert("刪除成功");
   }
   return (
     <>
@@ -115,7 +135,9 @@ const DetailedExpenses = ({
                         <Button onClick={() => handleEditExpense(time)}>
                           編輯
                         </Button>
-                        <Button>刪除</Button>
+                        <Button onClick={() => handleDeleteExpense(time)}>
+                          刪除
+                        </Button>
                       </div>
                     </div>
                   </article>
