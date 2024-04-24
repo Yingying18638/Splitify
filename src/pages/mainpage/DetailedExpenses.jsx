@@ -22,7 +22,10 @@ const DetailedExpenses = ({
     const parsedDate = parseISO(date);
     const unixTimestamp = parsedDate.getTime();
     setDate(unixTimestamp);
-    setSelected(participants);
+    const optionsSelected = participants?.map((item) => {
+      return { label: item, value: item };
+    });
+    setSelected(optionsSelected);
     setDisplayEditExpense("block");
   }
   return (

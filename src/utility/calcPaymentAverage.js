@@ -60,7 +60,7 @@ function calcPaymentAverage(expenseData, users) {
         const usersLeft = usersArr.filter((item) => !namesOfAve.includes(item));
         // usersLeft.forEach((item) => (average[index][item] = 0));
         usersLeft.forEach((item) => {
-          payment[index] = { ...average[index], [item]: 0 };
+          average[index] = { ...average[index], [item]: 0 };
         });
       }
       console.log("average", average);
