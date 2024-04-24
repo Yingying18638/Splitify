@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "../../components/ui/button";
 import list from "../../assets/list.png";
-import { parseISO } from "date-fns";
+import { parseISO, format } from "date-fns";
 import useStore from "../../utility/hooks/useStore";
 const DetailedExpenses = ({
   expensesArrToRender,
@@ -10,19 +10,19 @@ const DetailedExpenses = ({
   displayEditExpense,
   setDisplayEditExpense,
 }) => {
-  const groupId = "JR13SgWIQm5UNZFLwBC0";
-  const { editExpense, setEditExpense, group, setDate } = useStore();
+  const groupId = "R9jYevBIidQsWX4tR3PW";
+  const { newExpense, setNewExpense, group, setDate, setSelected } = useStore();
   const { expenses } = group;
   function handleEditExpense(expenseTime) {
     const expenseToEdit = expenses.filter(
       (item) => item.time === expenseTime
     )[0];
-    setEditExpense(expenseToEdit);
-    const dateString = expenseToEdit.date;
-    const parsedDate = parseISO(dateString);
+    setNewExpense(expenseToEdit);
+    const { participants, date } = expenseToEdit;
+    const parsedDate = parseISO(date);
     const unixTimestamp = parsedDate.getTime();
-    console.log(unixTimestamp);
     setDate(unixTimestamp);
+    setSelected(participants);
     setDisplayEditExpense("block");
   }
   return (
@@ -42,6 +42,7 @@ const DetailedExpenses = ({
                 note,
                 img,
                 ave,
+                creater,
               } = exp;
               const isSinglePayer = singlePayerOnly !== "多人付款";
               const payersPair = morePayers && Object.entries(morePayers);
@@ -67,7 +68,7 @@ const DetailedExpenses = ({
                       <img src={list} alt="icon" />
                     </figure>
                     <figcaption className="ml-2 w-[200px] md:w-[400px]">
-                      <p>{time}</p>
+                      <p>{item}</p>
                       <p>
                         {isSinglePayer
                           ? `${singlePayerOnly}先付${total_amount}元`
@@ -99,7 +100,7 @@ const DetailedExpenses = ({
                       <figure className="flex flex-wrap gap-2">
                         <div className="text-slate-500 text-sm">
                           <p className="text-slate-500 text-sm">
-                            挖泥尼在20240414建立
+                            {creater}在{format(time, "yyyyMMdd")}建立
                           </p>
                           <p className="text-slate-500 text-sm">{note}</p>
                         </div>

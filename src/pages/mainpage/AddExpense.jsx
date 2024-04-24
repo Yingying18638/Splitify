@@ -2,7 +2,11 @@
 import React, { useEffect, useState } from "react";
 import useStore from "../../utility/hooks/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
-import { updateGroupData, useGetDetail } from "../../utility/handleFirestore";
+import {
+  updateGroupData,
+  useGetDetail,
+  addGroupAndUpdateID,
+} from "../../utility/handleFirestore";
 import calcPaymentAverage from "../../utility/calcPaymentAverage";
 import calcFlow from "../../utility/calcFlow";
 import calcBills from "../../utility/calcBills";
@@ -46,6 +50,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     group,
     setGroup,
     setsomeNewExpense,
+    selected,
+    setSelected,
   } = useStore();
   const { expenses, users } = group;
   const {
@@ -61,7 +67,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
   });
-  const [selected, setSelected] = useState(options || []);
+  // const [selected, setSelected] = useState(options || []);
 
   // ----------------切成function-----------------------------
   function getAmountArr(personAmountObj) {
@@ -104,12 +110,14 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     }
   }
   //---------------temp------------------
-  const groupId = "JR13SgWIQm5UNZFLwBC0";
+  const groupId = "R9jYevBIidQsWX4tR3PW";
   useGetDetail(groupId, setGroup);
 
   //---------------temp------------------
   useEffect(() => {
     function handleGroupCalc() {
+      //test
+      // addGroupAndUpdateID(group);
       // 0. start group calc or not
       if (expenses.length === 0) return;
       console.log("starting group calculation");
@@ -131,10 +139,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     e.preventDefault();
     // 1. newExpense 算出ave
     const ave = calcSingleAve(newExpense);
-    const expenseToAdd = { ...newExpense, ave };
-    setsomeNewExpense(ave, "ave");
-    // const now = new Date().getTime();
-    // console.log(now);
+    const now = new Date().getTime();
+    const expenseToAdd = { ...newExpense, ave, time: now };
+    setNewExpense(expenseToAdd);
+    // setsomeNewExpense(ave, "ave");
     // setsomeNewExpense(now, "time");
     // 2. newExpense 塞入group expenses, setGroup (觸發useEffect)
     const abc = { ...group, expenses: [...group.expenses, expenseToAdd] };
@@ -217,7 +225,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               if (value !== "多人付款") {
                 setNewExpense({ ...newExpense, morePayers: {} });
               }
-              // setNewExpense({ ...newExpense, singlePayerOnly: value });
               setsomeNewExpense(value, "singlePayerOnly");
             }}
           >

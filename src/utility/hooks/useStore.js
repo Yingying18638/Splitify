@@ -4,6 +4,7 @@ const INITIANL_NEWEXPENSE = {
   date: "",
   time: "",
   item: "",
+  creater: "",
   icon: "",
   total_amount: 0,
   foreign_amount: 0,
@@ -27,13 +28,13 @@ const INITIANL_NEWEXPENSE = {
 const INITIANL_GROUP = {
   groupName: "FEbatch#23",
   groupId: "",
-  creater: "",
+
   users: [
     { uid: "", name: "a", email: "" },
     { uid: "", name: "b", email: "" },
     { uid: "", name: "c", email: "" },
-    { uid: "", name: "d", email: "" },
-    { uid: "", name: "e", email: "" },
+    // { uid: "", name: "d", email: "" },
+    // { uid: "", name: "e", email: "" },
   ],
   expenses: [
     // {
@@ -104,21 +105,19 @@ const useStore = create(
       set({
         newExpense: INITIANL_NEWEXPENSE,
       }),
-    editExpense: INITIANL_NEWEXPENSE,
-    setEditExpense: (data) => set({ editExpense: data }),
-    resetEditExpense: () =>
-      set({
-        editExpense: INITIANL_NEWEXPENSE,
-      }),
+    // editExpense: INITIANL_NEWEXPENSE,
+    // setEditExpense: (data) => set({ editExpense: data }),
+    // resetEditExpense: () =>
+    //   set({
+    //     editExpense: INITIANL_NEWEXPENSE,
+    //   }),
     group: INITIANL_GROUP,
     setGroup: (data) => set({ group: data }),
     // resetGroup: () =>set({ group: INITIAL })
     date: new Date(),
     setDate: (data) => set({ date: data }),
-    // setSelected: (data) => set({ selected: data }),
-    // options: [],
-    // setOptions: (data) => set({ options: data }),
-    // displayAddExpense: "hidden",
+    selected: [],
+    setSelected: (data) => set({ selected: data }),
   }))
 );
 export default useStore;

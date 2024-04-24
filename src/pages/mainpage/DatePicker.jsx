@@ -25,7 +25,6 @@ const DatePicker = () => {
   // const [date, setDate] = useState(new Date());
   useEffect(() => {
     setsomeNewExpense(format(date, "yyyyMMdd"), "date");
-    setsomeNewExpense(Date.now(), "time");
   }, [date, group]);
   return (
     <Popover>

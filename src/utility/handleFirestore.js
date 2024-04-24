@@ -17,7 +17,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // temp
 
-const groupId = "JR13SgWIQm5UNZFLwBC0";
+const groupId = "R9jYevBIidQsWX4tR3PW";
 const example_expense = "example";
 //
 async function updateGroupData(groupId, newGroupData) {
@@ -48,7 +48,7 @@ async function addGroupAndUpdateID(groupData) {
   const { id } = newGroupRef;
   const docSnap = await getDoc(newGroupRef);
   const oldData = docSnap?.data();
-  await updateDoc(newGroupRef, { ...oldData, groupId: id });
+  // await updateDoc(newGroupRef, { ...oldData, groupId: id });
 }
 export { updateGroupData, addGroupAndUpdateID, useGetDetail };
 

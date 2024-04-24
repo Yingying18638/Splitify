@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import useStore from "../../utility/hooks/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
+import calcSingleAve from "../../utility/calcSingleAve";
+
 import { updateGroupData, useGetDetail } from "../../utility/handleFirestore";
 //image
 import arrow from "../../assets/arrow.png";
@@ -30,30 +32,31 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
   //date同步問題？？
   //送出時計算
   //firestore更新
-  const { editExpense, setEditExpense, resetEditExpense, group } = useStore();
+  const {
+    newExpense,
+    setNewExpense,
+    resetNewExpense,
+    group,
+    setGroup,
+    setsomeNewExpense,
+    selected,
+    setSelected,
+  } = useStore();
   const { expenses, users } = group;
-  //   const {
-  //     morePayers,
-  //     total_amount,
-  //     singlePayerOnly,
-  //     participants,
-  //     note,
-  //     img,
-  //     participants_customized,
-  //   } = editExpense;
-  const morePayers = editExpense?.morePayers;
-  const total_amount = editExpense?.total_amount;
-  const singlePayerOnly = editExpense?.singlePayerOnly;
-  const participants = editExpense?.participants;
-  const note = editExpense?.note;
-  const participants_customized = editExpense?.participants_customized;
-  // const morePayers = editExpense?.morePayers;
-  console.log(editExpense);
+  const {
+    morePayers,
+    total_amount,
+    singlePayerOnly,
+    participants,
+    note,
+    img,
+    participants_customized,
+  } = newExpense;
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
   });
-  const [selected, setSelected] = useState(options || []);
+  //   const [selected, setSelected] = useState(options || []);
   // ----------------function and variables-----------------------------
   function getAmountArr(personAmountObj) {
     if (!personAmountObj) return;
@@ -92,7 +95,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
       return;
     }
   }
-  const groupId = "JR13SgWIQm5UNZFLwBC0";
+  const groupId = "R9jYevBIidQsWX4tR3PW";
 
   useEffect(() => {
     function handleGroupCalc() {
@@ -116,23 +119,26 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
   function handleSubmit(e) {
     e.preventDefault();
     // 1. editExpense 算出ave
-    const ave = calcSingleAve(editExpense);
-    const expenseToAdd = { ...editExpense, ave };
-    // setsomeNewExpense(ave, "ave");
-    // const now = new Date().getTime();
-    // console.log(now);
-    // setsomeNewExpense(now, "time");
-    // 2. editExpense 塞入group expenses, setGroup (觸發useEffect)
-    const abc = { ...group, expenses: [...group.expenses, expenseToAdd] };
-    // console.log(abc, "abc");
-    // setGroup(abc);
+    const ave = calcSingleAve(newExpense);
+    const expenseToBeUpdated = { ...newExpense, ave };
+    setsomeNewExpense(ave, "ave");
+    // 2. editExpense 更新group expenses, setGroup (觸發useEffect)
+    const expenseRemain = expenses.filter(
+      (item) => item.time !== newExpense.time
+    );
+    const newGroupData = {
+      ...group,
+      expenses: [...expenseRemain, expenseToBeUpdated],
+    };
+
+    console.log(newGroupData, "abc");
+    setGroup(newGroupData);
     //加入img
     setDisplayEditExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
-    // resetEditExpense();
+    resetNewExpense();
     setSelected(options);
-    console.log(editExpense);
   }
   return (
     <>
@@ -151,7 +157,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             setDisplayEditExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
-            resetEditExpense();
+            resetNewExpense();
             setSelected(options);
           }}
           className="absolute right-2 top-2 cursor-pointer"
@@ -164,10 +170,10 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
               placeholder="晚餐"
               id="item"
               className=""
-              value={editExpense.item}
+              value={newExpense.item}
               // required
               onChange={(e) =>
-                setEditExpense({ ...editExpense, item: e.target.value })
+                setNewExpense({ ...newExpense, item: e.target.value })
               }
             ></Input>
           </figcaption>
@@ -185,8 +191,8 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
                 const { value } = e.target;
                 const num = parseInt(value);
                 if (isNaN(num) && value !== "") return;
-                setEditExpense({
-                  ...editExpense,
+                setNewExpense({
+                  ...newExpense,
                   total_amount: num ? num : 0,
                 });
               }}
@@ -201,9 +207,9 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             required
             onValueChange={(value) => {
               if (value !== "多人付款") {
-                setEditExpense({ ...editExpense, morePayers: {} });
+                setNewExpense({ ...newExpense, morePayers: {} });
               }
-              // setEditExpense({ ...editExpense, singlePayerOnly: value });
+              // setNewExpense({ ...newExpense, singlePayerOnly: value });
               setsomeNewExpense(value, "singlePayerOnly");
             }}
           >
@@ -274,7 +280,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
           placeholder="備註"
           value={note}
           onChange={(e) =>
-            setEditExpense({ ...editExpense, note: e.target.value })
+            setNewExpense({ ...newExpense, note: e.target.value })
           }
         ></Textarea>
         <label htmlFor="uploadImg">圖片</label>
@@ -301,7 +307,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             setDisplayEditExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
-            resetEditExpense();
+            resetNewExpense();
             setSelected(options);
           }}
         >
