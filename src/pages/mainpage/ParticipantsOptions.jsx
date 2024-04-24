@@ -9,13 +9,9 @@ const ParticipantsOptions = ({
   cusAmountArr,
   participants_customNames,
 }) => {
-  const { newExpense, setNewExpense, group } = useStore();
+  const { newExpense, setNewExpense, group, shareObj, setShareObj } =
+    useStore();
   const { total_amount, participants_customized } = newExpense;
-  const usersObj = group.users?.reduce((acc, user) => {
-    acc[user.name] = "";
-    return acc;
-  }, {});
-  const [shareObj, setShareObj] = useState(usersObj || {});
 
   return (
     <section
@@ -46,7 +42,7 @@ const ParticipantsOptions = ({
             <div
               className={`${
                 participants_customNames?.find((item) => item === name) &&
-                cusAmountArr[index]
+                participants_customized[name]
                   ? ""
                   : "hidden"
               } absolute right-[300px]`}
@@ -62,7 +58,7 @@ const ParticipantsOptions = ({
             </label>
             <Input
               className="w-10 h-8"
-              value={shareObj[name]}
+              value={shareObj?.[name]}
               onChange={(e) => {
                 const { value } = e.target;
                 const num = parseInt(value);

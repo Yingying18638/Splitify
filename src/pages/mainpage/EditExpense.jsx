@@ -3,9 +3,6 @@ import React, { useEffect, useState } from "react";
 import useStore from "../../utility/hooks/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
 import calcSingleAve from "../../utility/calcSingleAve";
-import calcFlow from "../../utility/calcFlow";
-import calcBills from "../../utility/calcBills";
-import calcPaymentAverage from "../../utility/calcPaymentAverage";
 import { updateGroupData, useGetDetail } from "../../utility/handleFirestore";
 //image
 import arrow from "../../assets/arrow.png";
@@ -98,25 +95,6 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
     }
   }
   const groupId = "R9jYevBIidQsWX4tR3PW";
-
-  useEffect(() => {
-    function handleGroupCalc() {
-      // 0. start group calc or not
-      if (expenses.length === 0) return;
-      console.log("starting group calculation");
-      // 3. 計算付款&平均
-      const { payment, average } = calcPaymentAverage(expenses, users);
-      const { totalBill } = calcBills(payment, average, users);
-      const flow = calcFlow(totalBill);
-      const newGroupData = { ...group, totalBill, flow };
-      // 4. totalBill, flow 塞入group
-      // 4.1 整筆group更新到火基地
-      updateGroupData(groupId, newGroupData);
-      setGroup(newGroupData);
-    }
-    handleGroupCalc();
-  }, [expenses, users]);
-
   function handleSubmit(e) {
     e.preventDefault();
     // 1. editExpense 算出ave
@@ -335,7 +313,6 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         displayParticipantOpt={displayParticipantOpt}
         setDisplayParticipantOpt={setDisplayParticipantOpt}
         cusAmountGap={cusAmountGap}
-        cusAmountArr={cusAmountArr}
         participants_customNames={participants_customNames}
       />
     </>

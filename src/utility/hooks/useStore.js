@@ -105,12 +105,6 @@ const useStore = create(
       set({
         newExpense: INITIANL_NEWEXPENSE,
       }),
-    // editExpense: INITIANL_NEWEXPENSE,
-    // setEditExpense: (data) => set({ editExpense: data }),
-    // resetEditExpense: () =>
-    //   set({
-    //     editExpense: INITIANL_NEWEXPENSE,
-    //   }),
     group: INITIANL_GROUP,
     setGroup: (data) => set({ group: data }),
     // resetGroup: () =>set({ group: INITIAL })
@@ -118,6 +112,8 @@ const useStore = create(
     setDate: (data) => set({ date: data }),
     selected: [],
     setSelected: (data) => set({ selected: data }),
+    shareObj: {},
+    setShareObj: (data) => set({ shareObj: data }),
   }))
 );
 export default useStore;

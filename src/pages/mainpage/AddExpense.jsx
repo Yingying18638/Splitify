@@ -52,6 +52,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     setsomeNewExpense,
     selected,
     setSelected,
+    shareObj,
+    setShareObj,
   } = useStore();
   const { expenses, users } = group;
   const {
@@ -67,8 +69,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
   });
-  // const [selected, setSelected] = useState(options || []);
-
+  const usersObj = group.users?.reduce((acc, user) => {
+    acc[user.name] = "";
+    return acc;
+  }, {});
   // ----------------切成function-----------------------------
   function getAmountArr(personAmountObj) {
     if (!personAmountObj) return;
@@ -115,18 +119,17 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
 
   //---------------temp------------------
   useEffect(() => {
+    setSelected(options);
     function handleGroupCalc() {
       //test
       // addGroupAndUpdateID(group);
       // 0. start group calc or not
       if (expenses.length === 0) return;
-      console.log("starting group calculation");
       // 3. 計算付款&平均
       const { payment, average } = calcPaymentAverage(expenses, users);
       const { totalBill } = calcBills(payment, average, users);
       const flow = calcFlow(totalBill);
       const newGroupData = { ...group, totalBill, flow };
-      console.log(newGroupData, "newGroupData");
       // 4. totalBill, flow 塞入group
       // 4.1 整筆group更新到火基地
       updateGroupData(groupId, newGroupData);
@@ -153,6 +156,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
     resetNewExpense();
+    setShareObj(usersObj);
     setSelected(options);
     console.log(newExpense);
   }
@@ -175,6 +179,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setDisplayPayersOpt("hidden");
             resetNewExpense();
             setSelected(options);
+            setShareObj(usersObj);
           }}
           className="absolute right-2 top-2 cursor-pointer"
         />
@@ -329,6 +334,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setDisplayPayersOpt("hidden");
             resetNewExpense();
             setSelected(options);
+            setShareObj(usersObj);
           }}
         >
           取消
@@ -354,7 +360,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         displayParticipantOpt={displayParticipantOpt}
         setDisplayParticipantOpt={setDisplayParticipantOpt}
         cusAmountGap={cusAmountGap}
-        cusAmountArr={cusAmountArr}
         participants_customNames={participants_customNames}
       />
     </>
