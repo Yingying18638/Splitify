@@ -1,19 +1,32 @@
 import "./App.css";
-import Header from "./common_components/Header";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Mainpage from "./pages/mainpage/";
+import RootLayout from "./common_components/RootLayout";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 function App() {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Header />}>
-            {/* <Route path="landing" element={<Mainpage />}></Route> */}
-            <Route path="main" element={<Mainpage />}></Route>
-          </Route>
-        </Routes>
-      </Router>
-    </>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <SignedIn>
+                <RootLayout children="signedIn" />
+              </SignedIn>
+              <SignedOut>
+                <RootLayout />
+              </SignedOut>
+            </>
+          }
+        ></Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
   );
 }
 
