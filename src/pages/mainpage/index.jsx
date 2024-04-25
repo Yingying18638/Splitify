@@ -8,6 +8,7 @@ import AddExpense from "./AddExpense";
 import Record from "./Record";
 import EditExpense from "./EditExpense";
 import Result from "./Result";
+import { Chart } from "./Chart";
 //---------------------- shadcn ui------------------------------------------------
 import {
   Tabs,
@@ -101,6 +102,7 @@ const Mainpage = () => {
               displayAddExpense={displayAddExpense}
               setDisplayAddExpense={setDisplayAddExpense}
             />
+            <Chart />
             <Result />
           </TabsContent>
         </Tabs>
