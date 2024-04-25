@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+// newExpense should be named as 'tempExpense'
 const INITIANL_NEWEXPENSE = {
   date: "",
   time: "",
