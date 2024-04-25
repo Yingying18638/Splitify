@@ -9,3 +9,14 @@ input[type="checkbox"] {
   font-size: 14px;
   --rmsc-main: #000 !important;
 }
+.cl-formButtonPrimary {
+  font-size: 14px;
+  text-transform: none;
+  background-color: slategrey !important;
+}
+.cl-footerActionLink {
+  background-color: slategray !important;
+}
+.cl-userButtonTrigger .cl-button {
+  right: 0;
+}
