@@ -5,7 +5,7 @@ import getExpensesArranged from "../../utility/getExpensesArranged";
 //----------------------component------------------------------------------------
 import LittleHeader from "./LittleHeader";
 import AddExpense from "./AddExpense";
-import DetailedExpenses from "./DetailedExpenses";
+import Record from "./Record";
 import EditExpense from "./EditExpense";
 import Result from "./Result";
 //---------------------- shadcn ui------------------------------------------------
@@ -17,7 +17,7 @@ import {
 } from "../../components/ui/tabs";
 const Mainpage = () => {
   const { group } = useStore();
-  const { expenses } = group;
+  const { expenses, history } = group;
   const initialDetailDisplay = expenses?.reduce((acc, cur) => {
     const { time } = cur;
     acc[time] = "hidden";
@@ -27,7 +27,19 @@ const Mainpage = () => {
   const [displayEditExpense, setDisplayEditExpense] = useState("hidden");
   const [displayDetail, setDisplayDetail] = useState(initialDetailDisplay);
   const [imgSrc, setImgSrc] = useState("");
+  const [displayHistory, setDisplayHistory] = useState({
+    display: "hidden",
+    text: "查看",
+  });
   const expensesArrToRender = getExpensesArranged(expenses);
+  const clearedExpensesToRender = getExpensesArranged(history);
+  function handleDisplayHistory() {
+    if (displayHistory?.display === "hidden") {
+      setDisplayHistory({ display: "block", text: "收起" });
+    } else {
+      setDisplayHistory({ display: "hidden", text: "查看" });
+    }
+  }
   return (
     <>
       <main className="p-5">
@@ -63,11 +75,24 @@ const Mainpage = () => {
               displayAddExpense={displayAddExpense}
               setDisplayAddExpense={setDisplayAddExpense}
             />
-            <DetailedExpenses
+            <Record
               expensesArrToRender={expensesArrToRender}
               displayDetail={displayDetail}
               setDisplayDetail={setDisplayDetail}
-              displayEditExpense={displayEditExpense}
+              setDisplayEditExpense={setDisplayEditExpense}
+              children={true}
+            />
+            <p
+              className="block w-32  mx-auto mt-5"
+              onClick={handleDisplayHistory}
+            >
+              {displayHistory?.text}已結清紀錄
+            </p>
+            <Record
+              displayHistory={displayHistory}
+              expensesArrToRender={clearedExpensesToRender}
+              displayDetail={displayDetail}
+              setDisplayDetail={setDisplayDetail}
               setDisplayEditExpense={setDisplayEditExpense}
             />
           </TabsContent>
@@ -76,9 +101,8 @@ const Mainpage = () => {
               displayAddExpense={displayAddExpense}
               setDisplayAddExpense={setDisplayAddExpense}
             />
-            <Result></Result>
+            <Result />
           </TabsContent>
-          {/* <TabsContent value="friend">好友</TabsContent> */}
         </Tabs>
         <AddExpense
           displayAddExpense={displayAddExpense}

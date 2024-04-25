@@ -6,16 +6,19 @@ import useStore from "../../utility/hooks/useStore";
 import { updateGroupData } from "../../utility/handleFirestore";
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   const { group, setGroup } = useStore();
-  const { groupName, expenses } = group;
+  const { groupName, expenses, history } = group;
   const groupId = "R9jYevBIidQsWX4tR3PW";
   function handleClear() {
-    // 清空expenses, totalBill, flow
-    const newGroupData = { ...group, totalBill: {}, flow: [], expenses: [] };
-    // 4. totalBill, flow 塞入group
-    // 4.1 整筆group更新到火基地
-
+    // expenses 放入history, 清空expenses, totalBill, flow
+    const newGroupData = {
+      ...group,
+      totalBill: {},
+      flow: [],
+      expenses: [],
+      history: [...history, ...expenses],
+    };
+    // 整筆group更新到火基地
     updateGroupData(groupId, newGroupData);
-    // setGroup(newGroupData);
   }
   return (
     <div className="flex flex-wrap w-full justify-center">

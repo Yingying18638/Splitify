@@ -1,17 +1,17 @@
 import React from "react";
-import { Button } from "../../components/ui/button";
 import list from "../../assets/list.png";
-import { parseISO, format } from "date-fns";
 import useStore from "../../utility/hooks/useStore";
-import { updateGroupData, useGetDetail } from "../../utility/handleFirestore";
-const DetailedExpenses = ({
+import { parseISO, format } from "date-fns";
+import { EditDeleteButtons } from "./EditDeleteButtons";
+
+const Record = ({
   expensesArrToRender,
-  setDisplayDetail,
+  children,
   displayDetail,
-  displayEditExpense,
+  setDisplayDetail,
+  displayHistory,
   setDisplayEditExpense,
 }) => {
-  const groupId = "R9jYevBIidQsWX4tR3PW";
   const {
     newExpense,
     setNewExpense,
@@ -23,6 +23,8 @@ const DetailedExpenses = ({
     setShareObj,
   } = useStore();
   const { expenses } = group;
+  const groupId = "R9jYevBIidQsWX4tR3PW";
+
   const usersObj = group.users?.reduce((acc, user) => {
     acc[user.name] = "";
     return acc;
@@ -49,7 +51,7 @@ const DetailedExpenses = ({
     alert("刪除成功");
   }
   return (
-    <>
+    <section className={`${displayHistory?.display}`}>
       {expensesArrToRender.map(([date, expenses]) => {
         return (
           <div key={date}>
@@ -119,7 +121,6 @@ const DetailedExpenses = ({
                             );
                           })}
                       </figcaption>
-
                       <figure className="flex flex-wrap gap-2">
                         <div className="text-slate-500 text-sm">
                           <p className="text-slate-500 text-sm">
@@ -131,14 +132,13 @@ const DetailedExpenses = ({
                           <img alt="圖片" />
                         </div>
                       </figure>
-                      <div className="md:self-center">
-                        <Button onClick={() => handleEditExpense(time)}>
-                          編輯
-                        </Button>
-                        <Button onClick={() => handleDeleteExpense(time)}>
-                          刪除
-                        </Button>
-                      </div>
+                      {children && (
+                        <EditDeleteButtons
+                          handleEditExpense={handleEditExpense}
+                          handleDeleteExpense={handleDeleteExpense}
+                          time={time}
+                        />
+                      )}
                     </div>
                   </article>
                 </fieldset>
@@ -147,9 +147,8 @@ const DetailedExpenses = ({
           </div>
         );
       })}
-      <p className="text-center">查看已結清紀錄</p>
-    </>
+    </section>
   );
 };
 
-export default DetailedExpenses;
+export default Record;
