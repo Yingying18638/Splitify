@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //---------------------- functions and hooks --------------------------------
 import useStore from "../../utility/hooks/useStore";
 import getExpensesArranged from "../../utility/getExpensesArranged";
+import { useUser, useAuth } from "@clerk/clerk-react";
+import { useClerkDataToFirestore } from "../../utility/handleFirestore";
 //----------------------component------------------------------------------------
 import LittleHeader from "./LittleHeader";
 import AddExpense from "./AddExpense";
@@ -41,6 +43,19 @@ const Mainpage = () => {
       setDisplayHistory({ display: "hidden", text: "查看" });
     }
   }
+  //get user from clerk
+  const userId = useAuth()?.userId;
+  const user = useUser()?.user;
+  const { fullName, imageUrl, emailAddresses } = user && user;
+  const email = emailAddresses[0].emailAddress;
+  const userObj = {
+    uid: userId,
+    name: fullName,
+    email,
+    img: imageUrl,
+    groupIds: [],
+  };
+  useClerkDataToFirestore(userId, userObj);
   return (
     <>
       <main className="p-5">

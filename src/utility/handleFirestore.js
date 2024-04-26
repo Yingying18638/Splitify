@@ -50,7 +50,12 @@ async function addGroupAndUpdateID(groupData) {
   const oldData = docSnap?.data();
   // await updateDoc(newGroupRef, { ...oldData, groupId: id });
 }
-export { updateGroupData, addGroupAndUpdateID, useGetDetail };
+export {
+  updateGroupData,
+  addGroupAndUpdateID,
+  useGetDetail,
+  useClerkDataToFirestore,
+};
 
 function useGetDetail(groupId, setterFunction) {
   useEffect(() => {
@@ -64,4 +69,28 @@ function useGetDetail(groupId, setterFunction) {
     });
     return () => unsubscribe();
   }, [groupId]);
+}
+//input userId
+//output (firestore set)
+function useClerkDataToFirestore(userId, userObj) {
+  useEffect(() => {
+    async function handleData(userId, userObj) {
+      //get user from firestore
+      const docRef = doc(db, "users", userId);
+      const docSnap = await getDoc(docRef);
+      //if user not exist in firestore, add it
+      if (docSnap.exists()) {
+        console.log("文件存在:", docSnap.data());
+        return;
+      } else {
+        await addUserWithId(userId, userObj);
+        console.log("新增成功");
+      }
+    }
+    handleData(userId, userObj);
+  }, [userId]);
+}
+
+async function addUserWithId(userId, userObj) {
+  await setDoc(doc(db, "users", userId), userObj);
 }

@@ -66,7 +66,35 @@ const users = {
   name: "",
   email: "",
   img: "",
-  // password:'',
   groupIds: [],
 };
 export { group, users };
+
+//////////////////////////////////
+// import { useUser, useAuth } from "@clerk/clerk-react";
+// import { useEffect } from "react";
+// import { Outlet, useNavigate } from "react-router-dom";
+// import Header from "../../common_components/Header";
+// export default function Layout() {
+//   const { isSignedIn, user } = useUser();
+//   const { userId, isLoaded } = useAuth();
+//   const navigate = useNavigate();
+//   // const { id, fullName, imageUrl, emailAddress } = user && user;
+//   // const email = emailAddress[0].emailAddress;
+//   console.log("test", userId);
+//   console.log(user);
+//   useEffect(() => {
+//     if (isLoaded && !userId) {
+//       // navigate("/sign-in")
+//       console.log("請重新登入");
+//     }
+//   }, [isLoaded]);
+
+//   if (!isLoaded) return "Loading...";
+
+//   return (
+//     <>
+//       <Outlet />
+//     </>
+//   );
+// }
