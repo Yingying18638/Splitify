@@ -13,6 +13,7 @@ import {
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./firebase";
 import { useEffect, useState } from "react";
+import useStore from "./hooks/useStore";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // temp
@@ -41,7 +42,15 @@ async function addGroupAndUpdateID(groupData) {
   const oldData = docSnap?.data();
   // await updateDoc(newGroupRef, { ...oldData, groupId: id });
 }
-export { updateGroupData, addGroupAndUpdateID, db, useClerkDataToFirestore };
+export {
+  updateGroupData,
+  db,
+  getData,
+  useClerkDataToFirestore,
+  addDocWithId,
+  useListenUsers,
+  useListenGroups,
+};
 
 // function useGetDetail(groupId, setterFunction) {
 //   useEffect(() => {
@@ -74,13 +83,66 @@ function useClerkDataToFirestore(userId, userObj, setTempUser, setTempGroupId) {
         // setTempGroupId(firstGroupId);
         return;
       } else {
-        await addUserWithId(userId, userObj);
+        await addDocWithId(userId, "users", userObj);
         console.log("新增成功");
       }
     })(userId, userObj, setTempUser, setTempGroupId);
   }, [userId]);
 }
 
-async function addUserWithId(userId, userObj) {
-  await setDoc(doc(db, "users", userId), userObj);
+async function addDocWithId(docId, collection, data) {
+  try {
+    await setDoc(doc(db, collection, docId), data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//監聽groups
+function useListenGroups() {
+  const { tempGroupId, setGroup } = useStore();
+  useEffect(() => {
+    if (!tempGroupId) return;
+    console.log("開始監聽或改變監聽", tempGroupId);
+    getData(db, "groups", tempGroupId, setGroup);
+    const docRef = doc(db, "groups", tempGroupId);
+    const unsubscribe = onSnapshot(docRef, (doc) => {
+      const data = doc.data();
+      setGroup(data);
+      console.log("監聽到的group data: ", data);
+    });
+    return () => unsubscribe();
+  }, [tempGroupId]);
+}
+
+//監聽users
+function useListenUsers() {
+  console.log("你說我有在聽user");
+  const { tempUser, setTempUser } = useStore();
+  useEffect(() => {
+    const { uid } = tempUser;
+    if (!uid) return;
+    console.log("開始監聽user或改變監聽", uid);
+    //先取得正確的user data
+    // getData(db, "users", uid, setTempUser);
+    //監聽users資料 + 設state
+    const docRef = doc(db, "users", uid);
+    const unsubscribe = onSnapshot(docRef, (doc) => {
+      const data = doc.data();
+      setTempUser(data); // 從任一群組刪別人時要更新別人的inGroup
+      console.log("監聽到的user data: ", data);
+    });
+    return () => unsubscribe();
+  }, [tempUser.uid]);
+}
+async function getData(db, collection, docId, setterFunction) {
+  try {
+    const docRef = doc(db, collection, docId);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap?.data();
+    console.log(data, "我拿到data");
+    setterFunction(data);
+  } catch (e) {
+    console.log(e);
+  }
 }

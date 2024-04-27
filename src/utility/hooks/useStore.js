@@ -29,7 +29,6 @@ const INITIANL_NEWEXPENSE = {
 const INITIANL_GROUP = {
   groupName: "",
   groupId: "",
-
   users: [
     { uid: "", name: "1", email: "" },
     { uid: "", name: "2", email: "" },
@@ -86,12 +85,12 @@ const INITIANL_GROUP = {
     //   amount: 200,
     // },
   ],
-  paidAmount: [
-    // { from: "a", to: "b", amount: 10, time: "timestamp" }
-  ],
-  leftAmount: [
-    // { from: "a", to: "b", amount: 90 }
-  ],
+  // paidAmount: [
+  //   // { from: "a", to: "b", amount: 10, time: "timestamp" }
+  // ],
+  // leftAmount: [
+  //   // { from: "a", to: "b", amount: 90 }
+  // ],
   history: [],
 };
 const INITIAL_USER = {

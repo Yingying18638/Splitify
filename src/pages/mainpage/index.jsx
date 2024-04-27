@@ -12,6 +12,7 @@ import EditExpense from "./EditExpense";
 import Result from "./Result";
 import { Chart } from "./Chart";
 import SideBar from "./SideBar";
+import { DrawerDialogDemo } from "./DrawerDialogDemo";
 //---------------------- shadcn ui------------------------------------------------
 import {
   Tabs,
@@ -19,7 +20,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
-const Mainpage = () => {
+const Mainpage = ({ isSideBarOpen, setIsSideBarOpen }) => {
   const { group, setTempUser, setTempGroupId } = useStore();
   const { expenses, history } = group;
   const initialDetailDisplay = expenses?.reduce((acc, cur) => {
@@ -59,12 +60,19 @@ const Mainpage = () => {
   useClerkDataToFirestore(userId, userObj, setTempUser, setTempGroupId);
   return (
     <>
-      <main className="p-5">
-        <SideBar />
+      <main className="">
+        {isSideBarOpen ? (
+          <SideBar
+            isSideBarOpen={isSideBarOpen}
+            setIsSideBarOpen={setIsSideBarOpen}
+          />
+        ) : (
+          ""
+        )}
 
         <Tabs
           defaultValue="account"
-          className="w-[360px] md:w-[600px] mt-20 mx-auto flex flex-col items-center justify-center flex-wrap"
+          className="w-[360px] md:w-[600px] mt-16 pt-4 mx-auto flex flex-col items-center justify-center flex-wrap"
         >
           <TabsList>
             <TabsTrigger value="account" className="w-32">
@@ -117,6 +125,7 @@ const Mainpage = () => {
           displayEditExpense={displayEditExpense}
           setDisplayEditExpense={setDisplayEditExpense}
         />
+        {/* <DrawerDialogDemo /> */}
       </main>
     </>
   );

@@ -21,7 +21,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
     updateGroupData(tempGroupId, newGroupData);
   }
   return (
-    <div className="flex flex-wrap w-full justify-center">
+    <div className="flex flex-wrap w-full justify-center pt-2">
       <div className="w-28  rounded-sm px-3 py-1 text-sm font-medium">
         {groupName}
       </div>

@@ -2,10 +2,7 @@
 import React, { useEffect, useState } from "react";
 import useStore from "../../utility/hooks/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
-import {
-  updateGroupData,
-  addGroupAndUpdateID,
-} from "../../utility/handleFirestore";
+import { updateGroupData } from "../../utility/handleFirestore";
 import calcPaymentAverage from "../../utility/calcPaymentAverage";
 import calcFlow from "../../utility/calcFlow";
 import calcBills from "../../utility/calcBills";
@@ -120,8 +117,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   useEffect(() => {
     setSelected(options);
     function handleGroupCalc() {
-      //test
-      // addGroupAndUpdateID(group);
       // 0. start group calc or not
       if (expenses.length === 0) return;
       console.log("start group calc");
