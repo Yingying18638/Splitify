@@ -3,6 +3,7 @@ import list from "../../assets/list.png";
 import useStore from "../../utility/hooks/useStore";
 import { parseISO, format } from "date-fns";
 import { EditDeleteButtons } from "./EditDeleteButtons";
+import { updateGroupData } from "../../utility/handleFirestore";
 
 const Record = ({
   expensesArrToRender,
@@ -16,14 +17,12 @@ const Record = ({
     newExpense,
     setNewExpense,
     group,
-    setGroup,
     setDate,
     setSelected,
-    shareObj,
+    tempGroupId,
     setShareObj,
   } = useStore();
   const { expenses } = group;
-  const groupId = "R9jYevBIidQsWX4tR3PW";
 
   const usersObj = group.users?.reduce((acc, user) => {
     acc[user.name] = "";
@@ -47,7 +46,7 @@ const Record = ({
   }
   async function handleDeleteExpense(expenseTime) {
     const expensesRemain = expenses.filter((item) => item.time !== expenseTime);
-    await updateGroupData(groupId, { ...group, expenses: expensesRemain });
+    await updateGroupData(tempGroupId, { ...group, expenses: expensesRemain });
     alert("刪除成功");
   }
   return (

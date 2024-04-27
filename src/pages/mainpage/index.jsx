@@ -11,6 +11,7 @@ import Record from "./Record";
 import EditExpense from "./EditExpense";
 import Result from "./Result";
 import { Chart } from "./Chart";
+import SideBar from "./SideBar";
 //---------------------- shadcn ui------------------------------------------------
 import {
   Tabs,
@@ -19,7 +20,7 @@ import {
   TabsTrigger,
 } from "../../components/ui/tabs";
 const Mainpage = () => {
-  const { group } = useStore();
+  const { group, setTempUser, setTempGroupId } = useStore();
   const { expenses, history } = group;
   const initialDetailDisplay = expenses?.reduce((acc, cur) => {
     const { time } = cur;
@@ -53,26 +54,13 @@ const Mainpage = () => {
     name: fullName,
     email,
     img: imageUrl,
-    groupIds: [],
+    inGroup: {},
   };
-  useClerkDataToFirestore(userId, userObj);
+  useClerkDataToFirestore(userId, userObj, setTempUser, setTempGroupId);
   return (
     <>
       <main className="p-5">
-        <div className="bg-green-100 w-40 h-full fixed  top-0 left-0 hidden md:block ">
-          <nav className="pt-20 pl-10">
-            <div>
-              群組
-              <div className="pt-5 pl-2">group1</div>
-              <div className="pt-5 pl-2">group2</div>
-            </div>
-            <div className="pt-5">
-              好友
-              <div className="pt-5 pl-2">friend1</div>
-              <div className="pt-5 pl-2">friend2</div>
-            </div>
-          </nav>
-        </div>
+        <SideBar />
 
         <Tabs
           defaultValue="account"

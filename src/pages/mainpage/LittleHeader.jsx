@@ -5,9 +5,9 @@ import { Button } from "../../components/ui/button";
 import useStore from "../../utility/hooks/useStore";
 import { updateGroupData } from "../../utility/handleFirestore";
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
-  const { group, setGroup } = useStore();
+  const { group, tempGroupId } = useStore();
   const { groupName, expenses, history } = group;
-  const groupId = "R9jYevBIidQsWX4tR3PW";
+
   function handleClear() {
     // expenses 放入history, 清空expenses, totalBill, flow
     const newGroupData = {
@@ -18,7 +18,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
       history: [...history, ...expenses],
     };
     // 整筆group更新到火基地
-    updateGroupData(groupId, newGroupData);
+    updateGroupData(tempGroupId, newGroupData);
   }
   return (
     <div className="flex flex-wrap w-full justify-center">

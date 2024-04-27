@@ -4,7 +4,6 @@ import useStore from "../../utility/hooks/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
 import {
   updateGroupData,
-  useGetDetail,
   addGroupAndUpdateID,
 } from "../../utility/handleFirestore";
 import calcPaymentAverage from "../../utility/calcPaymentAverage";
@@ -52,7 +51,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     setsomeNewExpense,
     selected,
     setSelected,
-    shareObj,
+    tempGroupId,
     setShareObj,
   } = useStore();
   const { expenses, users } = group;
@@ -114,8 +113,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     }
   }
   //---------------temp------------------
-  const groupId = "R9jYevBIidQsWX4tR3PW";
-  useGetDetail(groupId, setGroup);
+  // const groupId = "R9jYevBIidQsWX4tR3PW";
+  // useGetDetail(groupId, setGroup);
 
   //---------------temp------------------
   useEffect(() => {
@@ -125,6 +124,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
       // addGroupAndUpdateID(group);
       // 0. start group calc or not
       if (expenses.length === 0) return;
+      console.log("start group calc");
       // 3. 計算付款&平均
       const { payment, average } = calcPaymentAverage(expenses, users);
       const { totalBill } = calcBills(payment, average, users);
@@ -132,7 +132,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
       const newGroupData = { ...group, totalBill, flow };
       // 4. totalBill, flow 塞入group
       // 4.1 整筆group更新到火基地
-      updateGroupData(groupId, newGroupData);
+      updateGroupData(group.groupId, newGroupData);
       setGroup(newGroupData);
     }
     handleGroupCalc();

@@ -16,9 +16,8 @@ import { useEffect, useState } from "react";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // temp
-
-const groupId = "R9jYevBIidQsWX4tR3PW";
-const example_expense = "example";
+// const groupId = "R9jYevBIidQsWX4tR3PW";
+// const example_expense = "example";
 //
 async function updateGroupData(groupId, newGroupData) {
   try {
@@ -34,14 +33,6 @@ async function updateGroupData(groupId, newGroupData) {
     console.log(err, "上傳失敗");
   }
 }
-// async function addGroupId(docRef) {
-//   const newGroupRef = doc(collection(db, "groups"));
-//   const {id}=newGroupRef
-//   const docSnap = await getDoc(newGroupRef);
-//   const oldData = docSnap?.data();
-//   await updateDoc(newGroupRef, {...oldData, groupId: id })
-// }
-// addGroupId();
 async function addGroupAndUpdateID(groupData) {
   const newGroupRef = doc(collection(db, "groups"));
   await addDoc(collection(db, "groups"), groupData);
@@ -50,44 +41,43 @@ async function addGroupAndUpdateID(groupData) {
   const oldData = docSnap?.data();
   // await updateDoc(newGroupRef, { ...oldData, groupId: id });
 }
-export {
-  updateGroupData,
-  addGroupAndUpdateID,
-  useGetDetail,
-  useClerkDataToFirestore,
-};
+export { updateGroupData, addGroupAndUpdateID, db, useClerkDataToFirestore };
 
-function useGetDetail(groupId, setterFunction) {
-  useEffect(() => {
-    //監聽group資料
-    //設state
-    const docRef = doc(db, "groups", groupId);
-    const unsubscribe = onSnapshot(docRef, (doc) => {
-      const data = doc.data();
-      setterFunction(data);
-      console.log("Current data: ", data);
-    });
-    return () => unsubscribe();
-  }, [groupId]);
-}
+// function useGetDetail(groupId, setterFunction) {
+//   useEffect(() => {
+//     //監聽group資料
+//     //設state
+//     const docRef = doc(db, "groups", groupId);
+//     const unsubscribe = onSnapshot(docRef, (doc) => {
+//       const data = doc.data();
+//       setterFunction(data);
+//       console.log("Current data: ", data);
+//     });
+//     return () => unsubscribe();
+//   }, [groupId]);
+// }
 //input userId
 //output (firestore set)
-function useClerkDataToFirestore(userId, userObj) {
+function useClerkDataToFirestore(userId, userObj, setTempUser, setTempGroupId) {
   useEffect(() => {
-    async function handleData(userId, userObj) {
+    (async function handleData(userId, userObj, setTempUser, setTempGroupId) {
       //get user from firestore
       const docRef = doc(db, "users", userId);
       const docSnap = await getDoc(docRef);
       //if user not exist in firestore, add it
       if (docSnap.exists()) {
-        console.log("文件存在:", docSnap.data());
+        const data = docSnap.data();
+        const { inGroup } = data;
+        const firstGroupId = Object.keys(inGroup)[0];
+        console.log("文件存在:", data);
+        setTempUser(data);
+        // setTempGroupId(firstGroupId);
         return;
       } else {
         await addUserWithId(userId, userObj);
         console.log("新增成功");
       }
-    }
-    handleData(userId, userObj);
+    })(userId, userObj, setTempUser, setTempGroupId);
   }, [userId]);
 }
 

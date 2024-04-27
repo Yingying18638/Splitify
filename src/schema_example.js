@@ -66,7 +66,7 @@ const users = {
   name: "",
   email: "",
   img: "",
-  groupIds: [],
+  inGroup: {},
 };
 export { group, users };
 

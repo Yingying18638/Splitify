@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import useStore from "../../utility/hooks/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
 import calcSingleAve from "../../utility/calcSingleAve";
-import { updateGroupData, useGetDetail } from "../../utility/handleFirestore";
+import { updateGroupData } from "../../utility/handleFirestore";
 //image
 import arrow from "../../assets/arrow.png";
 import list from "../../assets/list.png";
@@ -94,7 +94,6 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
       return;
     }
   }
-  const groupId = "R9jYevBIidQsWX4tR3PW";
   function handleSubmit(e) {
     e.preventDefault();
     // 1. editExpense 算出ave
