@@ -27,13 +27,13 @@ const INITIANL_NEWEXPENSE = {
   ave: {},
 };
 const INITIANL_GROUP = {
-  groupName: "FEbatch#23",
-  groupId: "R9jYevBIidQsWX4tR3PW",
+  groupName: "",
+  groupId: "",
 
   users: [
-    { uid: "", name: "a", email: "" },
-    { uid: "", name: "b", email: "" },
-    { uid: "", name: "c", email: "" },
+    { uid: "", name: "1", email: "" },
+    { uid: "", name: "2", email: "" },
+    { uid: "", name: "3", email: "" },
     // { uid: "", name: "d", email: "" },
     // { uid: "", name: "e", email: "" },
   ],
@@ -94,8 +94,20 @@ const INITIANL_GROUP = {
   ],
   history: [],
 };
+const INITIAL_USER = {
+  uid: "",
+  name: "",
+  email: "",
+  img: "",
+  inGroup: {},
+};
 const useStore = create(
   immer((set) => ({
+    tempUser: INITIAL_USER,
+    setTempUser: (data) => set({ tempUser: data }),
+    tempGroupId: "",
+    setTempGroupId: (data) => set({ tempGroupId: data }),
+
     newExpense: INITIANL_NEWEXPENSE,
     setNewExpense: (data) => set({ newExpense: data }),
     setsomeNewExpense: (value, property) =>
