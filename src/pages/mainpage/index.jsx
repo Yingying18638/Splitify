@@ -20,7 +20,12 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
-const Mainpage = ({ isSideBarOpen, setIsSideBarOpen }) => {
+const Mainpage = ({
+  isSideBarOpen,
+  setIsSideBarOpen,
+  sideBarClass,
+  setSideBarClass,
+}) => {
   const { group, setTempUser, setTempGroupId } = useStore();
   const { expenses, history } = group;
   const initialDetailDisplay = expenses?.reduce((acc, cur) => {
@@ -61,15 +66,20 @@ const Mainpage = ({ isSideBarOpen, setIsSideBarOpen }) => {
   return (
     <>
       <main className="">
-        {isSideBarOpen ? (
+        {/* {isSideBarOpen ? (
           <SideBar
             isSideBarOpen={isSideBarOpen}
             setIsSideBarOpen={setIsSideBarOpen}
           />
         ) : (
           ""
-        )}
-
+        )} */}
+        <SideBar
+          isSideBarOpen={isSideBarOpen}
+          setIsSideBarOpen={setIsSideBarOpen}
+          sideBarClass={sideBarClass}
+          setSideBarClass={setSideBarClass}
+        ></SideBar>
         <Tabs
           defaultValue="account"
           className="w-[360px] md:w-[600px] mt-16 pt-4 mx-auto flex flex-col items-center justify-center flex-wrap"

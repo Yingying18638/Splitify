@@ -12,12 +12,20 @@ import LandingPage from "../pages/landingpage";
 
 const RootLayout = ({ children }) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const mobileSideBar = "md:hidden";
+  const desktopSideBar = "hidden md:block";
+  const [sideBarClass, setSideBarClass] = useState(mobileSideBar);
   return (
     <>
       <header className="bg-[#dda15e] h-16 fixed top-0 w-full flex items-center gap-10 justify-center">
         <div className="fixed left-5 ">
           <SignedIn>
-            <Menu onClick={() => setIsSideBarOpen(true)}></Menu>
+            <Menu
+              onClick={() => {
+                setIsSideBarOpen(true);
+                setSideBarClass(mobileSideBar);
+              }}
+            ></Menu>
           </SignedIn>
         </div>
         <img src={logo} alt="logo" className="w-32  " />
@@ -35,6 +43,8 @@ const RootLayout = ({ children }) => {
           <Mainpage
             isSideBarOpen={isSideBarOpen}
             setIsSideBarOpen={setIsSideBarOpen}
+            sideBarClass={sideBarClass}
+            setSideBarClass={setSideBarClass}
           />
         ) : (
           <LandingPage />
