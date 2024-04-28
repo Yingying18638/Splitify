@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/logo-no-background.svg";
 import { Menu } from "lucide-react";
 import {
+  SignIn,
   SignInButton,
   SignedIn,
   SignedOut,
@@ -9,8 +10,11 @@ import {
 } from "@clerk/clerk-react";
 import Mainpage from "../pages/mainpage";
 import LandingPage from "../pages/landingpage";
-
+import { useSearchParams } from "react-router-dom";
 const RootLayout = ({ children }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const groupIdCreated = searchParams.get("id");
+  const isGoingToAGroup = Boolean(groupIdCreated);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const mobileSideBar = "md:hidden";
   const desktopSideBar = "hidden md:block";
@@ -31,7 +35,7 @@ const RootLayout = ({ children }) => {
         <img src={logo} alt="logo" className="w-32  " />
         <div className="fixed right-5 ">
           <SignedOut>
-            <SignInButton></SignInButton>
+            <SignInButton mode="modal"></SignInButton>
           </SignedOut>
           <SignedIn>
             <UserButton className="right-0"></UserButton>
@@ -39,16 +43,15 @@ const RootLayout = ({ children }) => {
         </div>
       </header>
       <div className="bg-[#fefae0] h-[100vh]">
-        {children === "signedIn" ? (
+        <SignedIn>
           <Mainpage
             isSideBarOpen={isSideBarOpen}
             setIsSideBarOpen={setIsSideBarOpen}
             sideBarClass={sideBarClass}
             setSideBarClass={setSideBarClass}
           />
-        ) : (
-          <LandingPage />
-        )}
+        </SignedIn>
+        <SignedOut>{isGoingToAGroup ? <SignIn /> : <LandingPage />}</SignedOut>
       </div>
     </>
   );

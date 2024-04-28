@@ -13,6 +13,7 @@ import Result from "./Result";
 import { Chart } from "./Chart";
 import SideBar from "./SideBar";
 import { DrawerDialogDemo } from "./DrawerDialogDemo";
+import JoinGroupDialog from "./JoinGroupDialog";
 //---------------------- shadcn ui------------------------------------------------
 import {
   Tabs,
@@ -20,6 +21,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
+import { Button } from "../../components/ui/button";
+
 const Mainpage = ({
   isSideBarOpen,
   setIsSideBarOpen,
@@ -66,14 +69,6 @@ const Mainpage = ({
   return (
     <>
       <main className="">
-        {/* {isSideBarOpen ? (
-          <SideBar
-            isSideBarOpen={isSideBarOpen}
-            setIsSideBarOpen={setIsSideBarOpen}
-          />
-        ) : (
-          ""
-        )} */}
         <SideBar
           isSideBarOpen={isSideBarOpen}
           setIsSideBarOpen={setIsSideBarOpen}
@@ -135,7 +130,7 @@ const Mainpage = ({
           displayEditExpense={displayEditExpense}
           setDisplayEditExpense={setDisplayEditExpense}
         />
-        {/* <DrawerDialogDemo /> */}
+        <JoinGroupDialog></JoinGroupDialog>
       </main>
     </>
   );

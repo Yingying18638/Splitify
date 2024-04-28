@@ -22,7 +22,7 @@ const SideBar = ({
   sideBarClass,
   setSideBarClass,
 }) => {
-  // useListenGroups();
+  useListenGroups();
 
   const { tempUser, setGroup, tempGroupId, setTempGroupId } = useStore();
   const { inGroup } = tempUser;
@@ -34,12 +34,12 @@ const SideBar = ({
   const [color, setColor] = useState(bgObject);
   const mobileSideBar = "md:hidden";
   const desktopSideBar = "hidden md:block";
-  if (window.innerWidth > 768 && sideBarClass === mobileSideBar) {
-    setSideBarClass(desktopSideBar);
-    setIsSideBarOpen(false);
-  }
   const isInAnyGroup = groupIds.length > 0;
   useEffect(() => {
+    if (window.innerWidth > 768 && sideBarClass === mobileSideBar) {
+      setSideBarClass(desktopSideBar);
+      setIsSideBarOpen(false);
+    }
     const handleResize = () => {
       if (window.innerWidth > 768 && sideBarClass === mobileSideBar) {
         setSideBarClass(desktopSideBar);

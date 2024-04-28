@@ -15,8 +15,9 @@ input[type="checkbox"] {
   background-color: slategrey !important;
 }
 .cl-footerActionLink {
-  background-color: slategray !important;
+  color: slategray !important;
 }
-.cl-userButtonTrigger .cl-button {
-  right: 0;
+.cl-signIn-root {
+  margin: auto;
+  padding-top: 100px;
 }
