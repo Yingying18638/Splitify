@@ -3,7 +3,10 @@ import React, { useState, useEffect } from "react";
 import useStore from "../../utility/hooks/useStore";
 import getExpensesArranged from "../../utility/getExpensesArranged";
 import { useUser, useAuth } from "@clerk/clerk-react";
-import { useClerkDataToFirestore } from "../../utility/handleFirestore";
+import {
+  useUserData,
+  useCheckUrlSetDialog,
+} from "../../utility/handleFirestore";
 //----------------------component------------------------------------------------
 import LittleHeader from "./LittleHeader";
 import AddExpense from "./AddExpense";
@@ -44,6 +47,7 @@ const Mainpage = ({
     display: "hidden",
     text: "查看",
   });
+  const [isGrpDialogOpen, setIsGrpDialogOpen] = useState(false);
   const expensesArrToRender = getExpensesArranged(expenses);
   const clearedExpensesToRender = getExpensesArranged(history);
   function handleDisplayHistory() {
@@ -65,7 +69,8 @@ const Mainpage = ({
     img: imageUrl,
     inGroup: {},
   };
-  useClerkDataToFirestore(userId, userObj, setTempUser, setTempGroupId);
+  useUserData(userId, userObj, setIsGrpDialogOpen);
+  // useCheckUrlSetDialog(setIsGrpDialogOpen);
   return (
     <>
       <main className="">
@@ -130,7 +135,7 @@ const Mainpage = ({
           displayEditExpense={displayEditExpense}
           setDisplayEditExpense={setDisplayEditExpense}
         />
-        <JoinGroupDialog></JoinGroupDialog>
+        {isGrpDialogOpen ? <JoinGroupDialog /> : ""}
       </main>
     </>
   );

@@ -20,10 +20,11 @@ export {
   updateGroupData,
   db,
   getData,
-  useClerkDataToFirestore,
+  useUserData,
   addDocWithId,
   useListenUsers,
   useListenGroups,
+  useCheckUrlSetDialog,
 };
 // temp
 // const groupId = "R9jYevBIidQsWX4tR3PW";
@@ -52,26 +53,40 @@ async function updateGroupData(groupId, newGroupData) {
 }
 //input userId,userObj,setTempUser,setTempGroupId
 //output (firestore set, tempUser set)
-function useClerkDataToFirestore(userId, userObj, setTempUser, setTempGroupId) {
+function useUserData(userId, userObj, setIsGrpDialogOpen) {
+  const { setTempUser, setTempGroupId } = useStore();
   useEffect(() => {
-    (async function handleData(userId, userObj, setTempUser, setTempGroupId) {
+    async function handleClerkDataToFirestore(userId, userObj) {
       //get user from firestore
       const docRef = doc(db, "users", userId);
       const docSnap = await getDoc(docRef);
       //if user not exist in firestore, add it
       if (docSnap.exists()) {
         const data = docSnap.data();
-        const { inGroup } = data;
-        const firstGroupId = Object.keys(inGroup)[0];
+        // const { inGroup } = data;
+        // const firstGroupId = Object.keys(inGroup)[0];
         console.log("文件存在:", data);
         setTempUser(data);
         // setTempGroupId(firstGroupId);
-        return;
+        return data;
       } else {
         await addDocWithId(userId, "users", userObj);
         console.log("新增成功");
       }
-    })(userId, userObj, setTempUser, setTempGroupId);
+    }
+    async function getDataAndCheckUrl(userId, userObj) {
+      const data = await handleClerkDataToFirestore(userId, userObj);
+      let params = new URLSearchParams(document.location.search.substring(1));
+      let gId = params.get("id");
+      if (!gId) return;
+      const { inGroup } = data;
+      const isAlreadyInGroup = Object.keys(inGroup).find(
+        (item) => item === gId
+      );
+      if (isAlreadyInGroup) return;
+      setIsGrpDialogOpen(true);
+    }
+    getDataAndCheckUrl(userId, userObj);
   }, [userId]);
 }
 //監聽groups
@@ -122,8 +137,20 @@ async function getData(db, collection, docId, setterFunction) {
   }
 }
 
-//input: url
+//input: url,userId
 //output:
-// function
+function useCheckUrlSetDialog(setterFunction) {
+  const { tempUser } = useStore();
+  const { inGroup } = tempUser;
+  useEffect(() => {
+    let params = new URLSearchParams(document.location.search.substring(1));
+    let gId = params.get("id");
+    if (!gId) return;
+
+    const isAlreadyInGroup = Object.keys(inGroup).find((item) => item === gId);
+    if (isAlreadyInGroup) return;
+    setterFunction(true);
+  }, [tempUser.uid]);
+}
 //是否已加入 ? return : 要加入嗎
 //確定-> 更新group, user
