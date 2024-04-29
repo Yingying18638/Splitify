@@ -26,7 +26,6 @@ const SideBar = ({
 
   const { tempUser, setGroup, tempGroupId, setTempGroupId } = useStore();
   const { inGroup } = tempUser;
-  console.log(inGroup, "我是什麼");
   const groupIds = Object.keys(inGroup).length ? Object.keys(inGroup) : [];
   const bgObject = groupIds.length
     ? groupIds.reduce((acc, groupId) => {
@@ -34,7 +33,6 @@ const SideBar = ({
         return acc;
       }, {})
     : {};
-  console.log(groupIds, "我是什麼");
 
   const [color, setColor] = useState(bgObject);
   const mobileSideBar = "md:hidden";
@@ -91,31 +89,31 @@ const SideBar = ({
         className={`bg-black opacity-70 w-full h-[100vh] fixed top-0 ${isSideBarOpen ? "" : "hidden"}`}
       ></div>
       <div
-        className={`bg-[#606c38] w-40 h-full fixed  top-0 left-0 z-11 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
+        className={`bg-[#283618] w-40 h-full fixed  top-0 left-0 z-11 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
       >
         {sideBarClass === mobileSideBar && (
           <X
-            className="absolute right-2 w-5 top-2 hover:bg-slate-400"
+            className="absolute right-2 w-5 top-2 hover:bg-[#606c38]"
             onClick={() => {
               setIsSideBarOpen(false);
               setSideBarClass(desktopSideBar);
             }}
           ></X>
         )}
-        <nav className="pt-20 pl-10">
-          <div>
-            已加入的群組
+        <nav>
+          <div className="pt-20 pl-10 text-[#dda15e]">
+            群組
             {isInAnyGroup &&
               Object.entries(inGroup).map(([groupId, groupName]) => {
                 return (
                   <div
-                    className={`pt-5 pl-2 hover:bg-slate-200 ${color[groupId]}`}
+                    className={`mt-2 p-2 rounded mr-5 hover:bg-slate-200  ${color[groupId]}`}
                     key={groupId}
                     id={groupId}
                     onClick={(e) => {
                       const { id } = e.target;
                       console.log(id);
-                      setColor({ ...bgObject, [id]: "bg-slate-400" });
+                      setColor({ ...bgObject, [id]: "bg-[#606c38]" });
                       setTempGroupId(id);
                     }}
                   >
@@ -126,8 +124,8 @@ const SideBar = ({
             {/* <Button variant="secondary" className="mt-5 ml-2">
         + 群組
       </Button> */}
-            <DrawerDialogDemo />
           </div>
+          <DrawerDialogDemo />
         </nav>
       </div>
     </>

@@ -198,7 +198,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
               <SelectScrollUpButton />
               {group?.users?.map(({ name }) => {
                 return (
-                  <SelectItem name="payer" key={name} value={name}>
+                  <SelectItem name="payer" key={name} value={name || " "}>
                     {name}
                   </SelectItem>
                 );

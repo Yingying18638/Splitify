@@ -109,11 +109,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
       return;
     }
   }
-  //---------------temp------------------
-  // const groupId = "R9jYevBIidQsWX4tR3PW";
-  // useGetDetail(groupId, setGroup);
-
-  //---------------temp------------------
   useEffect(() => {
     setSelected(options);
     function handleGroupCalc() {
@@ -157,11 +152,14 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   }
   return (
     <>
+      <div
+        className={`bg-black opacity-70 w-full h-[100vh] fixed top-0 ${displayAddExpense}`}
+      ></div>
       <form
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense}  fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-slate-400 h-full w-full sm:w-[360px] sm:h-[800px] p-3`}
+        className={`${displayAddExpense}  fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-slate-400 h-full w-full sm:w-[360px] sm:h-[800px] p-3 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">新增花費</h1>
@@ -233,9 +231,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             </SelectTrigger>
             <SelectContent className="">
               <SelectScrollUpButton />
-              {group?.users?.map(({ name }) => {
+              {group?.users.map(({ name }) => {
                 return (
-                  <SelectItem name="payer" key={name} value={name}>
+                  <SelectItem name="payer" key={name} value={name || " "}>
                     {name}
                   </SelectItem>
                 );

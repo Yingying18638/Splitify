@@ -105,12 +105,14 @@ const Mainpage = ({
               setDisplayEditExpense={setDisplayEditExpense}
               children={true}
             />
-            <p
-              className="block w-32  mx-auto mt-5"
-              onClick={handleDisplayHistory}
-            >
-              {displayHistory?.text}已結清紀錄
-            </p>
+            {clearedExpensesToRender.length !== 0 && (
+              <p
+                className="block w-32  mx-auto mt-5"
+                onClick={handleDisplayHistory}
+              >
+                {displayHistory?.text}已結清紀錄
+              </p>
+            )}
             <Record
               displayHistory={displayHistory}
               expensesArrToRender={clearedExpensesToRender}
