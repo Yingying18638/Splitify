@@ -26,14 +26,16 @@ const SideBar = ({
 
   const { tempUser, setGroup, tempGroupId, setTempGroupId } = useStore();
   const { inGroup } = tempUser;
-  // if (!inGroup) return;
-  const groupIds = Object.keys(inGroup).length
-    ? Object.keys(inGroup).length
-    : [];
-  const bgObject = groupIds.reduce((acc, groupId) => {
-    acc[groupId] = "";
-    return acc;
-  }, {});
+  console.log(inGroup, "我是什麼");
+  const groupIds = Object.keys(inGroup).length ? Object.keys(inGroup) : [];
+  const bgObject = groupIds.length
+    ? groupIds.reduce((acc, groupId) => {
+        acc[groupId] = "";
+        return acc;
+      }, {})
+    : {};
+  console.log(groupIds, "我是什麼");
+
   const [color, setColor] = useState(bgObject);
   const mobileSideBar = "md:hidden";
   const desktopSideBar = "hidden md:block";

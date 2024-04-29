@@ -15,6 +15,10 @@ const RootLayout = ({ children }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const groupIdCreated = searchParams.get("id");
   const isGoingToAGroup = Boolean(groupIdCreated);
+  console.log(isGoingToAGroup, "isGoingToAGroup");
+  if (isGoingToAGroup) {
+    localStorage.setItem("groupIdCreated", groupIdCreated);
+  }
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const mobileSideBar = "md:hidden";
   const desktopSideBar = "hidden md:block";

@@ -66,7 +66,7 @@ function useUserData(userId, userObj, setIsGrpDialogOpen) {
         // const { inGroup } = data;
         // const firstGroupId = Object.keys(inGroup)[0];
         console.log("文件存在:", data);
-        // setTempUser(data);
+        setTempUser(data);
         // setTempGroupId(firstGroupId);
         return data;
       } else {
@@ -77,6 +77,7 @@ function useUserData(userId, userObj, setIsGrpDialogOpen) {
     async function getDataAndCheckUrl(userId, userObj) {
       const data = await handleClerkDataToFirestore(userId, userObj);
       // setTempUser(data);
+      console.log(document.location, "我在哪");
       console.log(data, "iam data");
       let params = new URLSearchParams(document.location.search.substring(1));
       let gId = params.get("id");
