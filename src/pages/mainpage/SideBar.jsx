@@ -26,7 +26,10 @@ const SideBar = ({
 
   const { tempUser, setGroup, tempGroupId, setTempGroupId } = useStore();
   const { inGroup } = tempUser;
-  const groupIds = Object.keys(inGroup);
+  // if (!inGroup) return;
+  const groupIds = Object.keys(inGroup).length
+    ? Object.keys(inGroup).length
+    : [];
   const bgObject = groupIds.reduce((acc, groupId) => {
     acc[groupId] = "";
     return acc;

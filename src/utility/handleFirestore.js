@@ -66,7 +66,7 @@ function useUserData(userId, userObj, setIsGrpDialogOpen) {
         // const { inGroup } = data;
         // const firstGroupId = Object.keys(inGroup)[0];
         console.log("文件存在:", data);
-        setTempUser(data);
+        // setTempUser(data);
         // setTempGroupId(firstGroupId);
         return data;
       } else {
@@ -76,6 +76,8 @@ function useUserData(userId, userObj, setIsGrpDialogOpen) {
     }
     async function getDataAndCheckUrl(userId, userObj) {
       const data = await handleClerkDataToFirestore(userId, userObj);
+      // setTempUser(data);
+      console.log(data, "iam data");
       let params = new URLSearchParams(document.location.search.substring(1));
       let gId = params.get("id");
       if (!gId) return;
@@ -119,7 +121,7 @@ function useListenUsers() {
     const docRef = doc(db, "users", uid);
     const unsubscribe = onSnapshot(docRef, (doc) => {
       const data = doc.data();
-      setTempUser(data); // 從任一群組刪別人時要更新別人的inGroup
+      // setTempUser(data); // 從任一群組刪別人時要更新別人的inGroup
       console.log("監聽到的user data: ", data);
     });
     return () => unsubscribe();
