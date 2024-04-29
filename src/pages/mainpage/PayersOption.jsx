@@ -13,7 +13,7 @@ const PayersOption = ({
   const { morePayers } = newExpense;
   return (
     <section
-      className={`fixed z-[51] ${displayPayersOpt} bg-blue-200 top-1/2 right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-1/2 sm:h-[800px] sm:w-[270px] md:w-[360px] p-2`}
+      className={`rounded-lg fixed z-[51] ${displayPayersOpt} bg-blue-200 top-1/2 right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-1/2 sm:h-[800px] sm:w-[270px] md:w-[360px] p-2`}
     >
       <img
         src={closeIcon}
