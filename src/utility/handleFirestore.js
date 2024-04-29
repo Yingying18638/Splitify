@@ -25,11 +25,10 @@ export {
   useListenUsers,
   useListenGroups,
   useCheckUrlSetDialog,
+  useClerkDataToFirestore,
+  justGetData,
+  updateOneField,
 };
-// temp
-// const groupId = "R9jYevBIidQsWX4tR3PW";
-// const example_expense = "example";
-//
 async function addDocWithId(docId, collection, data) {
   try {
     await setDoc(doc(db, collection, docId), data);
@@ -76,11 +75,10 @@ function useUserData(userId, userObj, setIsGrpDialogOpen) {
     }
     async function getDataAndCheckUrl(userId, userObj) {
       const data = await handleClerkDataToFirestore(userId, userObj);
-      // setTempUser(data);
       console.log(document.location, "我在哪");
-      console.log(data, "iam data");
-      let params = new URLSearchParams(document.location.search.substring(1));
-      let gId = params.get("id");
+      const gId = localStorage.getItem("groupIdCreated");
+      // let params = new URLSearchParams(document.location.search.substring(1));
+      // let gId = params.get("id");
       if (!gId) return;
       const { inGroup } = data;
       const isAlreadyInGroup = Object.keys(inGroup).find(
@@ -88,8 +86,12 @@ function useUserData(userId, userObj, setIsGrpDialogOpen) {
       );
       if (isAlreadyInGroup) return;
       setIsGrpDialogOpen(true);
+      return true;
     }
-    getDataAndCheckUrl(userId, userObj);
+    async function temp(userId, userObj) {
+      const tf = await getDataAndCheckUrl(userId, userObj);
+    }
+    temp(userId, userObj);
   }, [userId]);
 }
 //監聽groups
@@ -133,13 +135,45 @@ async function getData(db, collection, docId, setterFunction) {
     const docRef = doc(db, collection, docId);
     const docSnap = await getDoc(docRef);
     const data = docSnap?.data();
-    console.log(data, "我拿到data");
     setterFunction(data);
   } catch (e) {
     console.log(e);
   }
 }
+async function justGetData(db, collection, docId) {
+  try {
+    const docRef = doc(db, collection, docId);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap?.data();
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+function useClerkDataToFirestore(userId, userObj) {
+  const { setTempUser, setTempGroupId } = useStore();
 
+  useEffect(() => {
+    (async function handleData(userId, userObj) {
+      //get user from firestore
+      const docRef = doc(db, "users", userId);
+      const docSnap = await getDoc(docRef);
+      //if user not exist in firestore, add it
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const { inGroup } = data;
+        const firstGroupId = Object.keys(inGroup)[0];
+        console.log("文件存在:", data);
+        setTempUser(data);
+        // setTempGroupId(firstGroupId);
+        return data;
+      } else {
+        await addDocWithId(userId, "users", userObj);
+        console.log("新增成功");
+      }
+    })(userId, userObj);
+  }, [userId]);
+}
 //input: url,userId
 //output:
 function useCheckUrlSetDialog(setterFunction) {
@@ -157,3 +191,17 @@ function useCheckUrlSetDialog(setterFunction) {
 }
 //是否已加入 ? return : 要加入嗎
 //確定-> 更新group, user
+
+async function updateOneField(collection, docId, fieldToSet, data) {
+  try {
+    const fieldRef = doc(db, collection, docId);
+    const docSnap = await getDoc(fieldRef);
+    const oldData = docSnap?.data();
+    const oldFieldData = oldData[fieldToSet];
+    const newFieldData = [...oldFieldData, data];
+    console.log(oldData, oldFieldData, newFieldData);
+    await updateDoc(fieldRef, { [fieldToSet]: newFieldData });
+  } catch (error) {
+    console.log(error);
+  }
+}

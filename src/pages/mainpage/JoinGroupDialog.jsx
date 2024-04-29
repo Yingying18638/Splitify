@@ -1,16 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../../components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-const JoinGroupDialog = () => {
+import useStore from "../../utility/hooks/useStore";
+import {
+  getData,
+  justGetData,
+  db,
+  updateOneField,
+  addDocWithId,
+} from "../../utility/handleFirestore";
+const JoinGroupDialog = ({ isGrpDialogOpen, setIsGrpDialogOpen }) => {
+  const { tempUser, setTempUser } = useStore();
+  const { inGroup, img, uid } = tempUser;
+  const [grpNameToJoin, setGrpNameToJoin] = useState("");
+  useEffect(() => {
+    async function getGrpName() {
+      try {
+        const gId = localStorage.getItem("groupIdCreated");
+        const grpData = await justGetData(db, "groups", gId);
+        const grpName = grpData?.groupName;
+        setGrpNameToJoin(grpName);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    getGrpName();
+  }, []);
+  async function handleJoinGroup() {
+    const gId = localStorage.getItem("groupIdCreated");
+    const { inGroup, img, ...dataForGrp } = tempUser;
+    const dataForUsr = {
+      ...tempUser,
+      inGroup: { ...inGroup, [gId]: grpNameToJoin },
+    };
+    // update group and user data
+    await updateOneField("groups", gId, "users", dataForGrp);
+    await addDocWithId(uid, "users", dataForUsr);
+    // setState
+    setTempUser(dataForUsr);
+    handleCloseModal();
+  }
+  function handleCloseModal() {
+    localStorage.removeItem("groupIdCreated");
+    setIsGrpDialogOpen(false);
+  }
   return (
-    <Dialog defaultOpen>
+    <Dialog
+      defaultOpen
+      open={isGrpDialogOpen}
+      onOpenChange={setIsGrpDialogOpen}
+    >
       <DialogTrigger>Open</DialogTrigger>
       <DialogContent
         onInteractOutside={(e) => {
@@ -21,11 +68,13 @@ const JoinGroupDialog = () => {
         }}
       >
         <DialogHeader>
-          <DialogTitle>要加入ＸＸＸ群組嗎？</DialogTitle>
+          <DialogTitle>要加入{grpNameToJoin}嗎？</DialogTitle>
           <DialogDescription>加入後即可參與分帳</DialogDescription>
         </DialogHeader>
-        <Button variant="secondary">取消</Button>
-        <Button>好</Button>
+        <Button variant="secondary" onClick={handleCloseModal}>
+          取消
+        </Button>
+        <Button onClick={handleJoinGroup}>好</Button>
       </DialogContent>
     </Dialog>
   );

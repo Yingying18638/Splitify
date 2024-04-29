@@ -60,11 +60,12 @@ const Mainpage = ({
   //get user from clerk
   const userId = useAuth()?.userId;
   const user = useUser()?.user;
-  const { fullName, imageUrl, emailAddresses } = user && user;
+  const { fullName, imageUrl, emailAddresses, username } = user && user;
   const email = emailAddresses[0].emailAddress;
+  console.log(user, "來自clerk");
   const userObj = {
     uid: userId,
-    name: fullName,
+    name: fullName || username,
     email,
     img: imageUrl,
     inGroup: {},
@@ -135,7 +136,14 @@ const Mainpage = ({
           displayEditExpense={displayEditExpense}
           setDisplayEditExpense={setDisplayEditExpense}
         />
-        {isGrpDialogOpen ? <JoinGroupDialog /> : ""}
+        {isGrpDialogOpen ? (
+          <JoinGroupDialog
+            isGrpDialogOpen={isGrpDialogOpen}
+            setIsGrpDialogOpen={setIsGrpDialogOpen}
+          />
+        ) : (
+          ""
+        )}
       </main>
     </>
   );
