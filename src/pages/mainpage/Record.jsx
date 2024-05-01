@@ -50,7 +50,7 @@ const Record = ({
     alert("刪除成功");
   }
   return (
-    <section className={`${displayHistory?.display}`}>
+    <section className={`${displayHistory?.display} mt-24 `}>
       {expensesArrToRender.map(([date, expenses]) => {
         return (
           <div key={date}>
@@ -91,7 +91,7 @@ const Record = ({
                     <figure>
                       <img src={list} alt="icon" />
                     </figure>
-                    <figcaption className="ml-2 w-[200px] md:w-[400px]">
+                    <figcaption className="ml-2 w-[150px] md:w-[400px]">
                       <p>{item}</p>
                       <p>
                         {isSinglePayer
@@ -127,9 +127,9 @@ const Record = ({
                           </p>
                           <p className="text-slate-500 text-sm">{note}</p>
                         </div>
-                        <div className="w-40 h-20 bg-slate-200">
+                        {/* <div className="w-40 h-20 bg-slate-200">
                           <img alt="圖片" />
-                        </div>
+                        </div> */}
                       </figure>
                       {children && (
                         <EditDeleteButtons

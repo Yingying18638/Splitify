@@ -86,10 +86,10 @@ const SideBar = ({
   return (
     <>
       <div
-        className={`bg-black opacity-70 w-full h-[100vh] fixed top-0 ${isSideBarOpen ? "" : "hidden"}`}
+        className={`bg-black opacity-70 w-full h-[100vh] fixed z-[9] top-0 ${isSideBarOpen ? "" : "hidden"}`}
       ></div>
       <div
-        className={`bg-[#283618] w-40 h-full fixed  top-0 left-0 z-11 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
+        className={`bg-[#283618] w-40 h-full fixed  top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
       >
         {sideBarClass === mobileSideBar && (
           <X

@@ -153,13 +153,13 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   return (
     <>
       <div
-        className={`bg-black opacity-70 w-full h-[100vh] fixed top-0 ${displayAddExpense}`}
+        className={`bg-black opacity-70 w-full h-[100vh] z-[11] fixed top-0 ${displayAddExpense}`}
       ></div>
       <form
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense}  fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-slate-400 h-full w-full sm:w-[360px] sm:h-[800px] p-3 rounded-lg`}
+        className={`${displayAddExpense} space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#869456] h-full w-full sm:w-[360px] sm:h-[800px] p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">新增花費</h1>
@@ -174,16 +174,16 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setSelected(options);
             setShareObj(usersObj);
           }}
-          className="absolute right-2 top-2 cursor-pointer"
+          className="absolute right-2 top-2 cursor-pointer "
         />
         <figure className="flex items-center">
-          <img src={list} alt="icon" className="w-9 h-9 mr-3" />
+          <img src={list} alt="icon" className="w-9 h-9 mr-9" />
           <figcaption>
             <label htmlFor="item">項目</label>
             <Input
+              className="mt-1"
               placeholder="晚餐"
               id="item"
-              className=""
               value={newExpense.item}
               // required
               onChange={(e) =>
@@ -193,11 +193,14 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           </figcaption>
         </figure>
         <figure className="flex items-center">
-          <div className="w-9 h-9 bg-slate-200 mr-3 p-1">NTD</div>
+          <div className="w-9 h-9 bg-slate-200 rounded mr-9 pt-2 p-1 text-sm">
+            NTD
+          </div>
           <figcaption>
             <label htmlFor="tw_amount">金額</label>
             <Input
               required
+              className="mt-1"
               placeholder="500"
               id="tw_amount" //
               value={total_amount || ""}
@@ -214,7 +217,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           </figcaption>
         </figure>
         <div className="flex items-center gap-2">
-          <label htmlFor="payer">誰先付</label>
+          <label className="block w-16" htmlFor="payer">
+            誰先付
+          </label>
           <Select
             value={singlePayerOnly || ""}
             id="payer"
@@ -264,7 +269,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         </p>
 
         <div className="flex items-center gap-2 ">
-          <label htmlFor="participant">分給誰</label>
+          <label className="block w-16" htmlFor="participant">
+            分給誰
+          </label>
           <MultiSelect
             selected={selected}
             setSelected={setSelected}
@@ -290,10 +297,12 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         >
           此分帳尚未完成
         </p>
-        <label htmlFor="date" className="block">
-          日期
-        </label>
-        <DatePicker id="date"></DatePicker>
+        {/* <label htmlFor="date" className="block">
+          className="block w-16"
+        </label> */}
+        <div className="flex items-center gap-10">
+          日期<DatePicker id="date"></DatePicker>
+        </div>
         <Textarea
           placeholder="備註"
           value={note}
@@ -301,8 +310,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setNewExpense({ ...newExpense, note: e.target.value })
           }
         ></Textarea>
-        <label htmlFor="uploadImg">圖片</label>
-        <input
+        {/* <label htmlFor="uploadImg">圖片</label> */}
+        {/* <input
           type="file"
           accept=".jpg, .jpeg, .png"
           id="uploadImg"
@@ -315,12 +324,14 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               console.log(src);
             }
           }}
-        />
+        /> */}
         <div className="bg-slate-200 w-40 h-30">
           {/* {imgSrc ? <img src={imgSrc} alt="圖片預覽" className="w-25" /> : ""} */}
         </div>
         <Button
           type="reset"
+          variant="secondary"
+          className="ml-[calc(100%-120px)]"
           onClick={() => {
             setDisplayAddExpense("hidden");
             setDisplayParticipantOpt("hidden");

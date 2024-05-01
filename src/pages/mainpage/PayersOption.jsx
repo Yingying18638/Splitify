@@ -13,7 +13,7 @@ const PayersOption = ({
   const { morePayers } = newExpense;
   return (
     <section
-      className={`rounded-lg fixed z-[51] ${displayPayersOpt} bg-blue-200 top-1/2 right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-1/2 sm:h-[800px] sm:w-[270px] md:w-[360px] p-2`}
+      className={`rounded-lg fixed z-[51] ${displayPayersOpt} bg-[#f3e8a2] top-1/2 right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-1/2 sm:h-[800px] sm:w-[270px] md:w-[360px] p-3 px-4`}
     >
       <img
         src={closeIcon}
@@ -23,7 +23,7 @@ const PayersOption = ({
       />
       <p className="text-center">多人付款</p>
       <p
-        className={`text-right mr-6 ${payersAmountGap === 0 ? "" : "text-red-500"}`}
+        className={`text-right mr-6 my-2 ${payersAmountGap === 0 ? "" : "text-red-500"}`}
       >
         剩餘金額 {payersAmountGap} 元
       </p>

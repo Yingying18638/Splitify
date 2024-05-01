@@ -83,16 +83,18 @@ const Mainpage = ({
         ></SideBar>
         <Tabs
           defaultValue="account"
-          className="w-[360px] md:w-[600px] mt-16 pt-4 mx-auto flex flex-col items-center justify-center flex-wrap"
+          className="w-[360px] md:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap "
         >
-          <TabsList>
-            <TabsTrigger value="account" className="w-32">
+          {/* <div className="fixed bg-[#121212] w-full h-4"> */}
+          <TabsList className="fixed left-[50%] md:ml-[80px] translate-x-[-50%] top-[5rem] bg-[#123456] w-full rounded-none">
+            <TabsTrigger value="account" className="w-32 ">
               帳目
             </TabsTrigger>
             <TabsTrigger value="calculation" className="w-32">
               結算
             </TabsTrigger>
           </TabsList>
+          {/* </div> */}
           <TabsContent value="account">
             <LittleHeader
               displayAddExpense={displayAddExpense}
@@ -107,7 +109,7 @@ const Mainpage = ({
             />
             {clearedExpensesToRender.length !== 0 && (
               <p
-                className="block w-32  mx-auto mt-5"
+                className="block w-32  mx-auto mt-20 hover:underline cursor-pointer "
                 onClick={handleDisplayHistory}
               >
                 {displayHistory?.text}已結清紀錄

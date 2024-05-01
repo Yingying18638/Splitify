@@ -27,7 +27,7 @@ export function DrawerDialogDemo() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" className="fixed z-50 mt-5 ml-10">
+          <Button variant="outline" className="fixed z-50 mt-5  md:ml-8 m-0">
             + 群組
           </Button>
         </DialogTrigger>

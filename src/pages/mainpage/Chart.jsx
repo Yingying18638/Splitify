@@ -48,5 +48,13 @@ export function Chart() {
     ],
   };
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
-  return <Bar options={options} data={data} width={360} height={300} />;
+  return (
+    <Bar
+      options={options}
+      data={data}
+      width={360}
+      height={300}
+      className="mt-24"
+    />
+  );
 }

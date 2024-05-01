@@ -15,7 +15,7 @@ const ParticipantsOptions = ({
 
   return (
     <section
-      className={`fixed ${displayParticipantOpt} rounded-lg z-[51] top-1/2 right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-1/2 sm:h-[800px] sm:w-[270px] md:w-[360px] bg-purple-200 p-2`}
+      className={`fixed ${displayParticipantOpt} rounded-lg z-[51] top-1/2 right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-1/2 sm:h-[800px] sm:w-[270px] md:w-[360px] bg-[#e3b279] pt-3 px-4`}
     >
       <img
         src={closeIcon}
@@ -24,12 +24,15 @@ const ParticipantsOptions = ({
         className="absolute right-2 top-2 cursor-pointer"
       />
       <p className="text-center">如何分擔</p>
+      <p className="pt-1 text-sm text-center text-[#fefae0]">
+        份數與金額擇一填寫即可
+      </p>
       <p
-        className={`text-right mr-6 ${cusAmountGap === 0 ? "" : "text-red-500"}`}
+        className={`text-right my-2 mr-6 ${cusAmountGap === 0 ? "" : "text-red-500"}`}
       >
         剩餘金額 {cusAmountGap} 元
       </p>
-      <div className="flex justify-center ml-[90px] gap-[30px]">
+      <div className="flex justify-center ml-[80px] gap-[30px]">
         <p>份數</p>
         <p>金額</p>
       </div>

@@ -9,9 +9,13 @@ const Result = () => {
       {flow.map((item, index) => {
         const { from, to, amount } = item;
         return (
-          <p key={index} className="text-center">
-            {from}給{to} {amount}元
-          </p>
+          <div className="flex gap-4 justify-center">
+            <p key={index} className="w-[80px]">
+              {from}
+            </p>
+            <p className="w-[100px]">給{to}</p>
+            <p>{amount}元</p>
+          </div>
         );
       })}
     </section>

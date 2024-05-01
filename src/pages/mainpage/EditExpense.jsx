@@ -120,11 +120,14 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
   }
   return (
     <>
+      <div
+        className={`bg-black opacity-70 w-full h-[100vh] z-[11] fixed top-0 ${displayEditExpense}`}
+      ></div>
       <form
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayEditExpense}  fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-slate-400 h-full w-full sm:w-[360px] sm:h-[800px] p-3`}
+        className={`${displayEditExpense} rounded-lg fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-slate-400 h-full w-full sm:w-[360px] sm:h-[800px] p-3`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">編輯花費</h1>
@@ -261,7 +264,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             setNewExpense({ ...newExpense, note: e.target.value })
           }
         ></Textarea>
-        <label htmlFor="uploadImg">圖片</label>
+        {/* <label htmlFor="uploadImg">圖片</label>
         <input
           type="file"
           accept=".jpg, .jpeg, .png"
@@ -275,7 +278,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
               console.log(src);
             }
           }}
-        />
+        /> */}
         <div className="bg-slate-200 w-40 h-30">
           {/* {imgSrc ? <img src={imgSrc} alt="圖片預覽" className="w-25" /> : ""} */}
         </div>
