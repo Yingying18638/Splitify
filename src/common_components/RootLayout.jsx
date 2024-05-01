@@ -25,10 +25,12 @@ const RootLayout = ({ children }) => {
   const [sideBarClass, setSideBarClass] = useState(mobileSideBar);
   return (
     <>
-      <header className="bg-[#dda15e] h-16 fixed top-0 w-full flex items-center gap-10 justify-center">
+      <header className="bg-[#dda15e] h-[5rem] fixed top-0 w-full flex items-center gap-10 justify-center">
         <div className="fixed left-5 ">
           <SignedIn>
             <Menu
+              size={28}
+              className="hover:bg-[#fefae0] rounded-full p-1 hover:shadow-md"
               onClick={() => {
                 setIsSideBarOpen(true);
                 setSideBarClass(mobileSideBar);
@@ -36,7 +38,7 @@ const RootLayout = ({ children }) => {
             ></Menu>
           </SignedIn>
         </div>
-        <img src={logo} alt="logo" className="w-32  " />
+        <img src={logo} alt="logo" className="w-32 md:ml-[160px] " />
         <div className="fixed right-5 ">
           <SignedOut>
             <SignInButton mode="modal"></SignInButton>

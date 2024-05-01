@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useStore from "../../utility/hooks/useStore";
 import { Button } from "../../components/ui/button";
 import { DrawerDialogDemo } from "./DrawerDialogDemo";
@@ -23,7 +23,19 @@ const SideBar = ({
   setSideBarClass,
 }) => {
   useListenGroups();
-
+  const sideBarRef = useRef();
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (sideBarRef.current.contains(e.target)) {
+        return;
+      }
+      setIsSideBarOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const { tempUser, setGroup, tempGroupId, setTempGroupId } = useStore();
   const { inGroup } = tempUser;
   const groupIds = Object.keys(inGroup).length ? Object.keys(inGroup) : [];
@@ -89,11 +101,13 @@ const SideBar = ({
         className={`bg-black opacity-70 w-full h-[100vh] fixed z-[9] top-0 ${isSideBarOpen ? "" : "hidden"}`}
       ></div>
       <div
+        ref={sideBarRef}
         className={`bg-[#283618] w-40 h-full fixed  top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
       >
         {sideBarClass === mobileSideBar && (
           <X
-            className="absolute right-2 w-5 top-2 hover:bg-[#606c38]"
+            color="#fefae0"
+            className="absolute right-2 w-5 top-2 hover:bg-[#606c38] rounded-full"
             onClick={() => {
               setIsSideBarOpen(false);
               setSideBarClass(desktopSideBar);
