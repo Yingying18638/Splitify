@@ -70,6 +70,7 @@ function useUserData(userId, userObj, setIsGrpDialogOpen) {
         return data;
       } else {
         await addDocWithId(userId, "users", userObj);
+        setTempUser(userObj);
         console.log("新增成功");
       }
     }
