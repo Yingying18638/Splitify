@@ -7,12 +7,14 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
+  useUser,
 } from "@clerk/clerk-react";
 import Mainpage from "../pages/mainpage";
 import LandingPage from "../pages/landingpage";
 import { useSearchParams } from "react-router-dom";
 const RootLayout = ({ children }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const isSignedIn = useUser()?.isSignedIn;
   const groupIdCreated = searchParams.get("id");
   const isGoingToAGroup = Boolean(groupIdCreated);
   console.log(isGoingToAGroup, "isGoingToAGroup");
@@ -38,10 +40,16 @@ const RootLayout = ({ children }) => {
             ></Menu>
           </SignedIn>
         </div>
-        <img src={logo} alt="logo" className="w-32 md:ml-[160px] " />
+        <img
+          src={logo}
+          alt="logo"
+          className={`${isSignedIn ? "md:ml-[160px]" : ""} w-32`}
+        />
         <div className="fixed right-5 ">
           <SignedOut>
-            <SignInButton mode="modal"></SignInButton>
+            <SignInButton mode="modal">
+              <button>登入或註冊</button>
+            </SignInButton>
           </SignedOut>
           <SignedIn>
             <UserButton className="right-0"></UserButton>
