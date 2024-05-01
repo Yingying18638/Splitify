@@ -4,11 +4,13 @@ import link from "../../assets/link.png";
 import { Button } from "../../components/ui/button";
 import useStore from "../../utility/hooks/useStore";
 import { updateGroupData } from "../../utility/handleFirestore";
+import { DrawerDialogDemo } from "./DrawerDialogDemo";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../../components/ui/popover";
+import { ArrowBigLeftDash } from "lucide-react";
 
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   const [isUrlCopied, setIsUrlCopied] = useState(false);
@@ -42,7 +44,15 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
     }
   }
   if (!isInAnyGroup || !tempGroupId)
-    return <div className="mt-20">左側選擇群組或新建群組</div>;
+    return (
+      <div className="mt-24 flex w-40 content-center flex-wrap fixed left-[50%] gap-2">
+        <ArrowBigLeftDash></ArrowBigLeftDash>
+        <p>左側選擇群組或</p>
+        <div className="mt-[-10px]">
+          <DrawerDialogDemo></DrawerDialogDemo>
+        </div>
+      </div>
+    );
   return (
     <div className="flex fixed  left-[50%] bg-[#869456] translate-x-[-50%]  md:ml-[80px] w-full flex-wrap items-center justify-center mt-8 p-2">
       <div className="w-28  rounded-sm px-3 py-1 text-sm font-medium">

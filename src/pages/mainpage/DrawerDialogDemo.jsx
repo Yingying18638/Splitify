@@ -28,7 +28,7 @@ export function DrawerDialogDemo() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="outline" className="fixed z-50 mt-5  md:ml-8 m-0">
-            + 群組
+            建立群組
           </Button>
         </DialogTrigger>
         <DialogContent
@@ -41,7 +41,7 @@ export function DrawerDialogDemo() {
           }}
         >
           <DialogHeader>
-            <DialogTitle>新增群組</DialogTitle>
+            <DialogTitle>建立群組</DialogTitle>
             <DialogDescription>
               分享群組連結給好友，登入後立即加入群組！
             </DialogDescription>
@@ -56,12 +56,12 @@ export function DrawerDialogDemo() {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="outline" className="m-20">
-          + 群組
+          建立群組
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>新增群組</DrawerTitle>
+          <DrawerTitle>建立群組</DrawerTitle>
           <DrawerDescription>
             分享群組連結給好友，登入後即加入群組！
           </DrawerDescription>
