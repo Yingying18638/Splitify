@@ -8,7 +8,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "../../components/ui/popover";
 
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   const [isUrlCopied, setIsUrlCopied] = useState(false);
@@ -32,9 +32,14 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
     updateGroupData(tempGroupId, newGroupData);
   }
   async function handleCopyUrl() {
-    const url = `${window.location.origin}?id=${groupId}`;
-    await navigator.clipboard.writeText(url);
-    setIsUrlCopied(true);
+    try {
+      const url = `${window.location.origin}?id=${groupId}`;
+      await navigator.clipboard.writeText(url);
+      setIsUrlCopied(true);
+    } catch (e) {
+      console.log(e);
+      setIsUrlCopied(false);
+    }
   }
   if (!isInAnyGroup || !tempGroupId)
     return <div className="mt-20">左側選擇群組或新建群組</div>;

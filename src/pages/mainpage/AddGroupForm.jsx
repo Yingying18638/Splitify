@@ -8,8 +8,14 @@ import { Button } from "../../components/ui/button";
 import { v4 as uuidv4 } from "uuid";
 import { addDocWithId, useListenUsers } from "../../utility/handleFirestore";
 import useStore from "../../utility/hooks/useStore";
-const AddGroupForm = ({ className }) => {
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../components/ui/popover";
+const AddGroupForm = ({ className, setOpen }) => {
   const { tempUser, setTempUser } = useStore();
+  const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
   const [newGroupId, setNewGroupId] = useState("");
   const [groupUrl, setGroupUrl] = useState("https:/......");
@@ -27,9 +33,10 @@ const AddGroupForm = ({ className }) => {
   const handleCopyURL = async (hashedUrl) => {
     try {
       await navigator.clipboard.writeText(hashedUrl);
-      alert("複製成功");
+      setIsUrlCopied(true);
     } catch (error) {
-      alert("bad bad bad");
+      console.log(error);
+      setIsUrlCopied(false);
     }
   };
   function handleGetGroupUrl(e) {
@@ -42,21 +49,27 @@ const AddGroupForm = ({ className }) => {
   }
   async function handleGroupSubmit(e) {
     e.preventDefault();
-    const newTempUser = {
-      ...tempUser,
-      inGroup: { ...inGroup, [newGroupId]: newGroupName },
-    };
-    setTempUser(newTempUser);
-    const newGroupData = {
-      ...INITIANL_GROUP,
-      groupName: newGroupName,
-      groupId: newGroupId,
-    };
-
-    await addDocWithId(tempUser.uid, "users", newTempUser);
-    await addDocWithId(newGroupId, "groups", newGroupData);
-    console.log(newGroupData);
-    alert("新增成功");
+    try {
+      const newTempUser = {
+        ...tempUser,
+        inGroup: { ...inGroup, [newGroupId]: newGroupName },
+      };
+      setTempUser(newTempUser);
+      const newGroupData = {
+        ...INITIANL_GROUP,
+        groupName: newGroupName,
+        groupId: newGroupId,
+      };
+      console.log(newTempUser, "新使用者");
+      await addDocWithId(tempUser.uid, "users", newTempUser);
+      await addDocWithId(newGroupId, "groups", newGroupData);
+      console.log(newGroupData);
+      alert("新增成功");
+      setOpen(false);
+    } catch (error) {
+      alert("新增失敗");
+      console.log(error);
+    }
   }
   return (
     <form
@@ -66,22 +79,27 @@ const AddGroupForm = ({ className }) => {
       <div className="grid gap-2">
         <Label htmlFor="groupName">名稱</Label>
         <Input
+          required
           id="groupName"
           placeholder="吃貨群組"
           value={newGroupName}
           onChange={(e) => setNewGroupName(e.target.value)}
         />
-        <Button variant="secondary" onClick={(e) => handleGetGroupUrl(e)}>
+        <Button
+          variant={newGroupId ? "secondary" : ""}
+          onClick={(e) => handleGetGroupUrl(e)}
+        >
           生成群組連結
         </Button>
       </div>
       <div className="grid gap-2">
         <Label htmlFor="username">連結</Label>
         <div className="flex">
-          <p className="flex h-10 w-[calc(100%-40px)] rounded-md border border-slate-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300">
+          <p className="flex h-14  w-[calc(100%-40px)]  rounded-md border border-slate-200 bg-white px-3 py-2 text-sm  ">
             {groupUrl}
           </p>
           <Button
+            className="h-14"
             variant="outline"
             size="icon"
             onClick={(e) => {
@@ -89,11 +107,20 @@ const AddGroupForm = ({ className }) => {
               handleCopyURL(groupUrl);
             }}
           >
-            <LinkIcon className="h-4 w-4" />
+            <Popover>
+              <PopoverTrigger>
+                <LinkIcon className="h-4" />
+              </PopoverTrigger>
+              <PopoverContent className="w-[150px] text-sm">
+                {isUrlCopied ? "連結已複製" : ""}
+              </PopoverContent>
+            </Popover>
           </Button>
         </div>
       </div>
-      <Button>確認</Button>
+      <Button disabled={!newGroupId ? true : false} type="submit">
+        完成
+      </Button>
     </form>
   );
 };

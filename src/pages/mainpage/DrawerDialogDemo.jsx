@@ -43,10 +43,10 @@ export function DrawerDialogDemo() {
           <DialogHeader>
             <DialogTitle>新增群組</DialogTitle>
             <DialogDescription>
-              分享群組連結給好友，登入後即加入群組！
+              分享群組連結給好友，登入後立即加入群組！
             </DialogDescription>
           </DialogHeader>
-          <AddGroupForm />
+          <AddGroupForm setOpen={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -69,7 +69,7 @@ export function DrawerDialogDemo() {
         <AddGroupForm className="px-4" />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline">取消</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
