@@ -100,16 +100,18 @@ const Mainpage = ({
               displayAddExpense={displayAddExpense}
               setDisplayAddExpense={setDisplayAddExpense}
             />
-            <Record
-              expensesArrToRender={expensesArrToRender}
-              displayDetail={displayDetail}
-              setDisplayDetail={setDisplayDetail}
-              setDisplayEditExpense={setDisplayEditExpense}
-              children={true}
-            />
+            <div className="mt-24">
+              <Record
+                expensesArrToRender={expensesArrToRender}
+                displayDetail={displayDetail}
+                setDisplayDetail={setDisplayDetail}
+                setDisplayEditExpense={setDisplayEditExpense}
+                children={true}
+              />
+            </div>
             {clearedExpensesToRender.length !== 0 && (
               <p
-                className="block w-32  mx-auto mt-20 hover:underline cursor-pointer "
+                className="block w-32  mx-auto my-3 hover:underline cursor-pointer "
                 onClick={handleDisplayHistory}
               >
                 {displayHistory?.text}已結清紀錄

@@ -50,7 +50,7 @@ const Record = ({
     alert("刪除成功");
   }
   return (
-    <section className={`${displayHistory?.display} mt-24 `}>
+    <section className={`${displayHistory?.display}`}>
       {expensesArrToRender.map(([date, expenses]) => {
         return (
           <div key={date}>
@@ -73,7 +73,7 @@ const Record = ({
               return (
                 <fieldset key={time} id={time}>
                   <div
-                    className="flex flex-wrap mt-3 cursor-pointer"
+                    className="flex flex-wrap mt-3 cursor-pointer hover:shadow-lg"
                     onClick={() => {
                       if (displayDetail?.[time] === "block") {
                         setDisplayDetail({
