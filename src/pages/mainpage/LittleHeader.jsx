@@ -10,6 +10,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../components/ui/popover";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { ArrowBigLeftDash } from "lucide-react";
 
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
@@ -21,17 +33,22 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   const groupIds = Object.keys(inGroup).length ? Object.keys(inGroup) : [];
   const isInAnyGroup = groupIds.length > 0;
 
-  function handleClear() {
+  async function handleClear() {
     // expenses 放入history, 清空expenses, totalBill, flow
-    const newGroupData = {
-      ...group,
-      totalBill: {},
-      flow: [],
-      expenses: [],
-      history: [...history, ...expenses],
-    };
-    // 整筆group更新到火基地
-    updateGroupData(tempGroupId, newGroupData);
+    try {
+      const newGroupData = {
+        ...group,
+        totalBill: {},
+        flow: [],
+        expenses: [],
+        history: [...history, ...expenses],
+      };
+      // 整筆group更新到火基地
+      await updateGroupData(tempGroupId, newGroupData);
+      alert("帳目已結清！");
+    } catch (error) {
+      alert(error, "銷帳失敗");
+    }
   }
   async function handleCopyUrl() {
     try {
@@ -95,7 +112,24 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
       >
         + 花費
       </Button>
-      <Button onClick={handleClear}>銷帳</Button>
+      {/* <Button onClick={handleClear}>銷帳</Button> */}
+      <AlertDialog>
+        <AlertDialogTrigger>
+          <Button>銷帳</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>確定要銷帳嗎？</AlertDialogTitle>
+            <AlertDialogDescription>
+              這個動作會把目前帳務結清，誰都不相欠，結清帳目後就只能查看
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>取消</AlertDialogCancel>
+            <AlertDialogAction onClick={handleClear}>確定</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
