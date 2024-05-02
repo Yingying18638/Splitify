@@ -3,7 +3,7 @@ import useStore from "../../utility/hooks/useStore";
 import closeIcon from "../../assets/x.png";
 import { Input } from "../../components/ui/input";
 import { CheckCheck } from "lucide-react";
-
+import { Button } from "../../components/ui/button";
 const ParticipantsOptions = ({
   displayParticipantOpt,
   setDisplayParticipantOpt,
@@ -42,95 +42,98 @@ const ParticipantsOptions = ({
           <p>份數</p>
           <p>金額</p>
         </div>
-        {group?.users?.map(({ name }, index) => {
-          return (
-            <div
-              className="flex justify-center gap-1 items-center mt-2 relative"
-              key={name}
-            >
+        <form action="">
+          {group?.users?.map(({ name }, index) => {
+            return (
               <div
-                className={`${
-                  participants_customNames?.find((item) => item === name) &&
-                  participants_customized[name]
-                    ? ""
-                    : "hidden"
-                } `}
+                className="flex justify-center gap-1 items-center mt-2 relative"
+                key={name}
               >
-                <CheckCheck></CheckCheck>
-              </div>
-              <label
-                // htmlFor={`participant_${name}`}
-                htmlFor={name}
-                className="block w-[100px] ml-2"
-              >
-                {name}
-              </label>
-              <Input
-                className="w-10 h-8"
-                value={shareObj?.[name]}
-                onChange={(e) => {
-                  const { value } = e.target;
-                  const num = parseInt(value);
-                  // if (isNaN(num) && value !== "") return;
-                  const newShareObj = { ...shareObj, [name]: num ? num : "" };
-                  setShareObj(newShareObj);
-                  const isNameNotExist = !participants_customNames?.find(
-                    (item) => item === name
-                  );
-                  if (isNameNotExist) {
-                    const newParticipantsCustom = {
-                      ...participants_customized,
-                      [name]: "",
-                    };
+                <div
+                  className={`${
+                    participants_customNames?.find((item) => item === name) &&
+                    participants_customized[name]
+                      ? ""
+                      : "hidden"
+                  } `}
+                >
+                  <CheckCheck></CheckCheck>
+                </div>
+                <label
+                  // htmlFor={`participant_${name}`}
+                  htmlFor={name}
+                  className="block w-[100px] ml-2"
+                >
+                  {name}
+                </label>
+                <Input
+                  className="w-10 h-8"
+                  value={shareObj?.[name]}
+                  onChange={(e) => {
+                    const { value } = e.target;
+                    const num = parseInt(value);
+                    // if (isNaN(num) && value !== "") return;
+                    const newShareObj = { ...shareObj, [name]: num ? num : "" };
+                    setShareObj(newShareObj);
+                    const isNameNotExist = !participants_customNames?.find(
+                      (item) => item === name
+                    );
+                    if (isNameNotExist) {
+                      const newParticipantsCustom = {
+                        ...participants_customized,
+                        [name]: "",
+                      };
+                      setNewExpense({
+                        ...newExpense,
+                        participants_customized: newParticipantsCustom,
+                      });
+                    }
+                    //does anybody Have Share
+                    const shareTotal = Object.values(newShareObj).reduce(
+                      (acc, cur) => {
+                        if (cur === "") return acc;
+                        return acc + cur;
+                      },
+                      0
+                    );
+                    const amountObj = {};
+                    for (const [key, share] of Object.entries(newShareObj)) {
+                      const amount = (share / shareTotal) * total_amount || 0;
+                      // amountObj[key] = amount;
+                      amountObj[key] = Math.round(amount);
+                      // ? Math.round(amount)
+                      // : 0;
+                    }
                     setNewExpense({
                       ...newExpense,
-                      participants_customized: newParticipantsCustom,
+                      participants_customized: { ...amountObj },
                     });
-                  }
-                  //does anybody Have Share
-                  const shareTotal = Object.values(newShareObj).reduce(
-                    (acc, cur) => {
-                      if (cur === "") return acc;
-                      return acc + cur;
-                    },
-                    0
-                  );
-                  const amountObj = {};
-                  for (const [key, share] of Object.entries(newShareObj)) {
-                    const amount = (share / shareTotal) * total_amount || 0;
-                    // amountObj[key] = amount;
-                    amountObj[key] = Math.round(amount);
-                    // ? Math.round(amount)
-                    // : 0;
-                  }
-                  setNewExpense({
-                    ...newExpense,
-                    participants_customized: { ...amountObj },
-                  });
-                  // }
-                }}
-              ></Input>
-              <Input
-                className="w-24 h-8"
-                placeholder="NT."
-                value={participants_customized[name] || ""}
-                onChange={(e) => {
-                  const { value } = e.target;
-                  const num = parseInt(value);
-                  if (isNaN(num) && value !== "") return;
-                  setShareObj({ ...shareObj, [name]: "" });
-                  setNewExpense({
-                    ...newExpense,
-                    participants_customized: {
-                      ...participants_customized,
-                      [name]: num ? num : 0,
-                    },
-                  });
-                }}
-              ></Input>
-            </div>
-          );
-        })}
+                    // }
+                  }}
+                ></Input>
+                <Input
+                  className="w-24 h-8"
+                  placeholder="NT."
+                  value={participants_customized[name] || ""}
+                  onChange={(e) => {
+                    const { value } = e.target;
+                    const num = parseInt(value);
+                    if (isNaN(num) && value !== "") return;
+                    setShareObj({ ...shareObj, [name]: "" });
+                    setNewExpense({
+                      ...newExpense,
+                      participants_customized: {
+                        ...participants_customized,
+                        [name]: num ? num : 0,
+                      },
+                    });
+                  }}
+                ></Input>
+              </div>
+            );
+          })}
+          {/* <button type="reset">全部清除</button> */}
+        </form>
       </section>
     </>
   );

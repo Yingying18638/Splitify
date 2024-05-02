@@ -9,6 +9,7 @@ import calcBills from "../../utility/calcBills";
 import calcSingleAve from "../../utility/calcSingleAve";
 //image
 import arrow from "../../assets/arrow.png";
+import optionsIcon from "../../assets/options.png";
 import list from "../../assets/list.png";
 import closeIcon from "../../assets/x.png";
 // component
@@ -95,6 +96,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   const [displayParticipantOpt, setDisplayParticipantOpt] = useState("hidden");
   const [imgSrc, setImgSrc] = useState("");
   function handlePayersParticipantsDisplay(e) {
+    console.log(e.target);
     if (e.target.id === "participant-arrow") {
       setDisplayParticipantOpt(
         displayParticipantOpt === "hidden" ? "block" : "hidden"
@@ -256,11 +258,15 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             </SelectContent>
           </Select>
 
-          <ListCollapse
-            id="payer-arrow"
-            className="w-6 h-6 cursor-pointer"
-            onClick={(e) => handlePayersParticipantsDisplay(e)}
-          ></ListCollapse>
+          <div className="bg-black rounded p-[3px]">
+            <img
+              src={optionsIcon}
+              alt="options"
+              id="payer-arrow"
+              className="w-6 h-6 cursor-pointer"
+              onClick={(e) => handlePayersParticipantsDisplay(e)}
+            />
+          </div>
         </div>
         <p
           className={`text-red-500 ${payersAmountGap !== 0 && singlePayerOnly === "多人付款" ? "" : "hidden"}`}
@@ -277,13 +283,15 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setSelected={setSelected}
             options={options}
           ></MultiSelect>
-          <ListCollapse
-            className="w-6 h-6 cursor-pointer"
-            id="participant-arrow"
-            onClick={(e) => {
-              handlePayersParticipantsDisplay(e);
-            }}
-          />
+          <div className="bg-black rounded p-[3px]">
+            <img
+              src={optionsIcon}
+              alt="options"
+              id="participant-arrow"
+              className="w-6 h-6 cursor-pointer"
+              onClick={(e) => handlePayersParticipantsDisplay(e)}
+            />
+          </div>
         </div>
         {/* <div
           className={`${cusAmountTotal ? "" : "hidden"} relative bg-white w-28 bottom-8 left-16`}
