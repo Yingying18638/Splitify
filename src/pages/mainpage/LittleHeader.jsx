@@ -43,18 +43,19 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
       setIsUrlCopied(false);
     }
   }
-  if (!isInAnyGroup || !tempGroupId)
+  if (!isInAnyGroup || !tempGroupId) {
     return (
-      <div className="mt-24 flex w-40 content-center flex-wrap fixed left-[50%] gap-2">
+      <div className="mt-24 flex w-56 translate-x-[-50%] content-center flex-wrap fixed left-[50%] gap-2">
         <ArrowBigLeftDash></ArrowBigLeftDash>
-        <p>左側選擇群組或</p>
+        <p>左側選擇群組 或</p>
         <div className="mt-[-10px]">
-          <DrawerDialogDemo></DrawerDialogDemo>
+          <DrawerDialogDemo btnClass></DrawerDialogDemo>
         </div>
       </div>
     );
+  }
   return (
-    <div className="flex fixed  left-[50%] bg-[#869456] translate-x-[-50%]  md:ml-[80px] w-full flex-wrap items-center justify-center mt-8 p-2">
+    <div className="flex fixed  left-[50%] bg-[#eabf8e] translate-x-[-50%]  md:ml-[80px] w-full flex-wrap items-center justify-center mt-8 p-2">
       <div className="w-28  rounded-sm px-3 py-1 text-sm font-medium">
         {groupName}
       </div>

@@ -55,23 +55,19 @@ const LandingPage = () => {
             <Lottie options={defaultOptions} height={200} width={200}></Lottie>
           </div>
         </section>
-        <article className="w-[90%] pb-10 sm:w-[70%] md:w-full mx-auto mt-10 md:grid md:grid-cols-3 md:items-center gap-6">
-          {/* {datas.map((item) => {
-            return ( */}
-          <div className="bg-[#faedcd] p-2 rounded shadow-lg  w-full md:w-auto h-20 mt-4">
+        <article className="w-[90%] pb-10 sm:w-[70%] md:w-full mx-auto mt-16 md:grid md:grid-cols-3 md:items-center gap-6">
+          <div className="flex gap-2 items-center justify-center bg-[#faedcd] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
             <CircleDollarSign></CircleDollarSign>
-            介面直覺簡潔，分帳不再是難事
+            <p className="mt-2">介面直覺簡潔，分帳不再是難事</p>
           </div>
-          <div className="bg-[#faedcd] p-2 rounded shadow-lg  w-full md:w-auto h-20 mt-4">
+          <div className="flex gap-2 items-center justify-center bg-[#faedcd] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
             <Users></Users>
-            多群組無縫切換，涵蓋生活所需
+            <p className="mt-2">多群組無縫切換，涵蓋生活所需</p>
           </div>
-          <div className="bg-[#faedcd] p-2 rounded shadow-lg  w-full md:w-auto h-20 mt-4">
+          <div className="flex gap-2 items-center justify-center bg-[#faedcd] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
             <PartyPopper></PartyPopper>
-            一站式理財，高效解決群組難題
+            <p className="mt-2">一站式理財，高效解決群組難題</p>
           </div>
-          {/* );
-          })} */}
         </article>
       </div>
     </>

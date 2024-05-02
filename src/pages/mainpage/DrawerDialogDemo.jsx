@@ -20,14 +20,18 @@ import {
   DrawerTrigger,
 } from "../../components/ui/drawer";
 
-export function DrawerDialogDemo() {
+export function DrawerDialogDemo({ btnClass }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = window.innerWidth >= 768;
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" className="fixed z-50 mt-5  md:ml-8 m-0">
+          {/* <Button variant="outline" className="relative z-50 left-10"> */}
+          <Button
+            variant="outline"
+            className={btnClass ? "fixed" : "relative z-50 left-10"}
+          >
             建立群組
           </Button>
         </DialogTrigger>
@@ -55,7 +59,10 @@ export function DrawerDialogDemo() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="m-20">
+        <Button
+          variant="outline"
+          className={btnClass ? "fixed" : "relative z-50 left-10"}
+        >
           建立群組
         </Button>
       </DrawerTrigger>

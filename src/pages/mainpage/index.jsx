@@ -86,7 +86,7 @@ const Mainpage = ({
           className="w-[360px] md:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap "
         >
           {/* <div className="fixed bg-[#121212] w-full h-4"> */}
-          <TabsList className="fixed left-[50%] md:ml-[80px] translate-x-[-50%] top-[5rem] bg-[#123456] w-full rounded-none">
+          <TabsList className="fixed left-[50%] md:ml-[80px] translate-x-[-50%] top-[5rem] bg-[#653A14] w-full rounded-none">
             <TabsTrigger value="account" className="w-32 ">
               帳目
             </TabsTrigger>

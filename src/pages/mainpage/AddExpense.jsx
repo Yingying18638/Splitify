@@ -29,6 +29,7 @@ import {
   SelectScrollUpButton,
   SelectScrollDownButton,
 } from "../../components/ui/select";
+import { ListCollapse } from "lucide-react";
 
 const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   // upload image
@@ -159,7 +160,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense} space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#869456] h-full w-full sm:w-[360px] sm:h-[800px] p-3 px-6 rounded-lg`}
+        className={`${displayAddExpense} space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#dda15e] h-full w-full sm:w-[360px] sm:h-[800px] p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">新增花費</h1>
@@ -174,7 +175,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setSelected(options);
             setShareObj(usersObj);
           }}
-          className="absolute right-2 top-2 cursor-pointer "
+          className="absolute right-2 top-[-0.5rem] cursor-pointer "
         />
         <figure className="flex items-center">
           <img src={list} alt="icon" className="w-9 h-9 mr-9" />
@@ -254,13 +255,12 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               <SelectScrollDownButton />
             </SelectContent>
           </Select>
-          <img
+
+          <ListCollapse
             id="payer-arrow"
-            src={arrow}
-            alt="arrow"
-            className="w-6 h-6"
+            className="w-6 h-6 cursor-pointer"
             onClick={(e) => handlePayersParticipantsDisplay(e)}
-          />
+          ></ListCollapse>
         </div>
         <p
           className={`text-red-500 ${payersAmountGap !== 0 && singlePayerOnly === "多人付款" ? "" : "hidden"}`}
@@ -277,10 +277,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setSelected={setSelected}
             options={options}
           ></MultiSelect>
-          <img
-            src={arrow}
-            alt="arrow"
-            className="w-6 h-6"
+          <ListCollapse
+            className="w-6 h-6 cursor-pointer"
             id="participant-arrow"
             onClick={(e) => {
               handlePayersParticipantsDisplay(e);

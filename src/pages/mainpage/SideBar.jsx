@@ -102,12 +102,12 @@ const SideBar = ({
       ></div>
       <div
         ref={sideBarRef}
-        className={`bg-[#283618] w-40 h-full fixed  top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
+        className={`bg-[#653A14] w-40 h-full fixed  top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
       >
         {sideBarClass === mobileSideBar && (
           <X
             color="#fefae0"
-            className="absolute right-2 w-5 top-2 hover:bg-[#606c38] rounded-full"
+            className="absolute right-2 w-5 top-2 hover:bg-[#fbf7d8] rounded-full"
             onClick={() => {
               setIsSideBarOpen(false);
               setSideBarClass(desktopSideBar);
@@ -116,18 +116,18 @@ const SideBar = ({
         )}
         <nav>
           <div className="pt-20 pl-10 text-[#dda15e]">
-            群組
+            <p className="text-[#fefae0]">群組</p>
             {isInAnyGroup &&
               Object.entries(inGroup).map(([groupId, groupName]) => {
                 return (
                   <div
-                    className={`mt-2 p-2 rounded mr-5 hover:bg-slate-200  ${color[groupId]}`}
+                    className={`mt-2 p-2 rounded mr-5 hover:bg-[#fefae0]  ${color[groupId]}`}
                     key={groupId}
                     id={groupId}
                     onClick={(e) => {
                       const { id } = e.target;
                       console.log(id);
-                      setColor({ ...bgObject, [id]: "bg-[#606c38]" });
+                      setColor({ ...bgObject, [id]: "bg-[#fbf7d8]" });
                       setTempGroupId(id);
                     }}
                   >

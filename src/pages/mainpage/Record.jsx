@@ -73,7 +73,7 @@ const Record = ({
               return (
                 <fieldset key={time} id={time}>
                   <div
-                    className="flex flex-wrap mt-3 cursor-pointer hover:shadow-lg"
+                    className="flex flex-wrap mt-3 cursor-pointer rounded-md shadow-md py-2 px-3 hover:shadow-xl"
                     onClick={() => {
                       if (displayDetail?.[time] === "block") {
                         setDisplayDetail({
@@ -106,10 +106,10 @@ const Record = ({
                     <div className="sm:ml-4">NT {total_amount}元</div>
                   </div>
                   <article
-                    className={`ml-20 w-[320px] ${displayDetail?.[time] || "hidden"}`}
+                    className={`mx-auto w-[320px]  ${displayDetail?.[time] || "hidden"}`}
                   >
-                    <div className="flex flex-wrap flex-col mt-3">
-                      <figcaption className="w-[200px] md:w-[400px]">
+                    <div className="flex flex-wrap flex-col mt-3 items-center">
+                      <figcaption className="">
                         {ave &&
                           Object.entries(ave).map(([name, amount]) => {
                             if (amount === 0) return;
@@ -120,17 +120,17 @@ const Record = ({
                             );
                           })}
                       </figcaption>
-                      <figure className="flex flex-wrap gap-2">
-                        <div className="text-slate-500 text-sm">
-                          <p className="text-slate-500 text-sm">
-                            {creater}在{format(time, "yyyyMMdd")}建立
-                          </p>
-                          <p className="text-slate-500 text-sm">{note}</p>
-                        </div>
-                        {/* <div className="w-40 h-20 bg-slate-200">
+                      {/* <figure className="flex flex-wrap gap-2"> */}
+                      <div className="text-slate-500 text-sm">
+                        <p className="text-slate-500 text-sm">
+                          {creater}在{format(time, "yyyyMMdd")}建立
+                        </p>
+                        <p className="text-slate-500 text-sm">{note}</p>
+                      </div>
+                      {/* <div className="w-40 h-20 bg-slate-200">
                           <img alt="圖片" />
                         </div> */}
-                      </figure>
+                      {/* </figure> */}
                       {children && (
                         <EditDeleteButtons
                           handleEditExpense={handleEditExpense}

@@ -1,9 +1,10 @@
 import React from "react";
 import useStore from "../../utility/hooks/useStore";
 const Result = () => {
-  const { group } = useStore();
+  const { group, tempGroupId } = useStore();
   const { expenses, flow } = group;
-  if (!flow.length) return <p className="text-center mt-5">無未結清帳款！</p>;
+  if (!flow.length && !tempGroupId)
+    return <p className="text-center mt-5">無未結清帳款！</p>;
   return (
     <section className="mt-5">
       {flow.map((item, index) => {

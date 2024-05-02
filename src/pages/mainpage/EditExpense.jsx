@@ -8,6 +8,7 @@ import { updateGroupData } from "../../utility/handleFirestore";
 import arrow from "../../assets/arrow.png";
 import list from "../../assets/list.png";
 import closeIcon from "../../assets/x.png";
+import { CheckCheck, ListCollapse } from "lucide-react";
 // component
 import DatePicker from "./DatePicker";
 import MultiSelect from "./Multiselect";
@@ -127,7 +128,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayEditExpense} rounded-lg fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-slate-400 h-full w-full sm:w-[360px] sm:h-[800px] p-3`}
+        className={`${displayEditExpense} space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#869456] h-full w-full sm:w-[360px] sm:h-[800px] p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">編輯花費</h1>
@@ -141,10 +142,10 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             resetNewExpense();
             setSelected(options);
           }}
-          className="absolute right-2 top-2 cursor-pointer"
+          className="absolute right-2 top-[-0.5rem] cursor-pointer"
         />
         <figure className="flex items-center">
-          <img src={list} alt="icon" className="w-9 h-9 mr-3" />
+          <img src={list} alt="icon" className="w-9 h-9 mr-9" />
           <figcaption>
             <label htmlFor="item">項目</label>
             <Input
@@ -160,7 +161,9 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
           </figcaption>
         </figure>
         <figure className="flex items-center">
-          <div className="w-9 h-9 bg-slate-200 mr-3 p-1">NTD</div>
+          <div className="w-9 h-9 bg-slate-200 rounded mr-9 pt-2 p-1 text-sm">
+            NTD
+          </div>
           <figcaption>
             <label htmlFor="tw_amount">金額</label>
             <Input
@@ -181,7 +184,9 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
           </figcaption>
         </figure>
         <div className="flex items-center gap-2">
-          <label htmlFor="payer">誰先付</label>
+          <label htmlFor="payer" className="block w-16">
+            誰先付
+          </label>
           <Select
             value={singlePayerOnly || ""}
             id="payer"
@@ -217,13 +222,11 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
               <SelectScrollDownButton />
             </SelectContent>
           </Select>
-          <img
+          <ListCollapse
             id="payer-arrow"
-            src={arrow}
-            alt="arrow"
-            className="w-6 h-6"
+            className="w-6 h-6 cursor-pointer"
             onClick={(e) => handlePayersParticipantsDisplay(e)}
-          />
+          ></ListCollapse>
         </div>
         <p
           className={`text-red-500 ${payersAmountGap !== 0 && singlePayerOnly === "多人付款" ? "" : "hidden"}`}
@@ -232,16 +235,16 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         </p>
 
         <div className="flex items-center gap-2 ">
-          <label htmlFor="participant">分給誰</label>
+          <label htmlFor="participant" className="block w-16">
+            分給誰
+          </label>
           <MultiSelect
             selected={selected}
             setSelected={setSelected}
             options={options}
           ></MultiSelect>
-          <img
-            src={arrow}
-            alt="arrow"
-            className="w-6 h-6"
+          <ListCollapse
+            className="w-6 h-6 cursor-pointer"
             id="participant-arrow"
             onClick={(e) => {
               handlePayersParticipantsDisplay(e);
@@ -284,6 +287,8 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         </div>
         <Button
           type="reset"
+          variant="secondary"
+          className="ml-[calc(100%-120px)]"
           onClick={() => {
             setDisplayEditExpense("hidden");
             setDisplayParticipantOpt("hidden");
