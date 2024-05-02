@@ -72,7 +72,8 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
     );
   }
   return (
-    <div className="flex fixed  left-[50%] bg-[#eabf8e] translate-x-[-50%]  md:ml-[80px] w-full flex-wrap items-center justify-center mt-8 p-2">
+    // <div className="flex fixed  left-[50%] bg-[#eabf8e] translate-x-[-50%]  md:ml-[80px] w-[60%] rounded shadow-md flex-wrap items-center justify-center mt-8 p-2">
+    <div className="flex mt-44 left-[50%] bg-[#eabf8e] translate-x-[-50%]  md:ml-[80px] w-[400px] rounded shadow-md flex-wrap items-center justify-center ml-44  p-2">
       <div className="w-28  rounded-sm px-3 py-1 text-sm font-medium">
         {groupName}
       </div>
