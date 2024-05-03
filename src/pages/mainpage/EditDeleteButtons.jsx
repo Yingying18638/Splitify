@@ -14,7 +14,7 @@ import {
 
 function EditDeleteButtons({ handleEditExpense, handleDeleteExpense, time }) {
   return (
-    <div className="md:self-center">
+    <div className="md:self-center  left-36  sm:left-48">
       <Button variant="secondary" onClick={() => handleEditExpense(time)}>
         編輯
       </Button>

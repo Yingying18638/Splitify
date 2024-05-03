@@ -101,6 +101,7 @@ const SideBar = ({
         className={`bg-black opacity-70 w-full h-[100vh] fixed z-[9] top-0 ${isSideBarOpen ? "" : "hidden"}`}
       ></div>
       <div
+        id="sidebar"
         ref={sideBarRef}
         className={`bg-[#653A14] w-40 h-full fixed  top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
       >

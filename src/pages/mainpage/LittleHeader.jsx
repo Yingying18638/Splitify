@@ -73,14 +73,19 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   }
   return (
     // <div className="flex fixed  left-[50%] bg-[#eabf8e] translate-x-[-50%]  md:ml-[80px] w-[60%] rounded shadow-md flex-wrap items-center justify-center mt-8 p-2">
-    <div className="flex mt-44 left-[50%] bg-[#eabf8e] translate-x-[-50%]  md:ml-[80px] w-[400px] rounded shadow-md flex-wrap items-center justify-center ml-44  p-2">
-      <div className="w-28  rounded-sm px-3 py-1 text-sm font-medium">
-        {groupName}
+    <div className="flex mt-24 bg-[#fadab5]    w-[600px] rounded-lg shadow-md flex-wrap items-center justify-center mx-auto  p-2 mb-[-80px]">
+      <div className="w-28 mr-28 rounded-sm px-3 py-1 text-md font-medium">
+       群組｜{groupName}
       </div>
       <figure className="cursor-pointer mx-2">
         <Popover>
           <PopoverTrigger>
-            <img src={groupImg} alt="group" className="hover:opacity-50" />
+            <img
+              id="seeMembers"
+              src={groupImg}
+              alt="group"
+              className="hover:opacity-50"
+            />
           </PopoverTrigger>
           <PopoverContent>
             {users.map(({ name, email }) => {
@@ -93,6 +98,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
         <Popover>
           <PopoverTrigger>
             <img
+              id="copyLink"
               src={link}
               alt="link"
               className="w-[32px] hover:opacity-50"

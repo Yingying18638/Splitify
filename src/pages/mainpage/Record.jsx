@@ -50,11 +50,13 @@ const Record = ({
     alert("刪除成功");
   }
   return (
-    <section className={`${displayHistory?.display}`}>
+    <section
+      className={`${displayHistory?.display} max-h-[700px]  overflow-auto  rounded-md p-1 `}
+    >
       {expensesArrToRender.map(([date, expenses]) => {
         return (
-          <div key={date}>
-            <h2>{`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`}</h2>
+          <div key={date} className="mt-4 ">
+            <h2 className="bg-gray-100 rounded-md w-28 px-1">{`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`}</h2>
             {expenses.map((exp) => {
               const {
                 item,
@@ -71,9 +73,12 @@ const Record = ({
               const isSinglePayer = singlePayerOnly !== "多人付款";
               const payersPair = morePayers && Object.entries(morePayers);
               return (
-                <fieldset key={time} id={time}>
+                <fieldset
+                  key={time}
+                  id={time}
+                >
                   <div
-                    className="flex flex-wrap mt-3 cursor-pointer rounded-md shadow-md py-2 px-3 hover:shadow-xl"
+                    className="flex flex-wrap mt-2 cursor-pointer  rounded-md shadow-md py-2 px-3 hover:shadow-xl"
                     onClick={() => {
                       if (displayDetail?.[time] === "block") {
                         setDisplayDetail({
@@ -91,7 +96,7 @@ const Record = ({
                     <figure>
                       <img src={list} alt="icon" />
                     </figure>
-                    <figcaption className="ml-2 w-[150px] md:w-[400px]">
+                    <figcaption className="ml-2 w-[150px] md:w-[380px]">
                       <p>{item}</p>
                       <p>
                         {isSinglePayer
@@ -106,9 +111,9 @@ const Record = ({
                     <div className="sm:ml-4">NT {total_amount}元</div>
                   </div>
                   <article
-                    className={`mx-auto w-[320px]  ${displayDetail?.[time] || "hidden"}`}
+                    className={`pr-8 py-2 pl-16 md:pl-24 ${displayDetail?.[time] || "hidden"}`}
                   >
-                    <div className="flex flex-wrap flex-col mt-3 items-center">
+                    <div className="mt-3 flex justify-between">
                       <figcaption className="">
                         {ave &&
                           Object.entries(ave).map(([name, amount]) => {
@@ -119,14 +124,15 @@ const Record = ({
                               </p>
                             );
                           })}
-                      </figcaption>
-                      {/* <figure className="flex flex-wrap gap-2"> */}
-                      <div className="text-slate-500 text-sm">
+                           <div className="text-slate-500 text-sm">
                         <p className="text-slate-500 text-sm">
                           {creater}在{format(time, "yyyyMMdd")}建立
                         </p>
                         <p className="text-slate-500 text-sm">{note}</p>
                       </div>
+                      </figcaption>
+                      {/* <figure className="flex flex-wrap gap-2"> */}
+                     
                       {/* <div className="w-40 h-20 bg-slate-200">
                           <img alt="圖片" />
                         </div> */}
