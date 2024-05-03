@@ -7,6 +7,7 @@ import {
   useUserData,
   useCheckUrlSetDialog,
 } from "../../utility/handleFirestore";
+import startGuide from "../../utility/userGuide";
 //----------------------component------------------------------------------------
 import LittleHeader from "./LittleHeader";
 import AddExpense from "./AddExpense";
@@ -90,6 +91,7 @@ const Mainpage = ({
             <TabsTrigger
               value="account"
               className=" w-32"
+              id="account"
               //  text-red-300 data-[state='active']:text-red-500
               // data-[state='active']:bg-red-950
             >
@@ -99,6 +101,7 @@ const Mainpage = ({
               value="calculation"
               className="w-32
               "
+              id="calculation"
               //  text-red-300 bg-red-800"
             >
               結算
@@ -160,6 +163,9 @@ const Mainpage = ({
         ) : (
           ""
         )}
+        <button onClick={startGuide} className="ml-60">
+          start
+        </button>
       </main>
     </>
   );
