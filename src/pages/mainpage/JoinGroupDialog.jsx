@@ -25,7 +25,7 @@ const JoinGroupDialog = ({ isGrpDialogOpen, setIsGrpDialogOpen }) => {
     async function getGrpName() {
       try {
         const gId = localStorage.getItem("groupIdCreated");
-        const grpData = await justGetData(db, "groups", gId);
+        const grpData = await justGetData("groups", gId);
         const grpName = grpData?.groupName;
         setGrpNameToJoin(grpName);
       } catch (e) {
