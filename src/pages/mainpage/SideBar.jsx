@@ -65,35 +65,6 @@ const SideBar = ({
 
     return () => window.removeEventListener("resize", handleResize);
   }, [sideBarClass]);
-  // useEffect(() => {
-  //   if (!tempGroupId) return;
-
-  //   console.log("開始監聽或改變監聽", tempGroupId);
-  //   //先取得正確的group data
-  //   // getData(db, "groups", tempGroupId, setGroup);
-  //   //監聽group資料 + 設state
-  //   const docRef = doc(db, "groups", tempGroupId);
-  //   const unsubscribe = onSnapshot(docRef, (doc) => {
-  //     const data = doc.data();
-  //     setGroup(data);
-  //     console.log("監聽到的data: ", data);
-  //   });
-  //   return () => unsubscribe();
-  // }, [tempGroupId]);
-
-  //input: tempGroupId
-  //output: (group state set)
-  // async function getData(db, tempGroupId) {
-  //   try {
-  //     const docRef = doc(db, "groups", tempGroupId);
-  //     const docSnap = await getDoc(docRef);
-  //     const data = docSnap?.data();
-  //     console.log(data, "我拿到data");
-  //     setGroup(data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
 
   return (
     <>
@@ -103,26 +74,26 @@ const SideBar = ({
       <div
         id="sidebar"
         ref={sideBarRef}
-        className={`bg-[#653A14] w-40 h-full fixed  top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
+        className={`bg-[#653A14] w-40 h-full fixed pr-3 top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
       >
         {sideBarClass === mobileSideBar && (
           <X
             color="#fefae0"
-            className="absolute right-2 w-5 top-2 hover:bg-[#fbf7d8] rounded-full"
+            className="absolute right-2 w-5 top-2 hover:bg-[#dda15e] rounded-full"
             onClick={() => {
               setIsSideBarOpen(false);
               setSideBarClass(desktopSideBar);
             }}
           ></X>
         )}
-        <nav>
+        <nav className="h-screen overflow-y-auto ">
           <div className="pt-20 pl-10 text-[#dda15e]">
-            <p className="text-[#fefae0]">群組</p>
+            <p className="text-[#fefae0] text-lg font-medium pb-2 border-b-2">群組</p>
             {isInAnyGroup &&
               Object.entries(inGroup).map(([groupId, groupName]) => {
                 return (
-                  <div
-                    className={`mt-2 p-2 rounded mr-5 hover:bg-[#fefae0]  ${color[groupId]}`}
+                  <p
+                    className={`mt-2 pl-2 py-2 cursor-pointer rounded  hover:bg-[#fefae0]  ${color[groupId]}`}
                     key={groupId}
                     id={groupId}
                     onClick={(e) => {
@@ -133,12 +104,10 @@ const SideBar = ({
                     }}
                   >
                     {groupName}
-                  </div>
+                  </p>
                 );
               })}
-            {/* <Button variant="secondary" className="mt-5 ml-2">
-        + 群組
-      </Button> */}
+        
           </div>
           <DrawerDialogDemo />
         </nav>

@@ -128,8 +128,8 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
 
         <ChartAndResult></ChartAndResult>
         <AlertDialog>
-          <AlertDialogTrigger>
-            <Button variant="destructive">
+          <AlertDialogTrigger disabled={!expenses.length?true:''}>
+            <Button variant="destructive" disabled={!expenses.length?true:''}>
               <BadgeAlert className="mr-1"></BadgeAlert>銷帳
             </Button>
           </AlertDialogTrigger>
@@ -137,7 +137,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
             <AlertDialogHeader>
               <AlertDialogTitle>確定要銷帳嗎？</AlertDialogTitle>
               <AlertDialogDescription>
-                這個動作會把目前帳務結清，誰都不相欠，結清帳目後就只能查看
+                這個動作會把目前帳務結清，誰都不相欠，並歸到已結清紀錄中
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
