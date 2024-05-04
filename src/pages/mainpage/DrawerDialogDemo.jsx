@@ -61,7 +61,7 @@ export function DrawerDialogDemo({ btnClass }) {
       <DrawerTrigger asChild>
         <Button
           variant="outline"
-          className={btnClass ? "fixed" : "relative z-50 left-10"}
+          className={btnClass ? "fixed" : "relative z-50 left-10 mt-6"}
         >
           建立群組
         </Button>
@@ -73,7 +73,7 @@ export function DrawerDialogDemo({ btnClass }) {
             分享群組連結給好友，登入後即加入群組！
           </DrawerDescription>
         </DrawerHeader>
-        <AddGroupForm className="px-4" />
+        <AddGroupForm className="px-4" setOpen={setOpen}/>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">取消</Button>

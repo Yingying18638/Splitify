@@ -29,7 +29,7 @@ const AddGroupForm = ({ className, setOpen }) => {
     flow: [],
     history: [],
   };
-  useListenUsers();
+  // useListenUsers();
   const handleCopyURL = async (hashedUrl) => {
     try {
       await navigator.clipboard.writeText(hashedUrl);
@@ -63,9 +63,8 @@ const AddGroupForm = ({ className, setOpen }) => {
       console.log(newTempUser, "新使用者");
       await addDocWithId(tempUser.uid, "users", newTempUser);
       await addDocWithId(newGroupId, "groups", newGroupData);
-      console.log(newGroupData);
-      alert("新增成功");
       setOpen(false);
+      alert("新增成功");
     } catch (error) {
       alert("新增失敗");
       console.log(error);
