@@ -97,7 +97,7 @@ function useUserData(userId, userObj, setIsGrpDialogOpen) {
 }
 //監聽groups
 function useListenGroups() {
-  const { tempGroupId, setGroup } = useStore();
+  const { tempGroupId, setGroup} = useStore();
   useEffect(() => {
     if (!tempGroupId) return;
     console.log("開始監聽或改變監聽", tempGroupId);
@@ -125,7 +125,7 @@ function useListenUsers() {
     const docRef = doc(db, "users", uid);
     const unsubscribe = onSnapshot(docRef, (doc) => {
       const data = doc.data();
-      // setTempUser(data); // 從任一群組刪別人時要更新別人的inGroup
+      setTempUser(data); // 從任一群組刪別人時要更新別人的inGroup
       console.log("監聽到的user data: ", data);
     });
     return () => unsubscribe();
@@ -141,7 +141,7 @@ async function getData(db, collection, docId, setterFunction) {
     console.log(e);
   }
 }
-async function justGetData(db, collection, docId) {
+async function justGetData(collection, docId) {
   try {
     const docRef = doc(db, collection, docId);
     const docSnap = await getDoc(docRef);
@@ -199,7 +199,9 @@ async function updateOneField(collection, docId, fieldToSet, data) {
     const docSnap = await getDoc(fieldRef);
     const oldData = docSnap?.data();
     const oldFieldData = oldData[fieldToSet];
-    const newFieldData = [...oldFieldData, data];
+    const newFieldData = oldFieldData?.length
+      ? [...oldFieldData, data]
+      : { ...oldFieldData, data };
     console.log(oldData, oldFieldData, newFieldData);
     await updateDoc(fieldRef, { [fieldToSet]: newFieldData });
   } catch (error) {

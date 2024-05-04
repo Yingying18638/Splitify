@@ -3,7 +3,12 @@ import groupImg from "../../assets/group.png";
 import link from "../../assets/link.png";
 import { Button } from "../../components/ui/button";
 import useStore from "../../utility/hooks/useStore";
-import { updateGroupData } from "../../utility/handleFirestore";
+import {
+  updateGroupData,
+  useListenUsers,
+  addDocWithId,
+  justGetData,
+} from "../../utility/handleFirestore";
 import { DrawerDialogDemo } from "./DrawerDialogDemo";
 import {
   Popover,
@@ -23,17 +28,19 @@ import {
 } from "@/components/ui/alert-dialog";
 import ChartAndResult from "./ChartAndResult";
 
-import { ArrowBigLeftDash, BadgeAlert, Plus } from "lucide-react";
+import { ArrowBigLeftDash, BadgeAlert, Plus, UserMinus } from "lucide-react";
 
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [open, setOpen] = useState(false);
-  const { group, tempGroupId, tempUser } = useStore();
+  const { group, tempGroupId, tempUser, setTempGroupId, resetGroup } =
+    useStore();
   const { inGroup } = tempUser;
   const { users, groupId } = group;
   const { groupName, expenses, history } = group;
   const groupIds = Object.keys(inGroup).length ? Object.keys(inGroup) : [];
   const isInAnyGroup = groupIds.length > 0;
+  useListenUsers();
   useEffect(() => {
     if (open) return;
     setIsUrlCopied(false);
@@ -63,6 +70,32 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
     } catch (e) {
       console.log(e);
       setIsUrlCopied(false);
+    }
+  }
+  async function handleRemoveMember(name, uid) {
+    try {
+      const isTempUserLeaving = uid === tempUser.uid;
+      const newGroupData = {
+        ...group,
+        users: users.filter((user) => user.name !== name),
+      };
+      await updateGroupData(tempGroupId, newGroupData);
+      if (isTempUserLeaving) {
+        setTempGroupId("");
+        resetGroup();
+      }
+    } catch (error) {
+      alert(error, "刪除失敗(更新群組)");
+    }
+    try {
+      const removedUser = await justGetData("users", uid);
+      const { inGroup } = removedUser;
+      const { [tempGroupId]: _, ...newInGroup } = inGroup;
+      const newRemovedUser = { ...removedUser, inGroup: newInGroup };
+      await addDocWithId(uid, "users", newRemovedUser);
+      alert("刪除成功");
+    } catch (error) {
+      alert(error, "刪除失敗(更新成員)");
     }
   }
   if (!isInAnyGroup || !tempGroupId) {
@@ -105,31 +138,72 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
               成員
             </Button>
           </PopoverTrigger>
-          <PopoverContent>
-            <>
-              {users.map(({ name, email }) => {
-                return <p className="my-2">{name}</p>;
-              })}
-              <div className="flex items-center gap-2">
-                <Button variant="outline" onClick={handleCopyUrl}>
-                  <img
-                    id="copyLink"
-                    src={link}
-                    alt="link"
-                    className="w-5 hover:opacity-50 mx-1"
-                  />
-                  複製邀請連結
-                </Button>
-                <p className="text-sm "> {isUrlCopied ? "連結已複製!" : ""}</p>
-              </div>
-            </>
+          <PopoverContent className="px-7">
+            <p className="border-b pb-2">群組成員</p>
+            {users.map(({ name, uid }) => {
+              return (
+                <div className="flex justify-between px-3 items-center">
+                  <p className="my-2" key={name}>
+                    {name}
+                  </p>
+                  <AlertDialog>
+                    <AlertDialogTrigger disabled={expenses.length ? true : ""}>
+                      <Button
+                        className="h-8 w-10"
+                        variant="destructive"
+                        disabled={expenses.length ? true : ""}
+                      >
+                        刪除
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          確定要刪除{name}嗎？
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          請記得跟{name}說再見
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>取消</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleRemoveMember(name, uid)}
+                        >
+                          確定
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+              );
+            })}
+            <div className="text-xs text-slate-400 py-2 px-3">
+              {expenses.length ? "註：請先銷帳才能刪除成員" : ""}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Button variant="outline" onClick={handleCopyUrl}>
+                <img
+                  id="copyLink"
+                  src={link}
+                  alt="link"
+                  className="w-5 hover:opacity-50 mx-1"
+                />
+                複製邀請連結
+              </Button>
+              <p className="text-sm "> {isUrlCopied ? "連結已複製!" : ""}</p>
+            </div>
           </PopoverContent>
         </Popover>
 
         <ChartAndResult></ChartAndResult>
         <AlertDialog>
-          <AlertDialogTrigger disabled={!expenses.length?true:''}>
-            <Button variant="destructive" disabled={!expenses.length?true:''}>
+          <AlertDialogTrigger disabled={!expenses.length ? true : ""}>
+            <Button
+              variant="destructive"
+              disabled={!expenses.length ? true : ""}
+            >
               <BadgeAlert className="mr-1"></BadgeAlert>銷帳
             </Button>
           </AlertDialogTrigger>

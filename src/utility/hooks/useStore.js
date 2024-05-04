@@ -30,9 +30,9 @@ const INITIANL_GROUP = {
   groupName: "",
   groupId: "",
   users: [
-    { uid: "", name: "1", email: "" },
-    { uid: "", name: "2", email: "" },
-    { uid: "", name: "3", email: "" },
+    // { uid: "", name: "1", email: "" },
+    // { uid: "", name: "2", email: "" },
+    // { uid: "", name: "3", email: "" },
     // { uid: "", name: "d", email: "" },
     // { uid: "", name: "e", email: "" },
   ],
@@ -119,7 +119,7 @@ const useStore = create(
       }),
     group: INITIANL_GROUP,
     setGroup: (data) => set({ group: data }),
-    // resetGroup: () =>set({ group: INITIAL })
+    resetGroup: () =>set({ group: INITIANL_GROUP }),
     date: new Date(),
     setDate: (data) => set({ date: data }),
     selected: [],
