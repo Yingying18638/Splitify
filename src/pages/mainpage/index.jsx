@@ -18,6 +18,7 @@ import { Chart } from "./Chart";
 import SideBar from "./SideBar";
 import { DrawerDialogDemo } from "./DrawerDialogDemo";
 import JoinGroupDialog from "./JoinGroupDialog";
+import ChartAndResult from "./ChartAndResult";
 //---------------------- shadcn ui------------------------------------------------
 import {
   Tabs,
@@ -26,7 +27,17 @@ import {
   TabsTrigger,
 } from "../../components/ui/tabs";
 import { Button } from "../../components/ui/button";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 const Mainpage = ({
   isSideBarOpen,
   setIsSideBarOpen,
@@ -86,29 +97,7 @@ const Mainpage = ({
           defaultValue="account"
           className="w-[360px] md:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap "
         >
-          {/* <div className="fixed bg-[#121212] w-full h-4"> */}
-          <TabsList className=" fixed left-[50%] md:ml-[80px] translate-x-[-50%] top-[5rem] bg-[#653A14] w-full rounded-none">
-            <TabsTrigger
-              value="account"
-              className=" w-32"
-              id="account"
-              //  text-red-300 data-[state='active']:text-red-500
-              // data-[state='active']:bg-red-950
-            >
-              帳目
-            </TabsTrigger>
-            <TabsTrigger
-              value="calculation"
-              className="w-32
-              "
-              id="calculation"
-              //  text-red-300 bg-red-800"
-            >
-              結算
-            </TabsTrigger>
-          </TabsList>
-          {/* </div> */}
-          <TabsContent value="account">
+          <section value="account">
             <LittleHeader
               displayAddExpense={displayAddExpense}
               setDisplayAddExpense={setDisplayAddExpense}
@@ -137,16 +126,25 @@ const Mainpage = ({
               setDisplayDetail={setDisplayDetail}
               setDisplayEditExpense={setDisplayEditExpense}
             />
-          </TabsContent>
-          <TabsContent value="calculation">
-            <LittleHeader
-              displayAddExpense={displayAddExpense}
-              setDisplayAddExpense={setDisplayAddExpense}
-            />
-            <Chart />
-            <Result />
-          </TabsContent>
-        </Tabs>
+          </section>
+        </Tabs> {/* <AlertDialog>
+            <AlertDialogTrigger>
+              <Button>123</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>誰要給誰多少錢？</AlertDialogTitle>
+                <AlertDialogDescription>
+                  <Chart />
+                  <Result />
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>取消</AlertDialogCancel>
+                <AlertDialogAction>確定</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog> */}
         <AddExpense
           displayAddExpense={displayAddExpense}
           setDisplayAddExpense={setDisplayAddExpense}

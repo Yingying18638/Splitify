@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import groupImg from "../../assets/group.png";
 import link from "../../assets/link.png";
 import { Button } from "../../components/ui/button";
@@ -21,18 +21,23 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import ChartAndResult from "./ChartAndResult";
 
-import { ArrowBigLeftDash } from "lucide-react";
+import { ArrowBigLeftDash, BadgeAlert, Plus } from "lucide-react";
 
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   const [isUrlCopied, setIsUrlCopied] = useState(false);
+  const [open, setOpen] = useState(false);
   const { group, tempGroupId, tempUser } = useStore();
   const { inGroup } = tempUser;
   const { users, groupId } = group;
   const { groupName, expenses, history } = group;
   const groupIds = Object.keys(inGroup).length ? Object.keys(inGroup) : [];
   const isInAnyGroup = groupIds.length > 0;
-
+  useEffect(() => {
+    if (open) return;
+    setIsUrlCopied(false);
+  }, [open]);
   async function handleClear() {
     // expenses 放入history, 清空expenses, totalBill, flow
     try {
@@ -73,72 +78,98 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   }
   return (
     // <div className="flex fixed  left-[50%] bg-[#eabf8e] translate-x-[-50%]  md:ml-[80px] w-[60%] rounded shadow-md flex-wrap items-center justify-center mt-8 p-2">
-    <div className="flex mt-24 bg-[#fadab5]    w-[600px] rounded-lg shadow-md flex-wrap items-center justify-center mx-auto  p-2 mb-[-80px]">
-      <div className="w-28 mr-28 rounded-sm px-3 py-1 text-md font-medium">
-       群組｜{groupName}
+    <div className="flex mt-24 bg-[#f9e9d7] gap-2 sm:w-[650px] rounded-lg shadow-md flex-wrap items-center justify-between mx-auto  p-2 mb-[-80px]">
+      <div className=" rounded-sm px-3 py-1 text-md font-medium">
+        群組｜{groupName}
       </div>
-      <figure className="cursor-pointer mx-2">
-        <Popover>
+      <div>
+        <Button
+          className=""
+          onClick={() => {
+            setDisplayAddExpense("block");
+          }}
+        >
+          <Plus className="w-5 mr-1"></Plus>花費
+          {/* <span className="text-lg font-extrabold"> ＋ </span><span>花費</span> */}
+        </Button>
+
+        <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger>
-            <img
-              id="seeMembers"
-              src={groupImg}
-              alt="group"
-              className="hover:opacity-50"
-            />
+            <Button variant="outline">
+              <img
+                id="seeMembers"
+                src={groupImg}
+                alt="group"
+                className="w-6 hover:opacity-50 mx-1"
+              />{" "}
+              成員
+            </Button>
           </PopoverTrigger>
           <PopoverContent>
-            {users.map(({ name, email }) => {
-              return <p className="my-2">{name}</p>;
-            })}
+            <>
+              {users.map(({ name, email }) => {
+                return <p className="my-2">{name}</p>;
+              })}
+              <div className="flex items-center gap-2">
+                <Button variant="outline" onClick={handleCopyUrl}>
+                  <img
+                    id="copyLink"
+                    src={link}
+                    alt="link"
+                    className="w-5 hover:opacity-50 mx-1"
+                  />
+                  複製邀請連結
+                </Button>
+                <p className="text-sm "> {isUrlCopied ? "連結已複製!" : ""}</p>
+              </div>
+            </>
           </PopoverContent>
         </Popover>
-      </figure>
-      <figure className="cursor-pointer">
-        <Popover>
-          <PopoverTrigger>
-            <img
-              id="copyLink"
-              src={link}
-              alt="link"
-              className="w-[32px] hover:opacity-50"
-              onClick={handleCopyUrl}
-            />
-          </PopoverTrigger>
-          <PopoverContent className="w-[150px]">
-            {isUrlCopied ? "連結已複製" : ""}
-          </PopoverContent>
-        </Popover>
-      </figure>
 
-      <Button
-        className="block mx-2"
-        onClick={() => {
-          setDisplayAddExpense("block");
-        }}
-      >
-        + 花費
-      </Button>
-      {/* <Button onClick={handleClear}>銷帳</Button> */}
-      <AlertDialog>
-        <AlertDialogTrigger>
-          <Button>銷帳</Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>確定要銷帳嗎？</AlertDialogTitle>
-            <AlertDialogDescription>
-              這個動作會把目前帳務結清，誰都不相欠，結清帳目後就只能查看
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>取消</AlertDialogCancel>
-            <AlertDialogAction onClick={handleClear}>確定</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        <ChartAndResult></ChartAndResult>
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <Button variant="destructive">
+              <BadgeAlert className="mr-1"></BadgeAlert>銷帳
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>確定要銷帳嗎？</AlertDialogTitle>
+              <AlertDialogDescription>
+                這個動作會把目前帳務結清，誰都不相欠，結清帳目後就只能查看
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>取消</AlertDialogCancel>
+              <AlertDialogAction onClick={handleClear}>確定</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
     </div>
   );
 };
 
 export default LittleHeader;
+
+{
+  /* <Button variant="outline" onClick={handleCopyUrl} >
+        <figure className="cursor-pointer">
+          <Popover>
+            <PopoverTrigger>
+              <img
+                id="copyLink"
+                src={link}
+                alt="link"
+                className="w-5 hover:opacity-50 mx-1"
+              />
+            </PopoverTrigger>
+            <PopoverContent className="w-[150px]">
+              {isUrlCopied ? "連結已複製" : ""}
+            </PopoverContent>
+          </Popover>
+        </figure>
+        複製
+      </Button> */
+}

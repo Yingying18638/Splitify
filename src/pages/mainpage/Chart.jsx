@@ -20,7 +20,7 @@ export const options = {
   plugins: {
     title: {
       display: true,
-      text: "看看你是付款還是收款",
+      text: "先看看你是付款還是收款",
     },
   },
 };
@@ -54,7 +54,7 @@ export function Chart() {
       data={data}
       width={360}
       height={300}
-      className="mt-24"
+      className="m-4"
     />
   );
 }

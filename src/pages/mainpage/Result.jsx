@@ -10,8 +10,8 @@ const Result = () => {
       {flow.map((item, index) => {
         const { from, to, amount } = item;
         return (
-          <div className="flex gap-4 justify-center">
-            <p key={index} className="w-[80px]">
+          <div key={index} className="flex gap-4 justify-center">
+            <p  className="w-[80px]">
               {from}
             </p>
             <p className="w-[100px]">給{to}</p>
