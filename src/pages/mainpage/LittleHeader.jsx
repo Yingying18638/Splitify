@@ -111,120 +111,123 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   }
   return (
     // <div className="flex fixed  left-[50%] bg-[#eabf8e] translate-x-[-50%]  md:ml-[80px] w-[60%] rounded shadow-md flex-wrap items-center justify-center mt-8 p-2">
-    //  <div className="flex mt-4 bg-[#f9e9d7] gap-2 sm:w-[650px] rounded-lg shadow-md flex-wrap items-center justify-between mx-auto  p-2 mb-[-80px]"> 
-     <div className="flex mt-4 bg-[#f9e9d7] gap-2  rounded-lg shadow-md flex-wrap items-center justify-between mx-auto  p-2 mb-[-80px]"> 
-      <div className=" rounded-sm px-3 py-1 text-md font-medium">
+    //  <div className="flex mt-4 bg-[#f9e9d7] gap-2 sm:w-[650px] rounded-lg shadow-md flex-wrap items-center justify-between mx-auto  p-2 mb-[-80px]">
+    <>
+      <h1 className=" rounded-md inline-block shadow-md bg-[#FBECCC] px-3 py-1 mt-4 text-md font-medium">
         群組｜{groupName}
-      </div>
-      <div>
-        <Button
-          className=""
-          onClick={() => {
-            setDisplayAddExpense("block");
-          }}
-        >
-          <Plus className="w-5 mr-1"></Plus>花費
-          {/* <span className="text-lg font-extrabold"> ＋ </span><span>花費</span> */}
-        </Button>
-
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger>
-            <Button variant="outline">
-              <img
-                id="seeMembers"
-                src={groupImg}
-                alt="group"
-                className="w-6 hover:opacity-50 mx-1"
-              />{" "}
-              成員
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="px-7">
-            <p className="border-b pb-2">群組成員</p>
-            {users.map(({ name, uid }) => {
-              return (
-                <div className="flex justify-between px-3 items-center">
-                  <p className="my-2" key={name}>
-                    {name}
-                  </p>
-                  <AlertDialog>
-                    <AlertDialogTrigger disabled={expenses.length ? true : ""}>
-                      <Button
-                        className="h-8 w-10"
-                        variant="destructive"
+      </h1>
+      <div className="flex   rounded-lg  flex-wrap items-center justify-between mx-auto  py-4 px-2 mb-[-80px]">
+        <div className="flex gap-6">
+          <Button
+            className=""
+            onClick={() => {
+              setDisplayAddExpense("block");
+            }}
+          >
+            <Plus className="w-5 mr-1"></Plus>花費
+            {/* <span className="text-lg font-extrabold"> ＋ </span><span>花費</span> */}
+          </Button>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger>
+              <Button variant="secondary">
+                <img
+                  id="seeMembers"
+                  src={groupImg}
+                  alt="group"
+                  className="w-6  mx-1"
+                />{" "}
+                成員
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="px-7">
+              <p className="border-b pb-2">群組成員</p>
+              {users.map(({ name, uid }) => {
+                return (
+                  <div className="flex justify-between px-3 items-center">
+                    <p className="my-2" key={name}>
+                      {name}
+                    </p>
+                    <AlertDialog>
+                      <AlertDialogTrigger
                         disabled={expenses.length ? true : ""}
                       >
-                        刪除
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          確定要刪除{name}嗎？
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          請記得跟{name}說再見
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>取消</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => handleRemoveMember(name, uid)}
+                        <Button
+                          className="h-8 w-10"
+                          variant="destructive"
+                          disabled={expenses.length ? true : ""}
                         >
-                          確定
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
-              );
-            })}
-            <div className="text-xs text-slate-400 py-2 px-3">
-              {expenses.length ? "註：請先銷帳才能刪除成員" : ""}
-            </div>
+                          刪除
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            確定要刪除{name}嗎？
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            請記得跟{name}說再見
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>取消</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleRemoveMember(name, uid)}
+                          >
+                            確定
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                );
+              })}
+              <div className="text-xs text-slate-400 py-2 px-3">
+                {expenses.length ? "註：請先銷帳才能刪除成員" : ""}
+              </div>
 
-            <div className="flex items-center gap-2">
-              <Button variant="outline" onClick={handleCopyUrl}>
-                <img
-                  id="copyLink"
-                  src={link}
-                  alt="link"
-                  className="w-5 hover:opacity-50 mx-1"
-                />
-                複製邀請連結
+              <div className="flex items-center gap-2">
+                <Button variant="secondary" onClick={handleCopyUrl}>
+                  <img
+                    id="copyLink"
+                    src={link}
+                    alt="link"
+                    className="w-5  mx-1"
+                  />
+                  複製邀請連結
+                </Button>
+                <p className="text-sm "> {isUrlCopied ? "連結已複製!" : ""}</p>
+              </div>
+            </PopoverContent>
+          </Popover>
+          <ChartAndResult></ChartAndResult>
+          <AlertDialog>
+            <AlertDialogTrigger disabled={!expenses.length ? true : ""}>
+              <Button
+                variant="destructive"
+                disabled={!expenses.length ? true : ""}
+              >
+                <BadgeAlert className="mr-1"></BadgeAlert>銷帳
               </Button>
-              <p className="text-sm "> {isUrlCopied ? "連結已複製!" : ""}</p>
-            </div>
-          </PopoverContent>
-        </Popover>
-
-        <ChartAndResult></ChartAndResult>
-        <AlertDialog>
-          <AlertDialogTrigger disabled={!expenses.length ? true : ""}>
-            <Button
-              variant="destructive"
-              disabled={!expenses.length ? true : ""}
-            >
-              <BadgeAlert className="mr-1"></BadgeAlert>銷帳
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>確定要銷帳嗎？</AlertDialogTitle>
-              <AlertDialogDescription>
-                這個動作會把目前帳務結清，誰都不相欠，並歸到已結清紀錄中
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>取消</AlertDialogCancel>
-              <AlertDialogAction onClick={handleClear}>確定</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>確定要銷帳嗎？</AlertDialogTitle>
+                <AlertDialogDescription>
+                  這個動作會把目前帳務結清，誰都不相欠，並歸到已結清紀錄中
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>取消</AlertDialogCancel>
+                <AlertDialogAction onClick={handleClear}>
+                  確定
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default LittleHeader;
-
