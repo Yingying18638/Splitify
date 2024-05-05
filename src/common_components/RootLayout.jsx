@@ -27,7 +27,7 @@ const RootLayout = ({ children }) => {
   const [sideBarClass, setSideBarClass] = useState(mobileSideBar);
   return (
     <>
-      <header className="bg-[#dda15e] h-[5rem] fixed top-0 w-full flex items-center gap-10 justify-center">
+      <header className="bg-[#dda15e] h-[5rem] fixed z-[9] top-0 w-full flex items-center gap-10 justify-center">
         <div className="fixed left-5 ">
           <SignedIn>
             <Menu
