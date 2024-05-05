@@ -111,7 +111,8 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   }
   return (
     // <div className="flex fixed  left-[50%] bg-[#eabf8e] translate-x-[-50%]  md:ml-[80px] w-[60%] rounded shadow-md flex-wrap items-center justify-center mt-8 p-2">
-    <div className="flex mt-24 bg-[#f9e9d7] gap-2 sm:w-[650px] rounded-lg shadow-md flex-wrap items-center justify-between mx-auto  p-2 mb-[-80px]">
+    //  <div className="flex mt-4 bg-[#f9e9d7] gap-2 sm:w-[650px] rounded-lg shadow-md flex-wrap items-center justify-between mx-auto  p-2 mb-[-80px]"> 
+     <div className="flex mt-4 bg-[#f9e9d7] gap-2  rounded-lg shadow-md flex-wrap items-center justify-between mx-auto  p-2 mb-[-80px]"> 
       <div className=" rounded-sm px-3 py-1 text-md font-medium">
         群組｜{groupName}
       </div>
@@ -227,23 +228,3 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
 
 export default LittleHeader;
 
-{
-  /* <Button variant="outline" onClick={handleCopyUrl} >
-        <figure className="cursor-pointer">
-          <Popover>
-            <PopoverTrigger>
-              <img
-                id="copyLink"
-                src={link}
-                alt="link"
-                className="w-5 hover:opacity-50 mx-1"
-              />
-            </PopoverTrigger>
-            <PopoverContent className="w-[150px]">
-              {isUrlCopied ? "連結已複製" : ""}
-            </PopoverContent>
-          </Popover>
-        </figure>
-        複製
-      </Button> */
-}

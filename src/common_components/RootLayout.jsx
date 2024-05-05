@@ -56,7 +56,6 @@ const RootLayout = ({ children }) => {
           </SignedIn>
         </div>
       </header>
-      <div className="bg-[#fefae0] h-[100vh]">
         <SignedIn>
           <Mainpage
             isSideBarOpen={isSideBarOpen}
@@ -66,7 +65,6 @@ const RootLayout = ({ children }) => {
           />
         </SignedIn>
         <SignedOut>{isGoingToAGroup ? <SignIn /> : <LandingPage />}</SignedOut>
-      </div>
     </>
   );
 };

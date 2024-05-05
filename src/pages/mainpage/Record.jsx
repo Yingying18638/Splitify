@@ -56,7 +56,7 @@ const Record = ({
       {expensesArrToRender.map(([date, expenses]) => {
         return (
           <div key={date} className="mt-4 ">
-            <h2 className="bg-gray-100 rounded-md w-28 px-1">{`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`}</h2>
+            <h2 className="bg-gray-100 shadow-md rounded-md w-28 px-1">{`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`}</h2>
             {expenses.map((exp) => {
               const {
                 item,
@@ -96,7 +96,7 @@ const Record = ({
                     <figure>
                       <img src={list} alt="icon" />
                     </figure>
-                    <figcaption className="ml-2 w-[150px] md:w-[380px]">
+                    <figcaption className="ml-2 w-[150px] sm:w-[380px]">
                       <p>{item}</p>
                       <p>
                         {isSinglePayer
@@ -108,7 +108,7 @@ const Record = ({
                       </p>
                       <p className="text-xs text-slate-400">{date}</p>
                     </figcaption>
-                    <div className="sm:ml-4">NT {total_amount}元</div>
+                    <div className="ml-3 sm:ml-4">NT {total_amount}元</div>
                   </div>
                   <article
                     className={`pr-8 py-2 pl-16 md:pl-24 ${displayDetail?.[time] || "hidden"}`}

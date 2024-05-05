@@ -27,17 +27,6 @@ import {
   TabsTrigger,
 } from "../../components/ui/tabs";
 import { Button } from "../../components/ui/button";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 const Mainpage = ({
   isSideBarOpen,
   setIsSideBarOpen,
@@ -86,7 +75,7 @@ const Mainpage = ({
   // useCheckUrlSetDialog(setIsGrpDialogOpen);
   return (
     <>
-      <main className="">
+      <main className="min-h-screen bg-[#fefae0]">
         <SideBar
           isSideBarOpen={isSideBarOpen}
           setIsSideBarOpen={setIsSideBarOpen}
@@ -95,7 +84,7 @@ const Mainpage = ({
         ></SideBar>
         <Tabs
           defaultValue="account"
-          className="w-[360px] md:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap "
+          className="w-[360px] sm:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap "
         >
           <section value="account">
             <LittleHeader
@@ -127,24 +116,7 @@ const Mainpage = ({
               setDisplayEditExpense={setDisplayEditExpense}
             />
           </section>
-        </Tabs> {/* <AlertDialog>
-            <AlertDialogTrigger>
-              <Button>123</Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>誰要給誰多少錢？</AlertDialogTitle>
-                <AlertDialogDescription>
-                  <Chart />
-                  <Result />
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>取消</AlertDialogCancel>
-                <AlertDialogAction>確定</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog> */}
+        </Tabs> 
         <AddExpense
           displayAddExpense={displayAddExpense}
           setDisplayAddExpense={setDisplayAddExpense}
