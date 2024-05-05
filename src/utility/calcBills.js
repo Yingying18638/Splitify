@@ -7,8 +7,8 @@ function calcBills(payment, ave, users) {
   const bill = payment?.map((_, index) => {
     const result = {};
     for (let i = 0; i < usersArr.length; i++) {
-      result[usersArr[i]] =
-        payment[index][usersArr[i]] - ave[index][usersArr[i]];
+      const gap = payment[index][usersArr[i]] - ave[index][usersArr[i]];
+      result[usersArr[i]] = Math.round(gap * 100) / 100;
     }
     return result;
   });

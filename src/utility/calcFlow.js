@@ -45,8 +45,12 @@ function calcFlowDetail(totalBill) {
   flowMatrix.forEach((item, index) => {
     item.forEach((it, ind) => {
       if (it === 0) return;
-      // console.log(negNames[index], "給", posNames[ind], it, "元");
-      flow.push({ from: negNames[index], to: posNames[ind], amount: it });
+      const roundedAmount = Math.round(it * 100) / 100;
+      flow.push({
+        from: negNames[index],
+        to: posNames[ind],
+        amount: roundedAmount,
+      });
     });
   });
   console.log(flow);
