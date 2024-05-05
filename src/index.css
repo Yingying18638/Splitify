@@ -12,10 +12,11 @@ input[type="checkbox"] {
 .cl-formButtonPrimary {
   font-size: 14px;
   text-transform: none;
-  background-color: slategrey !important;
+  background-color: #653A14 !important;
 }
 .cl-footerActionLink {
-  color: slategray !important;
+  color: #653A14 !important;
+  border: none !important;
 }
 .cl-signIn-root {
   margin: auto;

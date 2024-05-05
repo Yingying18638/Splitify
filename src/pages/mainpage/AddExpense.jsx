@@ -188,7 +188,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               placeholder="晚餐"
               id="item"
               value={newExpense.item}
-              // required
+              required
               onChange={(e) =>
                 setNewExpense({ ...newExpense, item: e.target.value })
               }

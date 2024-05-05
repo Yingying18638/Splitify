@@ -153,7 +153,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
               id="item"
               className=""
               value={newExpense.item}
-              // required
+              required
               onChange={(e) =>
                 setNewExpense({ ...newExpense, item: e.target.value })
               }
