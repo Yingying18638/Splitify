@@ -99,10 +99,8 @@ const ParticipantsOptions = ({
                     const amountObj = {};
                     for (const [key, share] of Object.entries(newShareObj)) {
                       const amount = (share / shareTotal) * total_amount || 0;
-                      // amountObj[key] = amount;
-                      amountObj[key] = Math.round(amount);
-                      // ? Math.round(amount)
-                      // : 0;
+                      amountObj[key] = Math.round(amount*100)/100;
+
                     }
                     setNewExpense({
                       ...newExpense,

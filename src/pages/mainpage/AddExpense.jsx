@@ -7,6 +7,8 @@ import calcPaymentAverage from "../../utility/calcPaymentAverage";
 import calcFlow from "../../utility/calcFlow";
 import calcBills from "../../utility/calcBills";
 import calcSingleAve from "../../utility/calcSingleAve";
+import { parseISO, format, setDate } from "date-fns";
+
 //image
 import arrow from "../../assets/arrow.png";
 import optionsIcon from "../../assets/options.png";
@@ -61,6 +63,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     participants,
     note,
     img,
+    date,
     participants_customized,
   } = newExpense;
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
@@ -85,7 +88,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   const payersAmountArr = getAmountArr(morePayers);
   const payersAmountTotal = payersAmountArr?.reduce((acc, cur) => acc + cur, 0);
   const cusAmountTotal = cusAmountArr?.reduce((acc, cur) => acc + cur, 0);
-  const cusAmountGap = getAmountGap(cusAmountArr);
+  const cusAmountGap = Math.round(getAmountGap(cusAmountArr));
   const payersAmountGap = getAmountGap(payersAmountArr);
   // ----------------切成function-----------------------------
 
@@ -135,20 +138,27 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     e.preventDefault();
     // 1. newExpense 算出ave
     const ave = calcSingleAve(newExpense);
+
     const now = new Date().getTime();
-    const expenseToAdd = { ...newExpense, ave, time: now };
+    const expenseToAdd = {
+      ...newExpense,
+      ave,
+      time: now,
+      date: date ? date : format(now, "yyyyMMdd"),
+    };
     setNewExpense(expenseToAdd);
     // setsomeNewExpense(ave, "ave");
     // setsomeNewExpense(now, "time");
     // 2. newExpense 塞入group expenses, setGroup (觸發useEffect)
-    const abc = { ...group, expenses: [...group.expenses, expenseToAdd] };
-    // console.log(abc, "abc");
-    setGroup(abc);
+    const newGrp = { ...group, expenses: [...group.expenses, expenseToAdd] };
+    // console.log(newGrp, "newGrp");
+    setGroup(newGrp);
     //加入img
     setDisplayAddExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
     resetNewExpense();
+    setDate(new Date())
     setShareObj(usersObj);
     setSelected(options);
     console.log(newExpense);
@@ -345,6 +355,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             resetNewExpense();
             setSelected(options);
             setShareObj(usersObj);
+            setDate('')
           }}
         >
           取消

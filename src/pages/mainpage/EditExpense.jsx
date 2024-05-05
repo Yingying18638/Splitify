@@ -6,6 +6,7 @@ import calcSingleAve from "../../utility/calcSingleAve";
 import { updateGroupData } from "../../utility/handleFirestore";
 //image
 import arrow from "../../assets/arrow.png";
+import optionsIcon from "../../assets/options.png";
 import list from "../../assets/list.png";
 import closeIcon from "../../assets/x.png";
 import { CheckCheck, ListCollapse } from "lucide-react";
@@ -56,7 +57,6 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
   });
-  //   const [selected, setSelected] = useState(options || []);
   // ----------------function and variables-----------------------------
   function getAmountArr(personAmountObj) {
     if (!personAmountObj) return;
@@ -71,7 +71,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
   const payersAmountArr = getAmountArr(morePayers);
   const payersAmountTotal = payersAmountArr?.reduce((acc, cur) => acc + cur, 0);
   const cusAmountTotal = cusAmountArr?.reduce((acc, cur) => acc + cur, 0);
-  const cusAmountGap = getAmountGap(cusAmountArr);
+  const cusAmountGap = Math.round(getAmountGap(cusAmountArr));
   const payersAmountGap = getAmountGap(payersAmountArr);
   const participants_customNames = participants_customized
     ? Object.keys(participants_customized)
@@ -222,11 +222,15 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
               <SelectScrollDownButton />
             </SelectContent>
           </Select>
-          <ListCollapse
-            id="payer-arrow"
-            className="w-6 h-6 cursor-pointer"
-            onClick={(e) => handlePayersParticipantsDisplay(e)}
-          ></ListCollapse>
+          <div className="bg-black rounded p-[3px]">
+            <img
+              src={optionsIcon}
+              alt="options"
+              id="payer-arrow"
+              className="w-6 h-6 cursor-pointer"
+              onClick={(e) => handlePayersParticipantsDisplay(e)}
+            />
+          </div>
         </div>
         <p
           className={`text-red-500 ${payersAmountGap !== 0 && singlePayerOnly === "多人付款" ? "" : "hidden"}`}
@@ -243,13 +247,15 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             setSelected={setSelected}
             options={options}
           ></MultiSelect>
-          <ListCollapse
-            className="w-6 h-6 cursor-pointer"
-            id="participant-arrow"
-            onClick={(e) => {
-              handlePayersParticipantsDisplay(e);
-            }}
-          />
+          <div className="bg-black rounded p-[3px]">
+            <img
+              src={optionsIcon}
+              alt="options"
+              id="participant-arrow"
+              className="w-6 h-6 cursor-pointer"
+              onClick={(e) => handlePayersParticipantsDisplay(e)}
+            />
+          </div>
         </div>
         <p
           className={`text-red-500 ${cusAmountGap !== 0 && cusAmountTotal !== 0 ? "" : "hidden"}`}
