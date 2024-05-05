@@ -25,7 +25,11 @@ const DatePicker = () => {
   // const [date, setDate] = useState(new Date());
   useEffect(() => {
     setsomeNewExpense(format(date, "yyyyMMdd"), "date");
-  }, [date, group]);
+  }, [date]);
+  // function handleDateSelect(){
+  //   console.log(date);
+  //   setDate(date);
+  // }
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -42,7 +46,7 @@ const DatePicker = () => {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
-          mode="single"
+          mode="single"    
           selected={date}
           onSelect={setDate}
           initialFocus
