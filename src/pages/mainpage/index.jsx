@@ -102,7 +102,7 @@ const Mainpage = ({
             </div>
             {clearedExpensesToRender.length !== 0 && (
               <p
-                className="block w-32  mx-auto my-3 hover:underline cursor-pointer "
+                className="block w-32 tracking-wide mx-auto my-3 hover:underline hover:bg-[#FBECCC] p-1 rounded-md cursor-pointer "
                 onClick={handleDisplayHistory}
               >
                 {displayHistory?.text}已結清紀錄

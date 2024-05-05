@@ -56,7 +56,7 @@ const Record = ({
       {expensesArrToRender.map(([date, expenses]) => {
         return (
           <div key={date} className="mt-4 ">
-            <h2 className="bg-gray-100 shadow-md rounded-md w-28 px-1">{`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`}</h2>
+            <h2 className="bg-[#FBECCC] shadow-md rounded-md w-28 px-1">{`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`}</h2>
             {expenses.map((exp) => {
               const {
                 item,

@@ -29,7 +29,7 @@ export function DrawerDialogDemo({ btnClass }) {
         <DialogTrigger asChild>
           {/* <Button variant="outline" className="relative z-50 left-10"> */}
           <Button
-            variant="outline"
+            variant="secondary"
             className={btnClass ? "fixed" : "relative z-50 left-10 mt-6"}
           >
             建立群組
@@ -60,7 +60,7 @@ export function DrawerDialogDemo({ btnClass }) {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button
-          variant="outline"
+          variant="secondary"
           className={btnClass ? "fixed" : "relative z-50 left-10 mt-6"}
         >
           建立群組

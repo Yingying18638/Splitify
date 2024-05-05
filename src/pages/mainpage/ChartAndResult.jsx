@@ -31,7 +31,7 @@ export default function ChartAndResult() {
       <Dialog open={openResult} onOpenChange={setOpenResult}>
         <DialogTrigger asChild>
           <Button
-            variant="outline"
+            variant="secondary"
           >
             <HandCoins className="mr-1"></HandCoins>錢怎麼給
           </Button>
@@ -52,7 +52,7 @@ export default function ChartAndResult() {
     <Drawer open={openResult} onOpenChange={setOpenResult}>
       <DrawerTrigger asChild>
         <Button
-          variant="outline"
+          variant="secondary"
         >
           <HandCoins className="mr-1"></HandCoins>錢怎麼給
         </Button>

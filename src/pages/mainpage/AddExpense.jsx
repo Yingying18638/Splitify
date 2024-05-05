@@ -172,7 +172,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense} space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#dda15e] h-full w-full sm:w-[360px] sm:h-[800px] p-3 px-6 rounded-lg`}
+        className={`${displayAddExpense} space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px] sm:h-[800px] p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">新增花費</h1>
