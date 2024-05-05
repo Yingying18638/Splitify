@@ -32,7 +32,7 @@ import { ArrowBigLeftDash, BadgeAlert, Plus, UserMinus } from "lucide-react";
 
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   const [isUrlCopied, setIsUrlCopied] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openMember, setOpenMember] = useState(false);
   const { group, tempGroupId, tempUser, setTempGroupId, resetGroup } =
     useStore();
   const { inGroup } = tempUser;
@@ -42,9 +42,9 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   const isInAnyGroup = groupIds.length > 0;
   useListenUsers();
   useEffect(() => {
-    if (open) return;
+    if (openMember) return;
     setIsUrlCopied(false);
-  }, [open]);
+  }, [openMember]);
   async function handleClear() {
     // expenses 放入history, 清空expenses, totalBill, flow
     try {
@@ -93,6 +93,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
       const { [tempGroupId]: _, ...newInGroup } = inGroup;
       const newRemovedUser = { ...removedUser, inGroup: newInGroup };
       await addDocWithId(uid, "users", newRemovedUser);
+      setOpenMember(false)
       alert("刪除成功");
     } catch (error) {
       alert(error, "刪除失敗(更新成員)");
@@ -127,7 +128,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
             <Plus className="w-5 mr-1"></Plus>花費
             {/* <span className="text-lg font-extrabold"> ＋ </span><span>花費</span> */}
           </Button>
-          <Popover open={open} onOpenChange={setOpen}>
+          <Popover defaultOpen={false} open={openMember} onOpenChange={setOpenMember}>
             <PopoverTrigger>
               <Button variant="secondary">
                 <img
@@ -135,7 +136,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
                   src={groupImg}
                   alt="group"
                   className="w-6  mx-1"
-                />{" "}
+                />
                 成員
               </Button>
             </PopoverTrigger>
@@ -143,8 +144,8 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
               <p className="border-b pb-2">群組成員</p>
               {users.map(({ name, uid }) => {
                 return (
-                  <div className="flex justify-between px-3 items-center">
-                    <p className="my-2" key={name}>
+                  <div key={name} className="flex justify-between px-3 items-center">
+                    <p className="my-2" >
                       {name}
                     </p>
                     <AlertDialog>

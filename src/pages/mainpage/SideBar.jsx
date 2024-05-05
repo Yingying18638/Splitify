@@ -3,18 +3,6 @@ import useStore from "../../utility/hooks/useStore";
 import { Button } from "../../components/ui/button";
 import { DrawerDialogDemo } from "./DrawerDialogDemo";
 import { X } from "lucide-react";
-import {
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  collection,
-  getFirestore,
-  getDoc,
-  doc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
 import { useListenGroups, getData, db } from "../../utility/handleFirestore";
 const SideBar = ({
   isSideBarOpen,
