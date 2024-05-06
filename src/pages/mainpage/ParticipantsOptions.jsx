@@ -21,7 +21,7 @@ const ParticipantsOptions = ({
         className={`bg-black opacity-70 w-full h-[100vh] z-[51] fixed top-0 ${displayParticipantOpt} sm:hidden`}
       ></div>
       <section
-        className={`fixed ${displayParticipantOpt} shadow-lg rounded-lg z-[51] top-[34%] right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-full sm:h-[800px] sm:w-[270px] md:w-[360px] bg-[#CCB99F] pt-3 px-4`}
+        className={`fixed ${displayParticipantOpt} shadow-lg rounded-lg z-[51] top-[34%] right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-full sm:h-[90vh] sm:w-[calc(100%-360px)] md:w-[360px] bg-[#CCB99F] pt-3 px-4`}
       >
         <img
           src={closeIcon}
@@ -53,14 +53,13 @@ const ParticipantsOptions = ({
                   className={`${
                     participants_customNames?.find((item) => item === name) &&
                     participants_customized[name]
-                      ? ""
+                      ? "sm:absolute md:left-[10px] sm:left-[-12px] right-10"
                       : "hidden"
                   } `}
                 >
-                  <CheckCheck></CheckCheck>
+                  <CheckCheck className="w-4"></CheckCheck>
                 </div>
                 <label
-                  // htmlFor={`participant_${name}`}
                   htmlFor={name}
                   className="block w-[100px] ml-2"
                 >

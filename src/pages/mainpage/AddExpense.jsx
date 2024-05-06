@@ -8,7 +8,7 @@ import calcFlow from "../../utility/calcFlow";
 import calcBills from "../../utility/calcBills";
 import calcSingleAve from "../../utility/calcSingleAve";
 import { parseISO, format, setDate } from "date-fns";
-
+import useAddExpGuide from "../../utility/useAddExpGuide";
 //image
 import arrow from "../../assets/arrow.png";
 import optionsIcon from "../../assets/options.png";
@@ -158,7 +158,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
     resetNewExpense();
-    setDate(new Date())
+    setDate(new Date());
     setShareObj(usersObj);
     setSelected(options);
     console.log(newExpense);
@@ -172,10 +172,11 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense} space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px] sm:h-[800px] p-3 px-6 rounded-lg`}
+        className={`${displayAddExpense} space-y-3 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px]  sm:h-[90vh] p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">新增花費</h1>
+        <button onClick={useAddExpGuide}>教學</button>
         <img
           src={closeIcon}
           alt="closeIcon"
@@ -229,46 +230,48 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             ></Input>
           </figcaption>
         </figure>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2" id="whoPaid">
           <label className="block w-16" htmlFor="payer">
             誰先付
           </label>
-          <Select
-            value={singlePayerOnly || ""}
-            id="payer"
-            required
-            onValueChange={(value) => {
-              if (value !== "多人付款") {
-                setNewExpense({ ...newExpense, morePayers: {} });
-              }
-              setsomeNewExpense(value, "singlePayerOnly");
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="誰？" />
-            </SelectTrigger>
-            <SelectContent className="">
-              <SelectScrollUpButton />
-              {group?.users.map(({ name }) => {
-                return (
-                  <SelectItem name="payer" key={name} value={name || " "}>
-                    {name}
-                  </SelectItem>
-                );
-              })}
-              <SelectItem
-                name="payer"
-                key="others"
-                value="多人付款"
-                className={payersAmountTotal !== 0 ? "" : "hidden"}
-              >
-                多人付款
-              </SelectItem>
-              <SelectScrollDownButton />
-            </SelectContent>
-          </Select>
+          <div id="evenPayer">
+            <Select
+              value={singlePayerOnly || ""}
+              id="payer"
+              required
+              onValueChange={(value) => {
+                if (value !== "多人付款") {
+                  setNewExpense({ ...newExpense, morePayers: {} });
+                }
+                setsomeNewExpense(value, "singlePayerOnly");
+              }}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="誰？" />
+              </SelectTrigger>
+              <SelectContent className="">
+                <SelectScrollUpButton />
+                {group?.users.map(({ name }) => {
+                  return (
+                    <SelectItem name="payer" key={name} value={name || " "}>
+                      {name}
+                    </SelectItem>
+                  );
+                })}
+                <SelectItem
+                  name="payer"
+                  key="others"
+                  value="多人付款"
+                  className={payersAmountTotal !== 0 ? "" : "hidden"}
+                >
+                  多人付款
+                </SelectItem>
+                <SelectScrollDownButton />
+              </SelectContent>
+            </Select>
+          </div>
 
-          <div className="bg-black rounded p-[3px]">
+          <div className="bg-black rounded p-[3px]" id="morePayerOptions">
             <img
               src={optionsIcon}
               alt="options"
@@ -284,16 +287,18 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           此分帳尚未完成
         </p>
 
-        <div className="flex items-center gap-2 ">
+        <div className="flex items-center gap-2 " id="whoParticipated">
           <label className="block w-16" htmlFor="participant">
             分給誰
           </label>
-          <MultiSelect
-            selected={selected}
-            setSelected={setSelected}
-            options={options}
-          ></MultiSelect>
-          <div className="bg-black rounded p-[3px]">
+          <div id="evenParticipated">
+            <MultiSelect
+              selected={selected}
+              setSelected={setSelected}
+              options={options}
+            ></MultiSelect>
+          </div>
+          <div className="bg-black rounded p-[3px]" id="cusParticipatedOptions">
             <img
               src={optionsIcon}
               alt="options"
@@ -355,7 +360,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             resetNewExpense();
             setSelected(options);
             setShareObj(usersObj);
-            setDate('')
+            setDate("");
           }}
         >
           取消

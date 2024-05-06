@@ -101,7 +101,6 @@ function useListenGroups() {
   useEffect(() => {
     if (!tempGroupId) return;
     console.log("開始監聽或改變監聽", tempGroupId);
-    // getData(db, "groups", tempGroupId, setGroup);
     const docRef = doc(db, "groups", tempGroupId);
     const unsubscribe = onSnapshot(docRef, (doc) => {
       const data = doc.data();
@@ -118,8 +117,6 @@ function useListenUsers() {
   useEffect(() => {
     if (!uid) return;
     console.log("開始監聽user或改變監聽", uid);
-    //先取得正確的user data
-    // getData(db, "users", uid, setTempUser);
     //監聽users資料 + 設state
     const docRef = doc(db, "users", uid);
     const unsubscribe = onSnapshot(docRef, (doc) => {
