@@ -21,7 +21,7 @@ import {
 import { useState } from "react";
 import { Chart } from "./Chart";
 import Result from "./Result";
-import { HandCoins,ChevronsRight } from "lucide-react";
+import { HandCoins, ChevronsRight } from "lucide-react";
 
 export default function ChartAndResult() {
   const [openResult, setOpenResult] = useState(false);
@@ -30,19 +30,21 @@ export default function ChartAndResult() {
     return (
       <Dialog open={openResult} onOpenChange={setOpenResult}>
         <DialogTrigger asChild>
-          <Button
-            variant="secondary"
-          >
+          <Button variant="secondary">
             <HandCoins className="mr-1"></HandCoins>錢怎麼給
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>錢怎麼給</DialogTitle>
-            <DialogDescription>誰要給誰多少錢</DialogDescription>
-          </DialogHeader>
-          <Chart></Chart>
-          <Result></Result>
+        <DialogContent className="min-w-[425px] max-h-[80vh] w-[50vw] block">
+          <DialogHeader className="mb-5">
+            <DialogTitle className='text-center'>錢怎麼給</DialogTitle>
+            <DialogDescription className='text-center'>誰要給誰多少錢</DialogDescription>
+          </DialogHeader>  <div className="mt-12">
+            <Result></Result>
+          </div>
+          <div className="max-w-[360px] mx-auto mt-10">
+            <Chart></Chart>
+          </div>
+        
         </DialogContent>
       </Dialog>
     );
@@ -51,19 +53,19 @@ export default function ChartAndResult() {
   return (
     <Drawer open={openResult} onOpenChange={setOpenResult}>
       <DrawerTrigger asChild>
-        <Button
-          variant="secondary"
-        >
+        <Button variant="secondary">
           <HandCoins className="mr-1"></HandCoins>錢怎麼給
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
+      <DrawerContent className="h-[60vh]">
+        <DrawerHeader className="">
           <DrawerTitle>錢怎麼給</DrawerTitle>
           <DrawerDescription>誰要給誰多少錢</DrawerDescription>
         </DrawerHeader>
-       <div className="w-[360px] mx-auto"> <Chart></Chart></div>
-        <Result></Result>
+       
+        <Result></Result> <div className="w-[360px] mx-auto mt-10">
+          <Chart></Chart>
+        </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="secondary">關閉</Button>

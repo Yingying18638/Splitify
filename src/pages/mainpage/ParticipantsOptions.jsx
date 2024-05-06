@@ -21,7 +21,7 @@ const ParticipantsOptions = ({
         className={`bg-black opacity-70 w-full h-[100vh] z-[51] fixed top-0 ${displayParticipantOpt} sm:hidden`}
       ></div>
       <section
-        className={`fixed ${displayParticipantOpt} shadow-lg rounded-lg z-[51] top-[34%] right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-full sm:h-[800px] sm:w-[270px] md:w-[360px] bg-[#f4edc7] pt-3 px-4`}
+        className={`fixed ${displayParticipantOpt} shadow-lg rounded-lg z-[51] top-[34%] right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-full sm:h-[800px] sm:w-[270px] md:w-[360px] bg-[#CCB99F] pt-3 px-4`}
       >
         <img
           src={closeIcon}

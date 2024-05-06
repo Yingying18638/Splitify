@@ -84,9 +84,10 @@ const Mainpage = ({
         ></SideBar>
         <Tabs
           defaultValue="account"
-          className="w-[360px] sm:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap "
+          className=" mt-20 mx-auto  w-[360px] sm:w-[600px]  md:ml-[calc((100%-600px)/2+80px)] flex flex-col items-center justify-center  flex-wrap "
+        // className='w-[360px] sm:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap '
         >
-          <section value="account">
+          <section value="account" className="w-full">
             <LittleHeader
               displayAddExpense={displayAddExpense}
               setDisplayAddExpense={setDisplayAddExpense}

@@ -113,12 +113,12 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   return (
     // <div className="flex fixed  left-[50%] bg-[#eabf8e] translate-x-[-50%]  md:ml-[80px] w-[60%] rounded shadow-md flex-wrap items-center justify-center mt-8 p-2">
     //  <div className="flex mt-4 bg-[#f9e9d7] gap-2 sm:w-[650px] rounded-lg shadow-md flex-wrap items-center justify-between mx-auto  p-2 mb-[-80px]">
-    <>
+    <div className="mx-auto w-full">
       <h1 className=" rounded-md inline-block shadow-md bg-[#FBECCC] px-3 py-1 mt-4 text-md font-medium">
         群組｜{groupName}
       </h1>
-      <div className="flex   rounded-lg  flex-wrap items-center justify-between mx-auto  py-4 px-2 mb-[-80px]">
-        <div className="flex gap-6">
+      <div className="flex  rounded-lg  flex-wrap items-center sm:justify-center gap-4 sm:gap-12 mx-auto  py-4 px-2 mb-[-80px]">
+
           <Button
             className=""
             onClick={() => {
@@ -227,7 +227,6 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
           </AlertDialog>
         </div>
       </div>
-    </>
   );
 };
 

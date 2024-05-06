@@ -113,7 +113,6 @@ function useListenGroups() {
 }
 //監聽users
 function useListenUsers() {
-  console.log("你說我有在聽user");
   const { tempUser, setTempUser } = useStore();
   const { uid } = tempUser;
   useEffect(() => {

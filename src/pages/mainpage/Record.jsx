@@ -96,7 +96,7 @@ const Record = ({
                     <figure>
                       <img src={list} alt="icon" />
                     </figure>
-                    <figcaption className="ml-2 w-[150px] sm:w-[380px]">
+                    <figcaption className="ml-2  sm:w-[380px]">
                       <p>{item}</p>
                       <p>
                         {isSinglePayer

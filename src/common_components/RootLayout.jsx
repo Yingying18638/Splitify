@@ -64,9 +64,10 @@ const RootLayout = ({ children }) => {
           setSideBarClass={setSideBarClass}
         />
       </SignedIn>
-      <div className="bg-[#FEFAE0] h-screen">
-        <SignedOut>{isGoingToAGroup ? <SignIn /> : <LandingPage />}</SignedOut>
-      </div>
+      <SignedOut>
+        <div className="bg-[#FEFAE0] h-screen"> 
+        {isGoingToAGroup ? <SignIn /> : <LandingPage />}</div>
+      </SignedOut>
     </>
   );
 };

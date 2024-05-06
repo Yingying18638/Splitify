@@ -20,7 +20,7 @@ export const options = {
   plugins: {
     title: {
       display: true,
-      text: "先看看你是付款還是收款",
+      text: "看看你是總共是付款還是收款",
     },
   },
 };
@@ -41,8 +41,8 @@ export function Chart() {
           const index = context.dataIndex;
           const value = context.dataset.data[index];
           return value < 0
-            ? "rgb(255, 99, 132)" // draw negative values in red
-            : "rgb(99, 255, 132)";
+            ? "#EA8072" // draw negative values in red
+            : "#50DD9D";
         },
       },
     ],
