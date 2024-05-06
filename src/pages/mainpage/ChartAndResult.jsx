@@ -21,7 +21,7 @@ import {
 import { useState } from "react";
 import { Chart } from "./Chart";
 import Result from "./Result";
-import { HandCoins } from "lucide-react";
+import { HandCoins,ChevronsRight } from "lucide-react";
 
 export default function ChartAndResult() {
   const [openResult, setOpenResult] = useState(false);
