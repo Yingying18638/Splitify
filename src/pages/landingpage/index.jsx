@@ -2,6 +2,7 @@ import React from "react";
 import logo from "../../assets/logo-no-background.svg";
 import { CircleDollarSign, Users, PartyPopper } from "lucide-react";
 import { Button } from "../../components/ui/button";
+import Loading from "../../common_components/Loading";
 import {
   SignIn,
   SignInButton,

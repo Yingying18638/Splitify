@@ -56,15 +56,17 @@ const RootLayout = ({ children }) => {
           </SignedIn>
         </div>
       </header>
-        <SignedIn>
-          <Mainpage
-            isSideBarOpen={isSideBarOpen}
-            setIsSideBarOpen={setIsSideBarOpen}
-            sideBarClass={sideBarClass}
-            setSideBarClass={setSideBarClass}
-          />
-        </SignedIn>
+      <SignedIn>
+        <Mainpage
+          isSideBarOpen={isSideBarOpen}
+          setIsSideBarOpen={setIsSideBarOpen}
+          sideBarClass={sideBarClass}
+          setSideBarClass={setSideBarClass}
+        />
+      </SignedIn>
+      <div className="bg-[#FEFAE0] h-screen">
         <SignedOut>{isGoingToAGroup ? <SignIn /> : <LandingPage />}</SignedOut>
+      </div>
     </>
   );
 };
