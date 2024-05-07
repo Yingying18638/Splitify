@@ -17,7 +17,7 @@ const PayersOption = ({
         className={`bg-black opacity-70 w-full h-[100vh] z-[51] fixed top-0 ${displayPayersOpt} sm:hidden`}
       ></div>
       <section
-        className={`rounded-lg fixed z-[51] ${displayPayersOpt} bg-[#efddc7] right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full top-[34%] h-full sm:h-[90vh] sm:w-[270px] md:w-[360px] p-3 px-4`}
+        className={`rounded-lg fixed z-[51] ${displayPayersOpt} bg-[#efddc7] right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full top-[34%] h-full sm:h-[90vh] sm:w-[calc(100%-360px)] md:w-[360px] p-3 px-4`}
       >
         <img
           src={closeIcon}
@@ -45,11 +45,11 @@ const PayersOption = ({
                 className={`${
                   morePayersNames?.find((item) => item === name) &&
                   morePayers[name]
-                    ? ""
+                    ? "sm:absolute md:left-[10px] sm:left-[-12px] absolute left-[calc((100%-240px)/2-18px)]"
                     : "hidden"
                 }  z-30`}
               >
-                <CheckCheck></CheckCheck>
+                <CheckCheck className="w-4"></CheckCheck>
               </div>
               <label htmlFor={name} className="block w-[150px] ml-2">
                 {name}

@@ -53,16 +53,13 @@ const ParticipantsOptions = ({
                   className={`${
                     participants_customNames?.find((item) => item === name) &&
                     participants_customized[name]
-                      ? "sm:absolute md:left-[10px] sm:left-[-12px] right-10"
+                      ? "absolute md:left-[10px] sm:left-[-12px]  left-[calc((100%-240px)/2-18px)]"
                       : "hidden"
                   } `}
                 >
-                  <CheckCheck className="w-4"></CheckCheck>
+                  <CheckCheck className="w-4 "></CheckCheck>
                 </div>
-                <label
-                  htmlFor={name}
-                  className="block w-[100px] ml-2"
-                >
+                <label htmlFor={name} className="block w-[100px] ml-2">
                   {name}
                 </label>
                 <Input
@@ -98,8 +95,7 @@ const ParticipantsOptions = ({
                     const amountObj = {};
                     for (const [key, share] of Object.entries(newShareObj)) {
                       const amount = (share / shareTotal) * total_amount || 0;
-                      amountObj[key] = Math.round(amount*100)/100;
-
+                      amountObj[key] = Math.round(amount * 100) / 100;
                     }
                     setNewExpense({
                       ...newExpense,
