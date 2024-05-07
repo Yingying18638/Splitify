@@ -110,8 +110,8 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
   }
   if (!isInAnyGroup || !tempGroupId) {
     return (
-      <div className="mt-24 flex w-56 translate-x-[-50%] content-center flex-wrap fixed left-[50%] gap-2">
-        <ArrowBigLeftDash></ArrowBigLeftDash>
+      <div className="mt-24 flex max-w-[16rem] gap-2  content-center flex-wrap mx-auto">
+        <ArrowBigLeftDash className="animate-leftArrow"></ArrowBigLeftDash>
         <p>左側選擇群組 或</p>
         <div className="mt-[-10px]">
           <DrawerDialogDemo btnClass></DrawerDialogDemo>
@@ -136,6 +136,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
           <Plus className="w-5 mr-1"></Plus>花費
           {/* <span className="text-lg font-extrabold"> ＋ </span><span>花費</span> */}
         </Button>
+        <ChartAndResult></ChartAndResult>
         <Popover
           defaultOpen={false}
           open={openMember}
@@ -225,11 +226,11 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
             </div>
           </PopoverContent>
         </Popover>
-        <ChartAndResult></ChartAndResult>
         <AlertDialog>
           <AlertDialogTrigger disabled={!expenses.length ? true : ""}>
             <Button
-              variant="destructive"
+              // variant="destructive"
+              className='bg-[#FEB838] hover:bg-[#FEB838]/80'
               disabled={!expenses.length ? true : ""}
             >
               <BadgeAlert className="mr-1"></BadgeAlert>銷帳

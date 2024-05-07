@@ -30,7 +30,7 @@ export function DrawerDialogDemo({ btnClass }) {
           {/* <Button variant="outline" className="relative z-50 left-10"> */}
           <Button
             variant="secondary"
-            className={btnClass ? "fixed" : "relative z-50 left-10 mt-6"}
+            className={btnClass ? "" : "relative z-50 left-10 mt-6"}
           >
             建立群組
           </Button>

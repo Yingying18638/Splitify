@@ -134,9 +134,6 @@ const Mainpage = ({
         ) : (
           ""
         )}
-        <button onClick={startGuide} className="ml-60">
-          start
-        </button>
       </main>
     </>
   );
