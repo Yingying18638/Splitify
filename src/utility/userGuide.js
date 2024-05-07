@@ -1,6 +1,6 @@
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
-const driverObj = driver({
+const driverObjMain = driver({
   showProgress: true,
   steps: [
     {
@@ -13,7 +13,7 @@ const driverObj = driver({
         //     alert("Please wait...");
         //     return;
         //   }
-          driverObj.moveNext();
+          driverObjMain.moveNext();
         },
       },
     },
@@ -36,5 +36,5 @@ const driverObj = driver({
   ],
 });
 export default function startGuide() {
-  driverObj.drive();
+  driverObjMain.drive();
 }

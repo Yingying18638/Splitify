@@ -128,7 +128,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayEditExpense} space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px] sm:h-[800px] p-3 px-6 rounded-lg`}
+        className={`${displayEditExpense} space-y-3 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px] sm:h-[90vh] p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">編輯花費</h1>
@@ -142,7 +142,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             resetNewExpense();
             setSelected(options);
           }}
-          className="absolute right-2 top-[-0.5rem] cursor-pointer"
+          className="absolute right-2 top-[-0.3rem] cursor-pointer"
         />
         <figure className="flex items-center">
           <img src={list} alt="icon" className="w-9 h-9 mr-9" />
@@ -161,7 +161,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
           </figcaption>
         </figure>
         <figure className="flex items-center">
-          <div className="w-9 h-9 bg-slate-200 rounded mr-9 pt-2 p-1 text-sm">
+          <div className="w-9 h-9 bg-[#FEFAE0] rounded mr-9 pt-2 p-1 text-sm">
             NTD
           </div>
           <figcaption>
@@ -262,10 +262,9 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         >
           此分帳尚未完成
         </p>
-        <label htmlFor="date" className="block">
-          日期
-        </label>
-        <DatePicker id="date"></DatePicker>
+        <div className="flex items-center gap-10">
+          日期<DatePicker id="date"></DatePicker>
+        </div>
         <Textarea
           placeholder="備註"
           value={note}

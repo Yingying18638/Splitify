@@ -65,6 +65,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     img,
     date,
     participants_customized,
+    item,
   } = newExpense;
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
   const options = group?.users?.map(({ name }) => {
@@ -136,6 +137,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
+    // if (!item || !total_amount) {
+    //   // alert("請填寫項目與金額！")
+    //   return;
+    // }
     // 1. newExpense 算出ave
     const ave = calcSingleAve(newExpense);
 
@@ -176,7 +181,12 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">新增花費</h1>
-        <button onClick={useAddExpGuide}>教學</button>
+        <span
+          onClick={useAddExpGuide}
+          className="absolute cursor-pointer left-[220px] top-0 text-xs bg-[#FEFAE0] rounded-lg p-1"
+        >
+          怎麼填
+        </span>
         <img
           src={closeIcon}
           alt="closeIcon"
@@ -188,7 +198,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setSelected(options);
             setShareObj(usersObj);
           }}
-          className="absolute right-2 top-[-0.5rem] cursor-pointer "
+          className="absolute right-2 top-[-0.3rem] cursor-pointer "
         />
         <figure className="flex items-center">
           <img src={list} alt="icon" className="w-9 h-9 mr-9" />
@@ -197,9 +207,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             <Input
               className="mt-1"
               placeholder="晚餐"
+              required
               id="item"
               value={newExpense.item}
-              required
               onChange={(e) =>
                 setNewExpense({ ...newExpense, item: e.target.value })
               }
@@ -207,7 +217,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           </figcaption>
         </figure>
         <figure className="flex items-center">
-          <div className="w-9 h-9 bg-slate-200 rounded mr-9 pt-2 p-1 text-sm">
+          <div className="w-9 h-9 bg-[#FEFAE0] rounded mr-9 pt-2 p-1 text-sm">
             NTD
           </div>
           <figcaption>
