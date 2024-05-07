@@ -4,6 +4,7 @@ import useStore from "../../utility/hooks/useStore";
 import { parseISO, format } from "date-fns";
 import { EditDeleteButtons } from "./EditDeleteButtons";
 import { updateGroupData } from "../../utility/handleFirestore";
+import { ChevronsRight, CircleUserRound } from "lucide-react";
 
 const Record = ({
   expensesArrToRender,
@@ -22,7 +23,7 @@ const Record = ({
     tempGroupId,
     setShareObj,
   } = useStore();
-  const { expenses } = group;
+  const { expenses, users } = group;
 
   const usersObj = group.users?.reduce((acc, user) => {
     acc[user.name] = "";
@@ -49,6 +50,10 @@ const Record = ({
     await updateGroupData(tempGroupId, { ...group, expenses: expensesRemain });
     alert("刪除成功");
   }
+  function getImg(name) {
+    const user = users.find((item) => item.name === name);
+    return user?.img;
+  }
   return (
     <section
       className={`${displayHistory?.display} max-h-[700px]  overflow-auto  rounded-md p-1 `}
@@ -73,10 +78,7 @@ const Record = ({
               const isSinglePayer = singlePayerOnly !== "多人付款";
               const payersPair = morePayers && Object.entries(morePayers);
               return (
-                <fieldset
-                  key={time}
-                  id={time}
-                >
+                <fieldset key={time} id={time}>
                   <div
                     className="flex flex-wrap mt-2 cursor-pointer  rounded-md shadow-md py-2 px-3 hover:shadow-xl"
                     onClick={() => {
@@ -119,20 +121,33 @@ const Record = ({
                           Object.entries(ave).map(([name, amount]) => {
                             if (amount === 0) return;
                             return (
-                              <p key={name}>
-                                {name}應負擔{amount}元
-                              </p>
+                              <div className="flex items-center gap-2">
+                                <div className="rounded-full bg-gray-200 w-5 h-5">
+                                  {getImg(name) ? (
+                                    <img
+                                      src={getImg(name)}
+                                      alt=""
+                                      className="rounded-full w-5 h-5"
+                                    />
+                                  ) : (
+                                    <CircleUserRound className="w-5 "/>
+                                  )}
+                                </div>
+                                <p key={name}>
+                                  {name}應負擔{amount}元
+                                </p>
+                              </div>
                             );
                           })}
-                           <div className="text-slate-500 text-sm">
-                        <p className="text-slate-500 text-sm">
-                          {creater}在{format(time, "yyyyMMdd")}建立
-                        </p>
-                        <p className="text-slate-500 text-sm">{note}</p>
-                      </div>
+                        <div className="text-slate-500 text-sm">
+                          <p className="text-slate-500 text-sm">
+                            {creater}在{format(time, "yyyyMMdd")}建立
+                          </p>
+                          <p className="text-slate-500 text-sm">{note}</p>
+                        </div>
                       </figcaption>
                       {/* <figure className="flex flex-wrap gap-2"> */}
-                     
+
                       {/* <div className="w-40 h-20 bg-slate-200">
                           <img alt="圖片" />
                         </div> */}
