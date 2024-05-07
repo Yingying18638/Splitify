@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import groupImg from "../../assets/group.png";
+import groupImg from "../../assets/group2.png";
 import link from "../../assets/link.png";
 import { Button } from "../../components/ui/button";
 import useStore from "../../utility/hooks/useStore";
@@ -152,27 +152,27 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
               成員
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="px-7">
+          <PopoverContent className="px-7 w-[288px]">
             <p className="border-b pb-2">群組成員</p>
             {users.map(({ name, uid }) => {
               return (
                 <div
                   key={name}
-                  className="flex justify-between px-3 items-center"
+                  className="flex justify-between px-3 items-center w-full"
                 >
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-2 items-center ">
                     <div className="rounded-full bg-gray-200 w-6 h-6">
                       {getImg(name) ? (
                         <img
                           src={getImg(name)}
                           alt=""
-                          className="rounded-full w-6 h-6 "
+                          className="rounded-full"
                         />
                       ) : (
                         <CircleUserRound />
                       )}
                     </div>
-                    <p className="my-2">{name}</p>
+                    <p className="my-2 truncate w-[calc(224px-76px)]">{name}</p>
                   </div>
 
                   <AlertDialog>
