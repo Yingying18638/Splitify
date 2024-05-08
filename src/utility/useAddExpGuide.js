@@ -8,7 +8,7 @@ const driverObj = driver({
       element: "#whoPaid",
       popover: {
         title: "誰先付",
-        description: "這筆帳是誰付的？記得項目與金額要先寫",
+        description: "這筆帳是誰付的？",
       },
     },
     {

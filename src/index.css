@@ -22,3 +22,6 @@ input[type="checkbox"] {
   margin: auto;
   padding-top: 100px;
 }
+#driver-popover-description{
+  padding: 10px;
+}
