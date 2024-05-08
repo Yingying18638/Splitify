@@ -13,12 +13,9 @@ import LittleHeader from "./LittleHeader";
 import AddExpense from "./AddExpense";
 import Record from "./Record";
 import EditExpense from "./EditExpense";
-import Result from "./Result";
-import { Chart } from "./Chart";
 import SideBar from "./SideBar";
 import { DrawerDialogDemo } from "./DrawerDialogDemo";
 import JoinGroupDialog from "./JoinGroupDialog";
-import ChartAndResult from "./ChartAndResult";
 //---------------------- shadcn ui------------------------------------------------
 import {
   Tabs,
@@ -33,7 +30,7 @@ const Mainpage = ({
   sideBarClass,
   setSideBarClass,
 }) => {
-  const { group, setTempUser, setTempGroupId } = useStore();
+  const { group, setTempUser, setTempGroupId, tempGroupId } = useStore();
   const { expenses, history } = group;
   const initialDetailDisplay = expenses?.reduce((acc, cur) => {
     const { time } = cur;
@@ -85,7 +82,7 @@ const Mainpage = ({
         <Tabs
           defaultValue="account"
           className=" mt-20 mx-auto  w-[360px] sm:w-[600px]  md:ml-[calc((100%-600px)/2+80px)] flex flex-col items-center justify-center  flex-wrap "
-        // className='w-[360px] sm:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap '
+          // className='w-[360px] sm:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap '
         >
           <section value="account" className="w-full">
             <LittleHeader
@@ -93,13 +90,19 @@ const Mainpage = ({
               setDisplayAddExpense={setDisplayAddExpense}
             />
             <div className="mt-24">
-              <Record
-                expensesArrToRender={expensesArrToRender}
-                displayDetail={displayDetail}
-                setDisplayDetail={setDisplayDetail}
-                setDisplayEditExpense={setDisplayEditExpense}
-                children={true}
-              />
+              {expenses.length ? (
+                <Record
+                  expensesArrToRender={expensesArrToRender}
+                  displayDetail={displayDetail}
+                  setDisplayDetail={setDisplayDetail}
+                  setDisplayEditExpense={setDisplayEditExpense}
+                  children={true}
+                />
+              ) : tempGroupId ? (
+                <p className="text-center">目前尚無花費！</p>
+              ) : (
+                ""
+              )}
             </div>
             {clearedExpensesToRender.length !== 0 && (
               <p
@@ -117,7 +120,7 @@ const Mainpage = ({
               setDisplayEditExpense={setDisplayEditExpense}
             />
           </section>
-        </Tabs> 
+        </Tabs>
         <AddExpense
           displayAddExpense={displayAddExpense}
           setDisplayAddExpense={setDisplayAddExpense}
