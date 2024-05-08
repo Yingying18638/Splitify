@@ -65,7 +65,7 @@ const RootLayout = ({ children }) => {
         />
       </SignedIn>
       <SignedOut>
-        <div className="bg-[#FEFAE0] min-h-full"> 
+        <div className="bg-[#FEFAE0] min-h-screen"> 
         {isGoingToAGroup ? <SignIn /> : <LandingPage />}</div>
       </SignedOut>
     </>

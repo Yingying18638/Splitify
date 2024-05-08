@@ -105,7 +105,10 @@ const Record = ({
                           ? `${singlePayerOnly}先付${total_amount}元`
                           : payersPair &&
                             payersPair.map(
-                              ([name, amount]) => `${name}先付${amount}元  `
+                              ([name, amount]) => {
+                                if(!amount) return
+                                return(`${name}先付${amount}元  `)
+                              }
                             )}
                       </p>
                       <p className="text-xs text-slate-400">{date}</p>

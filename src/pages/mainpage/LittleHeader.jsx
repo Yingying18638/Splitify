@@ -167,7 +167,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
                         <img
                           src={getImg(name)}
                           alt=""
-                          className="rounded-full"
+                          className="rounded-full  w-6 h-6"
                         />
                       ) : (
                         <CircleUserRound />
