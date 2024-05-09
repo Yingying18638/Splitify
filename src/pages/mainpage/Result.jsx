@@ -30,7 +30,7 @@ const Result = () => {
                   <CircleUserRound />
                 )}
               </div>
-              <p className="w-[80px]">{from}</p>
+              <p className="w-[80px] truncate">{from}</p>
               <p className="text-sm">應給</p>
               <ChevronsRight></ChevronsRight>
               <div className="rounded-full bg-gray-200 w-6 h-6">
@@ -44,7 +44,7 @@ const Result = () => {
                   <CircleUserRound />
                 )}
               </div>
-              <p> {to}</p>
+              <p className="w-[80px] truncate"> {to}</p>
               <p>{amount} 元</p>
             </div>
           </>

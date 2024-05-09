@@ -15,15 +15,13 @@ import {
 function EditDeleteButtons({ handleEditExpense, handleDeleteExpense, time }) {
   return (
     <div className="md:self-center  left-36  sm:left-48">
-      <Button variant="secondary" onClick={() => handleEditExpense(time)}>
+      <Button variant="secondary" className='' onClick={() => handleEditExpense(time)}>
         編輯
       </Button>
-      {/* <Button variant="destructive" onClick={() => handleDeleteExpense(time)}>
-        刪除
-      </Button> */}
+     
       <AlertDialog>
         <AlertDialogTrigger>
-          <Button variant="destructive">刪除</Button>
+          <Button variant="destructive" className='' >刪除</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

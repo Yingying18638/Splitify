@@ -62,7 +62,7 @@ const SideBar = ({
       <div
         id="sidebar"
         ref={sideBarRef}
-        className={`bg-[#653A14] w-40 h-full fixed pr-3 top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
+        className={`bg-[#653A14] w-40 h-full fixed pr-6 top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
       >
         {sideBarClass === mobileSideBar && (
           <X

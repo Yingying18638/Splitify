@@ -98,34 +98,45 @@ const Record = ({
                     <figure>
                       <img src={list} alt="icon" />
                     </figure>
-                    <figcaption className="ml-2  sm:w-[380px]">
-                      <p>{item}</p>
+                    <figcaption className="ml-2 w-[160px] sm:w-[380px] ">
+                      <p className="w-full truncate">{item}</p>
                       <p>
                         {isSinglePayer
                           ? `${singlePayerOnly}先付${total_amount}元`
-                          : payersPair &&
-                            payersPair.map(
-                              ([name, amount]) => {
-                                if(!amount) return
-                                return(`${name}先付${amount}元  `)
-                              }
-                            )}
+                          : `${payersPair && payersPair[0][0]}等人共先付${total_amount}元`}
                       </p>
                       <p className="text-xs text-slate-400">{date}</p>
                     </figcaption>
-                    <div className="ml-3 sm:ml-4">NT {total_amount}元</div>
+                    <div className="ml-2 sm:ml-4">NT {total_amount}元</div>
                   </div>
                   <article
-                    className={`pr-8 py-2 pl-16 md:pl-24 ${displayDetail?.[time] || "hidden"}`}
+                    className={`py-2 pl-6 sm:pl-24 pr-2 sm:pr-8 ${displayDetail?.[time] || "hidden"}`}
                   >
                     <div className="mt-3 flex justify-between">
-                      <figcaption className="">
+                      <figcaption className="w-[240px] sm:w-[300px]">
+                        <div className="my-1 shadow-sm">
+                          {/* 付款人 */}
+                          <div className="pl-2">
+                            {payersPair &&
+                              payersPair.map(([name, amount]) => {
+                                if (!amount) return;
+                                return (
+                                  <p className="my-1">
+                                    {name}先付{amount}元
+                                  </p>
+                                );
+                              })}
+                          </div>
+                        </div>
                         {ave &&
                           Object.entries(ave).map(([name, amount]) => {
                             if (amount === 0) return;
                             return (
-                              <div className="flex items-center gap-2">
-                                <div className="rounded-full bg-gray-200 w-5 h-5">
+                              <div
+                                key={name}
+                                className="flex items-center w-full text-sm sm:text-base py-1"
+                              >
+                                <div className="rounded-full bg-gray-200 w-5 h-5 mr-2">
                                   {getImg(name) ? (
                                     <img
                                       src={getImg(name)}
@@ -133,24 +144,25 @@ const Record = ({
                                       className="rounded-full w-5 h-5"
                                     />
                                   ) : (
-                                    <CircleUserRound className="w-5 "/>
+                                    <CircleUserRound className="w-5 h-5" />
                                   )}
                                 </div>
-                                <p key={name}>
-                                  {name}應負擔{amount}元
+                                <p className="max-w-[calc(100%-180px)] truncate">
+                                  {name}
                                 </p>
+                                <p>應負擔{amount}元</p>
                               </div>
                             );
                           })}
-                        <div className="text-slate-500 text-sm">
-                          <p className="text-slate-500 text-sm">
-                            {creater}在{format(time, "yyyyMMdd")}建立
-                          </p>
-                          <p className="text-slate-500 text-sm">{note}</p>
-                        </div>
+
+                        <p className="text-slate-500 text-sm pt-2">
+                          {creater}在{format(time, "yyyyMMdd")}建立
+                        </p>
+                        <p className="text-slate-500 text-sm w-full truncate">
+                          {note}
+                        </p>
                       </figcaption>
                       {/* <figure className="flex flex-wrap gap-2"> */}
-
                       {/* <div className="w-40 h-20 bg-slate-200">
                           <img alt="圖片" />
                         </div> */}

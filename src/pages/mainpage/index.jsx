@@ -24,6 +24,7 @@ import {
   TabsTrigger,
 } from "../../components/ui/tabs";
 import { Button } from "../../components/ui/button";
+import { Smile } from 'lucide-react';
 const Mainpage = ({
   isSideBarOpen,
   setIsSideBarOpen,
@@ -72,7 +73,7 @@ const Mainpage = ({
   // useCheckUrlSetDialog(setIsGrpDialogOpen);
   return (
     <>
-      <main className="min-h-screen bg-[#fefae0]">
+      <main className="min-h-[calc(100vh-80px)] bg-[#fefae0]">
         <SideBar
           isSideBarOpen={isSideBarOpen}
           setIsSideBarOpen={setIsSideBarOpen}
@@ -99,18 +100,19 @@ const Mainpage = ({
                   children={true}
                 />
               ) : tempGroupId ? (
-                <p className="text-center">目前尚無花費！</p>
+                <p className="justify-center flex gap-1 p-2">目前尚無新花費<Smile/></p>
               ) : (
                 ""
               )}
             </div>
             {clearedExpensesToRender.length !== 0 && (
-              <p
-                className="block w-32 tracking-wide mx-auto my-3 hover:underline hover:bg-[#FBECCC] p-1 rounded-md cursor-pointer "
+              <Button
+              variant='secondary'
+                className="block w-32 tracking-wide mx-auto my-3  p-1 rounded-md cursor-pointer "
                 onClick={handleDisplayHistory}
               >
                 {displayHistory?.text}已結清紀錄
-              </p>
+              </Button>
             )}
             <Record
               displayHistory={displayHistory}
