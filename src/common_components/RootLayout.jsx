@@ -48,7 +48,7 @@ const RootLayout = ({ children }) => {
         <div className="fixed right-5 ">
           <SignedOut>
             <SignInButton mode="modal">
-              <button>登入或註冊</button>
+              <button>登入 / 註冊</button>
             </SignInButton>
           </SignedOut>
           <SignedIn>
