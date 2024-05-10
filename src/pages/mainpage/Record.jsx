@@ -61,7 +61,7 @@ const Record = ({
       {expensesArrToRender.map(([date, expenses]) => {
         return (
           <div key={date} className="mt-4 ">
-            <h2 className="bg-[#FBECCC] shadow-md rounded-md w-28 px-1">{`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`}</h2>
+            <h2 className="bg-[#FBECCC] shadow-md rounded-md inline-block px-2 py-[2px] mb-2">{`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6)}`}</h2>
             {expenses.map((exp) => {
               const {
                 item,
@@ -77,10 +77,13 @@ const Record = ({
               } = exp;
               const isSinglePayer = singlePayerOnly !== "多人付款";
               const payersPair = morePayers && Object.entries(morePayers);
+              const actualPayersPair = payersPair.filter(
+                (item) => item[1] !== 0
+              );
               return (
                 <fieldset key={time} id={time}>
                   <div
-                    className="flex flex-wrap mt-2 cursor-pointer  rounded-md shadow-md py-2 px-3 hover:shadow-xl"
+                    className="flex flex-wrap mt-2 cursor-pointer  rounded-md  py-2 pr-3 hover:shadow-xl"
                     onClick={() => {
                       if (displayDetail?.[time] === "block") {
                         setDisplayDetail({
@@ -95,42 +98,62 @@ const Record = ({
                       }
                     }}
                   >
-                    <figure>
-                      <img src={list} alt="icon" />
+                    <figure className="self-center">
+                      <img src={list} alt="icon" className="w-11" />
                     </figure>
                     <figcaption className="ml-2 w-[160px] sm:w-[380px] ">
                       <p className="w-full truncate">{item}</p>
                       <p>
                         {isSinglePayer
                           ? `${singlePayerOnly}先付${total_amount}元`
-                          : `${payersPair && payersPair[0][0]}等人共先付${total_amount}元`}
+                          : `${actualPayersPair && actualPayersPair.length}人先付${total_amount}元`}
                       </p>
                       <p className="text-xs text-slate-400">{date}</p>
                     </figcaption>
-                    <div className="ml-2 sm:ml-4">NT {total_amount}元</div>
+                    <div className="ml-[20px] sm:ml-[52px]">
+                      NT {total_amount}元
+                    </div>
                   </div>
                   <article
                     className={`py-2 pl-6 sm:pl-24 pr-2 sm:pr-8 ${displayDetail?.[time] || "hidden"}`}
                   >
-                    <div className="mt-3 flex justify-between">
+                    <div className="mt-3 flex justify-between items-start flex-wrap">
                       <figcaption className="w-[240px] sm:w-[300px]">
-                        <div className="my-1 shadow-sm">
-                          {/* 付款人 */}
-                          <div className="pl-2">
-                            {payersPair &&
-                              payersPair.map(([name, amount]) => {
-                                if (!amount) return;
-                                return (
-                                  <p className="my-1">
-                                    {name}先付{amount}元
-                                  </p>
-                                );
-                              })}
-                          </div>
+                        <div
+                          className={`my-1 ${actualPayersPair.length ? "border-b-2" : ""} border-[#CABB9D] pb-2 mb-2`}
+                        >
+                          {payersPair &&
+                            payersPair.map(([name, amount]) => {
+                              if (!amount) return;
+                              return (
+                                <>
+                                  <div
+                                    key={name}
+                                    className="flex items-center w-full text-sm sm:text-base py-1"
+                                  >
+                                    <div className="rounded-full bg-gray-200 w-5 h-5 mr-2">
+                                      {getImg(name) ? (
+                                        <img
+                                          src={getImg(name)}
+                                          alt=""
+                                          className="rounded-full w-5 h-5"
+                                        />
+                                      ) : (
+                                        <CircleUserRound className="w-5 h-5" />
+                                      )}
+                                    </div>
+                                    <p className="max-w-[calc(100%-180px)] truncate">
+                                      {name}
+                                    </p>
+                                    <p>先付{amount}元</p>
+                                  </div>
+                                </>
+                              );
+                            })}
                         </div>
                         {ave &&
                           Object.entries(ave).map(([name, amount]) => {
-                            if (amount === 0) return;
+                            if (!amount) return;
                             return (
                               <div
                                 key={name}

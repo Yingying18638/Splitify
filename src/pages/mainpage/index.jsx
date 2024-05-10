@@ -73,7 +73,7 @@ const Mainpage = ({
   // useCheckUrlSetDialog(setIsGrpDialogOpen);
   return (
     <>
-      <main className="min-h-[calc(100vh-80px)] bg-[#fefae0]">
+      <main className="min-h-[calc(100vh-80px)] bg-[#fefae0] ">
         <SideBar
           isSideBarOpen={isSideBarOpen}
           setIsSideBarOpen={setIsSideBarOpen}

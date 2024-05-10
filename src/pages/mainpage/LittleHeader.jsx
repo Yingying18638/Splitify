@@ -33,6 +33,7 @@ import {
   BadgeAlert,
   Plus,
   CircleUserRound,
+  Link as LinkIcon,
 } from "lucide-react";
 
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
@@ -126,7 +127,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
       <h1 className=" rounded-md inline-block shadow-md bg-[#FBECCC] px-3 py-1 mt-4 text-md font-medium max-w-full truncate">
         群組｜{groupName}
       </h1>
-      <div className="flex  rounded-lg  flex-wrap items-center sm:justify-center gap-4 sm:gap-12 mx-auto  py-4 px-2 mb-[-80px]">
+      <div className="flex  rounded-lg  flex-wrap items-center sm:justify-between mx-auto gap-2 py-4 px-2 mb-[-80px]">
         <Button
           className=""
           onClick={() => {
@@ -137,6 +138,17 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
           {/* <span className="text-lg font-extrabold"> ＋ </span><span>花費</span> */}
         </Button>
         <ChartAndResult></ChartAndResult>
+        <Popover>
+          <PopoverTrigger>
+            <Button variant="secondary" onClick={handleCopyUrl}>
+              <LinkIcon id="copyLink" className="w-5  mx-1 " strokeWidth={2.5} />
+              邀請連結
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-[150px]">
+            {isUrlCopied ? "連結已複製" : ""}
+          </PopoverContent>
+        </Popover>
         <Popover
           defaultOpen={false}
           open={openMember}
@@ -212,7 +224,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
               {expenses.length ? "註：請先銷帳才能刪除成員" : ""}
             </div>
 
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <Button variant="secondary" onClick={handleCopyUrl}>
                 <img
                   id="copyLink"
@@ -223,14 +235,14 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
                 複製邀請連結
               </Button>
               <p className="text-sm "> {isUrlCopied ? "連結已複製!" : ""}</p>
-            </div>
+            </div> */}
           </PopoverContent>
         </Popover>
         <AlertDialog>
           <AlertDialogTrigger disabled={!expenses.length ? true : ""}>
             <Button
               // variant="destructive"
-              className='bg-[#FEB838] hover:bg-[#FEB838]/80'
+              className="bg-[#FEB838] hover:bg-[#FEB838]/80"
               disabled={!expenses.length ? true : ""}
             >
               <BadgeAlert className="mr-1"></BadgeAlert>銷帳
