@@ -63,12 +63,13 @@ const ParticipantsOptions = ({
                   {name}
                 </label>
                 <Input
-                  className="w-10 h-8"
+                  className="w-12 h-8 pr-[1px]"
                   value={shareObj?.[name]}
                   onChange={(e) => {
                     const { value } = e.target;
-                    const num = parseInt(value);
-                    // if (isNaN(num) && value !== "") return;
+                    const num = Number(value);
+                    if ((!num && value != "") || num < 0 || num % 1) return;
+
                     const newShareObj = { ...shareObj, [name]: num ? num : "" };
                     setShareObj(newShareObj);
                     const isNameNotExist = !participants_customNames?.find(
@@ -105,13 +106,13 @@ const ParticipantsOptions = ({
                   }}
                 ></Input>
                 <Input
-                  className="w-24 h-8"
+                  className="w-24 h-8 pr-2"
                   placeholder="NT."
                   value={participants_customized[name] || ""}
                   onChange={(e) => {
                     const { value } = e.target;
-                    const num = parseInt(value);
-                    if (isNaN(num) && value !== "") return;
+                    const num = Number(value);
+                    if ((!num && value != "") || num < 0 || num % 1) return;
                     setShareObj({ ...shareObj, [name]: "" });
                     setNewExpense({
                       ...newExpense,

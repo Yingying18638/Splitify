@@ -137,10 +137,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // if (!item || !total_amount) {
-    //   // alert("請填寫項目與金額！")
-    //   return;
-    // }
+    if (!singlePayerOnly && !payersAmountTotal) {
+      alert("請選擇付款人！");
+      return;
+    }
     // 1. newExpense 算出ave
     const ave = calcSingleAve(newExpense);
 
@@ -230,8 +230,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               value={total_amount || ""}
               onChange={(e) => {
                 const { value } = e.target;
-                const num = parseInt(value);
-                if (isNaN(num) && value !== "") return;
+                const num = Number(value);
+                if ((!num && value != "") || num < 0 || num % 1) return;
                 setNewExpense({
                   ...newExpense,
                   total_amount: num ? num : 0,
@@ -248,7 +248,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             <Select
               value={singlePayerOnly || ""}
               id="payer"
-              required
               onValueChange={(value) => {
                 if (value !== "多人付款") {
                   setNewExpense({ ...newExpense, morePayers: {} });

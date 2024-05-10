@@ -60,8 +60,8 @@ const PayersOption = ({
                 value={morePayers?.[name] ? morePayers[name] : ""}
                 onChange={(e) => {
                   const { value } = e.target;
-                  const num = parseInt(value);
-                  if (isNaN(num) && value !== "") return;
+                  const num = Number(value);
+                  if ((!num && value != "") || num < 0 || num % 1) return;
                   const newMorePayers = {
                     ...morePayers,
                     [name]: num ? num : 0,

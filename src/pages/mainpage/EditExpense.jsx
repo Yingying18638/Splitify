@@ -97,6 +97,10 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
   }
   function handleSubmit(e) {
     e.preventDefault();
+    if (!singlePayerOnly && !payersAmountTotal) {
+      alert("請選擇付款人！");
+      return;
+    }
     // 1. editExpense 算出ave
     const ave = calcSingleAve(newExpense);
     const expenseToBeUpdated = { ...newExpense, ave };
@@ -173,8 +177,8 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
               value={total_amount || ""}
               onChange={(e) => {
                 const { value } = e.target;
-                const num = parseInt(value);
-                if (isNaN(num) && value !== "") return;
+                const num = Number(value);
+                if ((!num && value != "") || num < 0 || num % 1) return;
                 setNewExpense({
                   ...newExpense,
                   total_amount: num ? num : 0,
