@@ -297,7 +297,8 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         <Button
           type="reset"
           variant="secondary"
-          className="ml-[calc(100%-120px)]"
+          className='w-full'
+
           onClick={() => {
             setDisplayEditExpense("hidden");
             setDisplayParticipantOpt("hidden");
@@ -309,6 +310,8 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
           取消
         </Button>
         <Button
+        className='w-full'
+
           disabled={
             (payersAmountGap !== 0 && singlePayerOnly === "多人付款") ||
             (cusAmountGap !== 0 && cusAmountTotal !== 0)

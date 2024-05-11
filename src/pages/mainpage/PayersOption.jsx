@@ -27,9 +27,9 @@ const PayersOption = ({
         />
         <p className="text-center">多人付款</p>
         <p
-          className={`text-right mr-6 my-2 ${payersAmountGap === 0 ? "" : "text-red-500"}`}
+          className={`text-right sm:mr-9 relative sm:static right-[calc((100%-250px)/2)]  my-2 ${payersAmountGap === 0 ? "" : "text-red-500"}`}
         >
-          剩餘金額 {payersAmountGap} 元
+          剩餘金額 {payersAmountGap}元
         </p>
 
         <div className="flex justify-center ml-[130px] gap-[30px]">

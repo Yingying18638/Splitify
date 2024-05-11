@@ -2,26 +2,34 @@ import React, { useState } from "react";
 import useStore from "../../utility/hooks/useStore";
 import closeIcon from "../../assets/x.png";
 import { Input } from "../../components/ui/input";
-import { CheckCheck } from "lucide-react";
+import { CheckCheck ,BadgeAlert} from "lucide-react";
 import { Button } from "../../components/ui/button";
 const ParticipantsOptions = ({
   displayParticipantOpt,
   setDisplayParticipantOpt,
   cusAmountGap,
-  cusAmountArr,
+  usersObj,
   participants_customNames,
 }) => {
   const { newExpense, setNewExpense, group, shareObj, setShareObj } =
     useStore();
   const { total_amount, participants_customized } = newExpense;
-
+  function clearParticipantCus(e) {
+    e.preventDefault();
+    setNewExpense({
+      ...newExpense,
+      participants_customized: {},
+    });
+    setShareObj(usersObj);
+  }
   return (
     <>
       <div
         className={`bg-black opacity-70 w-full h-[100vh] z-[51] fixed top-0 ${displayParticipantOpt} sm:hidden`}
       ></div>
       <section
-        className={`fixed ${displayParticipantOpt} shadow-lg rounded-lg z-[51] top-[34%] right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-full sm:h-[90vh] sm:w-[calc(100%-360px)] md:w-[360px] bg-[#CCB99F] pt-3 px-4`}
+        className={`fixed flex flex-col items-center
+        ${displayParticipantOpt} shadow-lg rounded-lg z-[51] top-[34%] right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-full sm:h-[90vh] sm:w-[calc(100%-360px)] md:w-[360px] bg-[#CCB99F] pt-3 px-4`}
       >
         <img
           src={closeIcon}
@@ -34,7 +42,7 @@ const ParticipantsOptions = ({
           份數與金額擇一填寫即可
         </p>
         <p
-          className={`text-right my-2 mr-6 ${cusAmountGap === 0 ? "" : "text-red-500"}`}
+          className={`text-right my-2 left-[70px] relative sm:static sm:mr-8 sm:self-end ${cusAmountGap === 0 ? "" : "text-red-500"}`}
         >
           剩餘金額 {cusAmountGap} 元
         </p>
@@ -43,6 +51,7 @@ const ParticipantsOptions = ({
           <p>金額</p>
         </div>
         <form action="">
+
           {group?.users?.map(({ name }, index) => {
             return (
               <div
@@ -53,7 +62,7 @@ const ParticipantsOptions = ({
                   className={`${
                     participants_customNames?.find((item) => item === name) &&
                     participants_customized[name]
-                      ? "absolute md:left-[10px] sm:left-[-12px]  left-[calc((100%-240px)/2-18px)]"
+                      ? "absolute sm:left-[-12px] left-[calc((100%-240px)/2-24px)]"
                       : "hidden"
                   } `}
                 >
@@ -126,8 +135,16 @@ const ParticipantsOptions = ({
               </div>
             );
           })}
-          {/* <button type="reset">全部清除</button> */}
+         
         </form>
+        <Button
+          className="h-9 my-5 sm:ml-[calc(100%-165px)] sm:static relative left-20 "
+          onClick={(e) => clearParticipantCus(e)}
+          variant="destructive"
+        >
+          <BadgeAlert className="inline-block mr-1"></BadgeAlert>
+          清除
+        </Button>
       </section>
     </>
   );

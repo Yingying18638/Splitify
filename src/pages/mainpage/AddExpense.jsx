@@ -143,7 +143,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     }
     // 1. newExpense 算出ave
     const ave = calcSingleAve(newExpense);
-
     const now = new Date().getTime();
     const expenseToAdd = {
       ...newExpense,
@@ -158,7 +157,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     const newGrp = { ...group, expenses: [...group.expenses, expenseToAdd] };
     // console.log(newGrp, "newGrp");
     setGroup(newGrp);
-    //加入img
     setDisplayAddExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
@@ -177,13 +175,14 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense} space-y-3 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px]  sm:h-[90vh] p-3 px-6 rounded-lg`}
+        className={`${displayAddExpense} space-y-3 lg:space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px]  sm:h-[90vh] p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">新增花費</h1>
         <span
           onClick={useAddExpGuide}
-          className="shadow-md bg-200x100 bg-start-top animate-gradientChange bg-bottom absolute cursor-pointer left-[220px] top-0 text-xs bg-gradient-linear  rounded-lg p-1"
+          className="shadow-md bg-200x100 bg-start-top animate-gradientChange bg-bottom absolute cursor-pointer left-[220px]
+          lg:top-[-0.5rem] top-0 text-xs bg-gradient-linear  rounded-lg p-1"
         >
           怎麼填
         </span>
@@ -198,7 +197,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setSelected(options);
             setShareObj(usersObj);
           }}
-          className="absolute right-2 top-[-0.3rem] cursor-pointer "
+          className="absolute right-2 top-[-0.3rem] lg:top-[-0.75rem] cursor-pointer "
         />
         <figure className="flex items-center">
           <img src={list} alt="icon" className="w-9 h-9 mr-9" />
@@ -361,7 +360,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         <Button
           type="reset"
           variant="secondary"
-          className="ml-[calc(100%-120px)]"
+          className=" w-full "
           onClick={() => {
             setDisplayAddExpense("hidden");
             setDisplayParticipantOpt("hidden");
@@ -375,6 +374,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           取消
         </Button>
         <Button
+        className='w-full'
           disabled={
             (payersAmountGap !== 0 && singlePayerOnly === "多人付款") ||
             (cusAmountGap !== 0 && cusAmountTotal !== 0)
@@ -392,6 +392,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         morePayersNames={morePayersNames}
       />
       <ParticipantsOptions
+      usersObj={usersObj}
         displayParticipantOpt={displayParticipantOpt}
         setDisplayParticipantOpt={setDisplayParticipantOpt}
         cusAmountGap={cusAmountGap}
