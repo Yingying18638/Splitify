@@ -80,7 +80,8 @@ const AddGroupForm = ({ className, setOpen }) => {
         <Input
           required
           id="groupName"
-          placeholder="吃貨群組"
+          placeholder="吃貨群組（限15字以內）"
+          maxlength='15'
           value={newGroupName}
           onChange={(e) => setNewGroupName(e.target.value)}
         />

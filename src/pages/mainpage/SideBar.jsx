@@ -53,7 +53,9 @@ const SideBar = ({
 
     return () => window.removeEventListener("resize", handleResize);
   }, [sideBarClass]);
-
+  const sortedInGroup = Object.entries(inGroup).sort(function (a, b) {
+    return a[1].length - b[1].length;
+  });
   return (
     <>
       <div
@@ -62,7 +64,7 @@ const SideBar = ({
       <div
         id="sidebar"
         ref={sideBarRef}
-        className={`bg-[#653A14] w-40 h-full fixed pr-6 top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
+        className={`bg-[#653A14] w-40 h-full fixed  top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
       >
         {sideBarClass === mobileSideBar && (
           <X
@@ -74,14 +76,17 @@ const SideBar = ({
             }}
           ></X>
         )}
-        <nav className="h-screen overflow-y-auto ">
-          <div className="pt-20 pl-10 text-[#dda15e]">
-            <p className="text-[#fefae0] text-lg font-medium pb-2 border-b-2">群組</p>
+        <nav className="h-screen overflow-y-auto break-words ">
+          <div className="pt-20 pr-6 pl-10 text-[#dda15e]">
+            <p className="text-[#fefae0] text-lg font-medium pb-2 border-b-2 ">
+              群組
+            </p>
             {isInAnyGroup &&
-              Object.entries(inGroup).map(([groupId, groupName]) => {
+              sortedInGroup.map(([groupId, groupName]) => {
                 return (
                   <p
-                    className={`mt-2 pl-2 py-2 cursor-pointer rounded  hover:bg-[#fefae0]  ${color[groupId]}`}
+                    className={`mt-2 pl-2 py-2 cursor-pointer rounded  hover:bg-[#fefae0] 
+                    ${color[groupId]}`}
                     key={groupId}
                     id={groupId}
                     onClick={(e) => {
@@ -95,7 +100,6 @@ const SideBar = ({
                   </p>
                 );
               })}
-        
           </div>
           <DrawerDialogDemo />
         </nav>
