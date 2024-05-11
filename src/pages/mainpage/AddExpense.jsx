@@ -7,8 +7,11 @@ import calcPaymentAverage from "../../utility/calcPaymentAverage";
 import calcFlow from "../../utility/calcFlow";
 import calcBills from "../../utility/calcBills";
 import calcSingleAve from "../../utility/calcSingleAve";
-import { parseISO, format, setDate } from "date-fns";
+import { parseISO, format } from "date-fns";
 import useAddExpGuide from "../../utility/useAddExpGuide";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
+
 //image
 import arrow from "../../assets/arrow.png";
 import optionsIcon from "../../assets/options.png";
@@ -32,7 +35,6 @@ import {
   SelectScrollUpButton,
   SelectScrollDownButton,
 } from "../../components/ui/select";
-import { ListCollapse } from "lucide-react";
 
 const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   // upload image
@@ -43,6 +45,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     setImageUrl,
     uploadImage,
   } = useUploadImg();
+  const { toast } = useToast();
   const {
     newExpense,
     setNewExpense,
@@ -54,6 +57,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     setSelected,
     tempGroupId,
     setShareObj,
+    setDate,
   } = useStore();
   const { expenses, users } = group;
   const {
@@ -138,7 +142,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   function handleSubmit(e) {
     e.preventDefault();
     if (!singlePayerOnly && !payersAmountTotal) {
-      alert("請選擇付款人！");
+      toast({ title: "請選擇付款人" });
       return;
     }
     // 1. newExpense 算出ave
@@ -175,14 +179,14 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense} space-y-3 lg:space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px]  sm:h-[90vh] p-3 px-6 rounded-lg`}
+        className={`${displayAddExpense} space-y-3 xl:space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px]  sm:h-[90vh] p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">新增花費</h1>
         <span
           onClick={useAddExpGuide}
           className="shadow-md bg-200x100 bg-start-top animate-gradientChange bg-bottom absolute cursor-pointer left-[220px]
-          lg:top-[-0.5rem] top-0 text-xs bg-gradient-linear  rounded-lg p-1"
+          xl:top-[-0.5rem] top-0 text-xs bg-gradient-linear  rounded-lg p-1"
         >
           怎麼填
         </span>
@@ -196,8 +200,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             resetNewExpense();
             setSelected(options);
             setShareObj(usersObj);
+            setDate(new Date());
           }}
-          className="absolute right-2 top-[-0.3rem] lg:top-[-0.75rem] cursor-pointer "
+          className="absolute right-2 top-[-0.3rem] xl:top-[-0.75rem] cursor-pointer "
         />
         <figure className="flex items-center">
           <img src={list} alt="icon" className="w-9 h-9 mr-9" />
@@ -368,13 +373,13 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             resetNewExpense();
             setSelected(options);
             setShareObj(usersObj);
-            setDate("");
+            setDate(new Date());
           }}
         >
           取消
         </Button>
         <Button
-        className='w-full'
+          className="w-full"
           disabled={
             (payersAmountGap !== 0 && singlePayerOnly === "多人付款") ||
             (cusAmountGap !== 0 && cusAmountTotal !== 0)
@@ -392,7 +397,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         morePayersNames={morePayersNames}
       />
       <ParticipantsOptions
-      usersObj={usersObj}
+        usersObj={usersObj}
         displayParticipantOpt={displayParticipantOpt}
         setDisplayParticipantOpt={setDisplayParticipantOpt}
         cusAmountGap={cusAmountGap}

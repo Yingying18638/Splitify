@@ -5,6 +5,7 @@ import { parseISO, format } from "date-fns";
 import { EditDeleteButtons } from "./EditDeleteButtons";
 import { updateGroupData } from "../../utility/handleFirestore";
 import { ChevronsRight, CircleUserRound } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const Record = ({
   expensesArrToRender,
@@ -14,6 +15,8 @@ const Record = ({
   displayHistory,
   setDisplayEditExpense,
 }) => {
+  const { toast } = useToast();
+
   const {
     newExpense,
     setNewExpense,
@@ -48,7 +51,7 @@ const Record = ({
   async function handleDeleteExpense(expenseTime) {
     const expensesRemain = expenses.filter((item) => item.time !== expenseTime);
     await updateGroupData(tempGroupId, { ...group, expenses: expensesRemain });
-    alert("刪除成功");
+    toast({title:"刪除成功"});
   }
   function getImg(name) {
     const user = users.find((item) => item.name === name);

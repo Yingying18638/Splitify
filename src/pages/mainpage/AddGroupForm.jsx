@@ -8,12 +8,16 @@ import { Button } from "../../components/ui/button";
 import { v4 as uuidv4 } from "uuid";
 import { addDocWithId, useListenUsers } from "../../utility/handleFirestore";
 import useStore from "../../utility/hooks/useStore";
+import { useToast } from "@/components/ui/use-toast";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../../components/ui/popover";
 const AddGroupForm = ({ className, setOpen }) => {
+  const { toast } = useToast();
+
   const { tempUser, setTempUser } = useStore();
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
@@ -64,9 +68,9 @@ const AddGroupForm = ({ className, setOpen }) => {
       await addDocWithId(tempUser.uid, "users", newTempUser);
       await addDocWithId(newGroupId, "groups", newGroupData);
       setOpen(false);
-      alert("新增成功");
+      toast({title:'新增成功'})
     } catch (error) {
-      alert("新增失敗");
+      toast({title:'新增失敗'})
       console.log(error);
     }
   }

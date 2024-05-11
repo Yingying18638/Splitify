@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import groupImg from "../../assets/group2.png";
-import link from "../../assets/link.png";
+import { useToast } from "@/components/ui/use-toast";
+
 import { Button } from "../../components/ui/button";
 import useStore from "../../utility/hooks/useStore";
 import {
@@ -37,6 +38,8 @@ import {
 } from "lucide-react";
 
 const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
+  const { toast } = useToast();
+
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [openMember, setOpenMember] = useState(false);
   const { group, tempGroupId, tempUser, setTempGroupId, resetGroup } =
@@ -63,9 +66,10 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
       };
       // 整筆group更新到火基地
       await updateGroupData(tempGroupId, newGroupData);
-      alert("帳目已結清！");
+      toast({title:"帳目已結清！"});
     } catch (error) {
-      alert(error, "銷帳失敗");
+      toast({title: "銷帳失敗"})
+      console.log(error);
     }
   }
   async function handleCopyUrl() {
@@ -91,7 +95,8 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
         resetGroup();
       }
     } catch (error) {
-      alert(error, "移除失敗(更新群組)");
+      toast({title: "移除失敗"});
+      console.log(error);
     }
     try {
       const removedUser = await justGetData("users", uid);
@@ -100,9 +105,10 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
       const newRemovedUser = { ...removedUser, inGroup: newInGroup };
       await addDocWithId(uid, "users", newRemovedUser);
       setOpenMember(false);
-      alert("移除成功");
+      toast({title:"移除成功"});
     } catch (error) {
-      alert(error, "移除失敗(更新成員)");
+      toast({title: "移除失敗"});
+      console.log(error);
     }
   }
   function getImg(name) {

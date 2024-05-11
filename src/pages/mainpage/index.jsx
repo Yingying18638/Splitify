@@ -8,6 +8,7 @@ import {
   useCheckUrlSetDialog,
 } from "../../utility/handleFirestore";
 import startGuide from "../../utility/userGuide";
+import { Toaster } from "@/components/ui/toaster"
 //----------------------component------------------------------------------------
 import LittleHeader from "./LittleHeader";
 import AddExpense from "./AddExpense";
@@ -123,6 +124,7 @@ const Mainpage = ({
             />
           </section>
         </Tabs>
+        <Toaster></Toaster>
         <AddExpense
           displayAddExpense={displayAddExpense}
           setDisplayAddExpense={setDisplayAddExpense}

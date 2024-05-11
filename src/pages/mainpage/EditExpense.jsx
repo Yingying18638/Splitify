@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import useStore from "../../utility/hooks/useStore";
 import useUploadImg from "../../utility/hooks/useUploadImg";
 import calcSingleAve from "../../utility/calcSingleAve";
+import { useToast } from "@/components/ui/use-toast";
+
 import { updateGroupData } from "../../utility/handleFirestore";
 //image
 import arrow from "../../assets/arrow.png";
@@ -29,10 +31,8 @@ import {
   SelectScrollDownButton,
 } from "../../components/ui/select";
 const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
-  //取得原有資料，setState
-  //date同步問題？？
-  //送出時計算
-  //firestore更新
+  const { toast } = useToast();
+
   const {
     newExpense,
     setNewExpense,
@@ -42,6 +42,8 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
     setsomeNewExpense,
     selected,
     setSelected,
+    setShareObj,
+    setDate,
   } = useStore();
   const { expenses, users } = group;
   const {
@@ -57,6 +59,10 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
   });
+  const usersObj = group.users?.reduce((acc, user) => {
+    acc[user.name] = "";
+    return acc;
+  }, {});
   // ----------------function and variables-----------------------------
   function getAmountArr(personAmountObj) {
     if (!personAmountObj) return;
@@ -98,7 +104,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
   function handleSubmit(e) {
     e.preventDefault();
     if (!singlePayerOnly && !payersAmountTotal) {
-      alert("請選擇付款人！");
+      toast({ title: "請選擇付款人" });
       return;
     }
     // 1. editExpense 算出ave
@@ -116,12 +122,13 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
 
     console.log(newGroupData, "abc");
     setGroup(newGroupData);
-    //加入img
     setDisplayEditExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
     resetNewExpense();
     setSelected(options);
+    setDate(new Date());
+    setShareObj(usersObj);
   }
   return (
     <>
@@ -132,7 +139,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayEditExpense} space-y-3 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px] sm:h-[90vh] p-3 px-6 rounded-lg`}
+        className={`${displayEditExpense} space-y-3 xl:space-y-5  fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px] sm:h-[90vh] p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">編輯花費</h1>
@@ -144,9 +151,11 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
             resetNewExpense();
+            setDate(new Date());
+            setShareObj(usersObj);
             setSelected(options);
           }}
-          className="absolute right-2 top-[-0.3rem] cursor-pointer"
+          className="absolute right-2 top-[-0.3rem] xl:top-[-0.75rem] cursor-pointer"
         />
         <figure className="flex items-center">
           <img src={list} alt="icon" className="w-9 h-9 mr-9" />
@@ -297,21 +306,21 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         <Button
           type="reset"
           variant="secondary"
-          className='w-full'
-
+          className="w-full"
           onClick={() => {
             setDisplayEditExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
             resetNewExpense();
+            setDate(new Date());
+            setShareObj(usersObj);
             setSelected(options);
           }}
         >
           取消
         </Button>
         <Button
-        className='w-full'
-
+          className="w-full"
           disabled={
             (payersAmountGap !== 0 && singlePayerOnly === "多人付款") ||
             (cusAmountGap !== 0 && cusAmountTotal !== 0)
@@ -329,6 +338,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         morePayersNames={morePayersNames}
       />
       <ParticipantsOptions
+        usersObj={usersObj}
         displayParticipantOpt={displayParticipantOpt}
         setDisplayParticipantOpt={setDisplayParticipantOpt}
         cusAmountGap={cusAmountGap}

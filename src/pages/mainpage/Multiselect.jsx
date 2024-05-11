@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import useStore from "../../utility/hooks/useStore";
+import { useToast } from "@/components/ui/use-toast";
+
 const Multiselect = ({ setSelected, selected, options }) => {
   const { newExpense, setNewExpense, group, setsomeNewExpense } = useStore();
   const { participants_customized, participants } = newExpense;
   const cusAmountArr = Object.values(participants_customized);
   const cusAmountTotal = cusAmountArr.reduce((acc, cur) => acc + cur, 0);
+  const { toast } = useToast();
+
   useEffect(() => {
     const newArr = selected?.map((item) => item.value);
     setsomeNewExpense(newArr, "participants");
@@ -24,7 +28,7 @@ const Multiselect = ({ setSelected, selected, options }) => {
   function handleOnChange(selected) {
     console.log(cusAmountTotal);
     if (cusAmountTotal) {
-      alert("請先清除自訂分擔金額");
+      toast({title:"請先清除自訂分擔金額",variant:'destructive'});
       return;
     }
     return setSelected(selected);
