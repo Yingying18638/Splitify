@@ -91,7 +91,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
         resetGroup();
       }
     } catch (error) {
-      alert(error, "刪除失敗(更新群組)");
+      alert(error, "移除失敗(更新群組)");
     }
     try {
       const removedUser = await justGetData("users", uid);
@@ -100,9 +100,9 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
       const newRemovedUser = { ...removedUser, inGroup: newInGroup };
       await addDocWithId(uid, "users", newRemovedUser);
       setOpenMember(false);
-      alert("刪除成功");
+      alert("移除成功");
     } catch (error) {
-      alert(error, "刪除失敗(更新成員)");
+      alert(error, "移除失敗(更新成員)");
     }
   }
   function getImg(name) {
@@ -195,16 +195,16 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
                         variant="destructive"
                         disabled={expenses.length ? true : ""}
                       >
-                        刪除
+                        移除
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
                         <AlertDialogTitle>
-                          確定要刪除{name}嗎？
+                          確定要移除{name}嗎？
                         </AlertDialogTitle>
                         <AlertDialogDescription>
-                          請記得跟{name}說再見
+                          {name}將無法再查看群組帳目
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
@@ -221,7 +221,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
               );
             })}
             <div className="text-xs text-slate-400 py-2 px-3">
-              {expenses.length ? "註：請先銷帳才能刪除成員" : ""}
+              {expenses.length ? "註：請先銷帳才能移除成員" : ""}
             </div>
 
             {/* <div className="flex items-center gap-2">
@@ -252,7 +252,7 @@ const LittleHeader = ({ displayAddExpense, setDisplayAddExpense }) => {
             <AlertDialogHeader>
               <AlertDialogTitle>確定要銷帳嗎？</AlertDialogTitle>
               <AlertDialogDescription>
-                這個動作會把目前帳務結清，誰都不相欠，並歸到已結清紀錄中
+                這個動作會把目前帳務結清，並歸到已結清紀錄中
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
