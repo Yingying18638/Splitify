@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import useStore from "../../utility/hooks/useStore";
 import { useToast } from "@/components/ui/use-toast";
-
+import { ChevronDown, X } from "lucide-react";
 const Multiselect = ({ setSelected, selected, options }) => {
   const { newExpense, setNewExpense, group, setsomeNewExpense } = useStore();
   const { participants_customized, participants } = newExpense;
@@ -28,11 +28,13 @@ const Multiselect = ({ setSelected, selected, options }) => {
   function handleOnChange(selected) {
     console.log(cusAmountTotal);
     if (cusAmountTotal) {
-      toast({title:"請先清除自訂分擔金額",variant:'destructive'});
+      toast({ title: "請先清除自訂分擔金額", variant: "destructive" });
       return;
     }
     return setSelected(selected);
   }
+  const ArrowRenderer = () => <ChevronDown className="w-4 opacity-60" />;
+  const CustomClearIcon = () => <X className="w-4 opacity-60" />;
   return (
     <>
       <MultiSelect
@@ -41,6 +43,9 @@ const Multiselect = ({ setSelected, selected, options }) => {
         options={options}
         value={selected}
         // disableSearch
+        ArrowRenderer={ArrowRenderer}
+        ClearIcon={<CustomClearIcon />}
+        ClearSelectedIcon={<CustomClearIcon />}
         onChange={handleOnChange}
         labelledBy="Select"
       />

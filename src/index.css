@@ -13,44 +13,37 @@ input[type="checkbox"] {
 .cl-formButtonPrimary {
   font-size: 14px;
   text-transform: none;
-  background-color: #653A14 !important;
+  background-color: #653a14 !important;
 }
 .cl-footerActionLink {
-  color: #653A14 !important;
+  color: #653a14 !important;
   border: none !important;
 }
 .cl-signIn-root {
   margin: auto;
   padding-top: 100px;
 }
-#driver-popover-description{
+#driver-popover-description {
   padding: 10px;
 }
-/* ::-webkit-scrollbar{
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #e9e0c5;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #cabb9d;
+  border-radius: 10px;
+}
 
-  display:none;
-  
-  } */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #E9E0C5;
-    border-radius: 10px;
+::-webkit-scrollbar-thumb:hover {
+  background: #fff;
+}
 
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #CABB9D;
-    border-radius: 10px;
-  }
-  
-  /* 網頁捲軸【滑過時】把手的顏色 */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #fff;
-  }
-
-  input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
