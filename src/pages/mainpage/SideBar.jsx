@@ -54,7 +54,7 @@ const SideBar = ({
     return () => window.removeEventListener("resize", handleResize);
   }, [sideBarClass]);
   const sortedInGroup = Object.entries(inGroup).sort(function (a, b) {
-    return a[1].length - b[1].length;
+    return a[1].localeCompare(b[1])
   });
   return (
     <>
