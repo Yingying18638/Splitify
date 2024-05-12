@@ -179,14 +179,15 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         method="post"
         encType="multipart/form-data"
         action=""
-        className={`${displayAddExpense} space-y-3 xl:space-y-5 fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px]  sm:h-[90vh] p-3 px-6 rounded-lg`}
+        className={`${displayAddExpense} space-y-3 xl:space-y-5 fixed z-50 
+        top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px]  sm:h-[90vh] p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">新增花費</h1>
         <span
           onClick={useAddExpGuide}
-          className="shadow-md bg-200x100 bg-start-top animate-gradientChange bg-bottom absolute cursor-pointer left-[220px]
-          xl:top-[-0.5rem] top-0 text-xs bg-gradient-linear  rounded-lg p-1"
+          className="shadow-md bg-200x100 bg-start-top animate-gradientChange bg-bottom sm:absolute cursor-pointer sm:left-[220px] 
+          xl:top-[-0.5rem] sm:top-0 text-xs bg-gradient-linear  rounded-lg p-1 relative top-[-25px] left-[calc((100%+90px)/2)]"
         >
           怎麼填
         </span>
