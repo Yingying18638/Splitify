@@ -1,5 +1,6 @@
 import "./App.css";
 import RootLayout from "./common_components/RootLayout";
+import LandingPage from './pages/landingpage'
 import {
   BrowserRouter as Router,
   Routes,
@@ -19,6 +20,7 @@ function App() {
                 <RootLayout children="signedIn" />
               </SignedIn>
               <SignedOut>
+                {/* <LandingPage /> */}
                 <RootLayout />
               </SignedOut>
             </>

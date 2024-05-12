@@ -186,7 +186,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         <h1 className="text-center">新增花費</h1>
         <span
           onClick={useAddExpGuide}
-          className="shadow-md bg-200x100 bg-start-top animate-gradientChange bg-bottom sm:absolute cursor-pointer sm:left-[220px] 
+          className="shadow-md bg-200x100  animate-gradientChange  sm:absolute cursor-pointer sm:left-[220px] 
           xl:top-[-0.5rem] sm:top-0 text-xs bg-gradient-linear  rounded-lg p-1 relative top-[-25px] left-[calc((100%+90px)/2)]"
         >
           怎麼填

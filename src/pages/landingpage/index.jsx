@@ -1,19 +1,28 @@
-import React from "react";
-import logo from "../../assets/logo-no-background.svg";
+import React, { useRef, useState, useEffect } from "react";
 import { CircleDollarSign, Users, PartyPopper } from "lucide-react";
 import { Button } from "../../components/ui/button";
-import Loading from "../../common_components/Loading";
-import {
-  SignIn,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  useUser,
-} from "@clerk/clerk-react";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { TextPlugin } from "gsap/TextPlugin";
+import { SignInButton } from "@clerk/clerk-react";
 import Lottie from "react-lottie";
-import animationData from "../../assets/split.json";
+import animationData from "../../assets/people.json";
 const LandingPage = () => {
+  gsap.registerPlugin(useGSAP, TextPlugin);
+  const mobile = { width: 300, height: 240 };
+  const desktop = { width: 400, height: 320 };
+  const [area, setArea] = useState(desktop);
+  const container = useRef();
+  useGSAP(
+    () => {
+      const timeLine = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+      timeLine.from("#split", { duration: 1, text: "" });
+      timeLine.from("#tify", { duration: 2, text: "" });
+      timeLine.from("#slogan", { duration: 2, text: "" });
+      timeLine.from("#cnSlogan", { duration: 2, text: "" });
+    },
+    { scope: container }
+  );
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -22,52 +31,76 @@ const LandingPage = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const datas = [
-    { title: "介面直覺簡潔，分帳不再是難事" },
-    { title: "多群組無縫切換，涵蓋生活所需" },
-    { title: "一站式團體理財，高效解決群組難題" },
-  ];
+  useEffect(() => {
+    if (window.innerWidth < 975) {
+      setArea(mobile);
+    }
+    const handleResize = () => {
+      if (window.innerWidth < 975) {
+        setArea(mobile);
+      } else {
+        setArea(desktop);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <>
-      <div className="pt-40 m-auto w-[80%]  md:pt-40 sm:pl-0">
-        {/* <section className="pt-60 pl-60 grid grid-cols-2 items-center"> */}
-        <section className=" md:grid md:grid-cols-2 md:items-center">
-          <div className="m-auto w-96 text-5xl ">
-            <div className="flex font-semibold">
-              <p className="tracking-widest text-[#bc6c25] ">Split</p>
-              <p className="tracking-widest">ify </p>
+      <div
+        className="w-full min-h-screen px-10 sm:px-12  xl:px-60 bg-[#714924] flex flex-col justify-center"
+        ref={container}
+      >
+        <section className="grid grid-rows-2 md:grid-cols-2 md:grid-rows-none items-center w-full pt-[80px] md:pt-0">
+          <div className="w-full sm:w-96  flex flex-col justify-between flex-wrap mx-auto md:mx-0">
+            <div className="flex font-semibold h-12 mt-9 mb-4 text-6xl">
+              <p id="split" className="tracking-widest text-[#FEFAE0] ">
+                Split
+              </p>
+              <p id="tify" className="tracking-widest text-[#dda15e]">
+                ify
+              </p>
             </div>
-            <p className="tracking-wider text-3xl pl-2 mt-3">
-              Simplify your bill split
+            <p
+              id="slogan"
+              className="tracking-wider  text-2xl md:text-3xl pl-2 text-[#CABB9D] font-semibold mt-3 h-9"
+            >
+              Simplify your bill split.
             </p>
-            <p className="tracking-wide text-3xl pl-2 mt-3">
+            <p
+              id="cnSlogan"
+              className="tracking-widest text-2xl md:text-3xl pl-2 mt-3 h-9 text-[#CABB9D] font-semibold"
+            >
               一個簡單的多人分帳網站
             </p>
             <SignInButton mode="modal">
-              <Button
-                // variant="secondary"
-                className="w-[70%] md:w-40 tracking-widest"
-              >
+              {/* <button className="w-full h-10 px-4 py-2 rounded-md hover:animate-bounce	 shadow-md mt-8 tracking-widest text-[#714924] animate-gradientChange bg-200x100 bg-gradient-linear  font-bold" >立即登入</button> */}
+              <button className="w-full h-10 px-4 py-2 rounded-md  shadow-md mt-8 tracking-widest text-[#714924]  hover:bg-[#FEFAE0] bg-[#EADDC3]  font-bold">
                 立即登入
-              </Button>
+              </button>
             </SignInButton>
           </div>
-          <div className="p-10 mt-1 h-72  text-5xl mx-auto">
-            <Lottie options={defaultOptions} height={200} width={200}></Lottie>
+          <div className="self-center mx-auto md:pl-12">
+            <Lottie
+              options={defaultOptions}
+              width={area.width}
+              height={area.height}
+            ></Lottie>
           </div>
         </section>
-        <article className="w-[90%] pb-10 sm:w-[70%] md:w-full mx-auto mt-16 md:grid md:grid-cols-3 md:items-center gap-6">
-          <div className="flex gap-2 items-center justify-center bg-[#faedcd] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
+
+        <article className="w-full pb-10 sm:w-[70%] md:w-full mx-auto mt-16 md:grid md:grid-cols-3 md:items-center gap-6">
+          <div className="flex gap-2 items-center justify-center bg-[#876542] text-[#FEFAE0] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
             <CircleDollarSign></CircleDollarSign>
-            <p className="mt-2">介面直覺簡潔，分帳不再是難事</p>
+            <p className="tracking-wide">介面直覺簡潔，分帳不再是難事</p>
           </div>
-          <div className="flex gap-2 items-center justify-center bg-[#faedcd] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
+          <div className="flex gap-2 items-center justify-center bg-[#876542] text-[#FEFAE0] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
             <Users></Users>
-            <p className="mt-2">多群組無縫切換，涵蓋生活所需</p>
+            <p className="tracking-wide">多群組無縫切換，涵蓋生活所需</p>
           </div>
-          <div className="flex gap-2 items-center justify-center bg-[#faedcd] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
+          <div className="flex gap-2 items-center justify-center bg-[#876542] text-[#FEFAE0] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
             <PartyPopper></PartyPopper>
-            <p className="mt-2">一站式理財，高效解決群組難題</p>
+            <p className="tracking-wide">一站式理財，高效解決群組難題</p>
           </div>
         </article>
       </div>
