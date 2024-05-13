@@ -90,12 +90,14 @@ const Mainpage = ({
         >
           <section value="account" className="w-full">
             <LittleHeader
-              displayAddExpense={displayAddExpense}
+              displayHistory={displayHistory}
+              setDisplayHistory={setDisplayHistory}
               setDisplayAddExpense={setDisplayAddExpense}
             />
             <div className="mt-24">
               {expenses.length ? (
                 <Record
+                  setDisplayHistory={setDisplayHistory}
                   expensesArrToRender={expensesArrToRender}
                   displayDetail={displayDetail}
                   setDisplayDetail={setDisplayDetail}
@@ -114,7 +116,7 @@ const Mainpage = ({
             {clearedExpensesToRender.length !== 0 && (
               <Button
                 variant="secondary"
-                className="block  tracking-wide mx-auto my-3  p-1 rounded-md  "
+                className="block  tracking-wide mx-auto my-3  rounded-md  "
                 onClick={handleDisplayHistory}
               >
                 {displayHistory?.text}已結清紀錄

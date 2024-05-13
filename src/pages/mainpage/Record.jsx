@@ -14,6 +14,8 @@ const Record = ({
   setDisplayDetail,
   displayHistory,
   setDisplayEditExpense,
+  setDisplayHistory
+  
 }) => {
   const { toast } = useToast();
 
@@ -47,6 +49,8 @@ const Record = ({
     setSelected(optionsSelected);
     setShareObj(usersObj);
     setDisplayEditExpense("block");
+    setDisplayHistory({ display: "hidden", text: "查看" })
+
   }
   async function handleDeleteExpense(expenseTime) {
     const expensesRemain = expenses.filter((item) => item.time !== expenseTime);
@@ -59,7 +63,7 @@ const Record = ({
   }
   return (
     <section
-      className={`${displayHistory?.display} max-h-[700px]  overflow-auto  rounded-md p-1 `}
+      className={`${displayHistory?.display} max-h-[700px]  overflow-y-auto  rounded-md p-1 `}
     >
       {expensesArrToRender.map(([date, expenses]) => {
         return (
@@ -86,7 +90,8 @@ const Record = ({
               return (
                 <fieldset key={time} id={time}>
                   <div
-                    className="flex flex-wrap mt-2 cursor-pointer  rounded-md  py-2 pr-3 hover:shadow-xl"
+                    className="flex flex-wrap mt-2 cursor-pointer  pl-[10px]
+                    rounded-md  py-2 pr-3 hover:shadow-xl "
                     onClick={() => {
                       if (displayDetail?.[time] === "block") {
                         setDisplayDetail({
@@ -101,8 +106,8 @@ const Record = ({
                       }
                     }}
                   >
-                    <figure className="self-center">
-                      <img src={list} alt="icon" className="w-11" />
+                    <figure className="mt-1">
+                      <img src={list} alt="icon" className="w-11 xl:w-12" />
                     </figure>
                     <figcaption className="ml-2 w-[160px] sm:w-[380px] xl:w-[520px]">
                       <p className="w-full truncate">{item}</p>
@@ -113,7 +118,7 @@ const Record = ({
                       </p>
                       <p className="text-xs text-slate-400">{date}</p>
                     </figcaption>
-                    <div className="ml-[20px] sm:ml-[52px]">
+                    <div className="ml-[15px] sm:ml-[calc(100%-520px)] xl:ml-[calc(100%-680px)] ">
                       NT {total_amount}元
                     </div>
                   </div>
@@ -160,7 +165,7 @@ const Record = ({
                             return (
                               <div
                                 key={name}
-                                className="flex items-center w-full text-sm sm:text-base xl:text-lg py-1"
+                                className="flex items-center w-full text-sm sm:text-base xl:text-lg py-1 xl:py-[0.5rem]"
                               >
                                 <div className="rounded-full bg-gray-200 w-5 h-5 xl:w-7 xl:h-7 mr-2">
                                   {getImg(name) ? (
@@ -190,6 +195,7 @@ const Record = ({
                       </figcaption>
                       {children && (
                         <EditDeleteButtons
+
                           handleEditExpense={handleEditExpense}
                           handleDeleteExpense={handleDeleteExpense}
                           time={time}
