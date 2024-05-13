@@ -77,22 +77,22 @@ const SideBar = ({
           ></X>
         )}
         <nav className="h-screen overflow-y-auto break-words ">
-          <div className="pt-20 pr-6 pl-10 text-[#dda15e]">
-            <p className="text-[#fefae0] text-lg xl:text-xl font-medium pb-2 border-b-2 ">
+          <div className="pt-20 pr-6 pl-10 text-[#B39D7E]">
+            <p className="text-[#fefae0] text-lg xl:text-xl font-medium pb-2 border-b-2 xl:pb-6 xl:mb-6">
               群組
             </p>
             {isInAnyGroup &&
               sortedInGroup.map(([groupId, groupName]) => {
                 return (
                   <p
-                    className={`mt-2 pl-2 py-2 cursor-pointer rounded  hover:bg-[#fefae0] 
+                    className={`mt-2  pl-2 py-2 cursor-pointer rounded  hover:bg-[#DDCEB6] hover:text-[#7C5733]
                     ${color[groupId]}`}
                     key={groupId}
                     id={groupId}
                     onClick={(e) => {
                       const { id } = e.target;
                       console.log(id);
-                      setColor({ ...bgObject, [id]: "bg-[#fbf7d8]" });
+                      setColor({ ...bgObject, [id]: "text-[#fbf7d8]  border-[#CABB9D] bg-[#876542] hover:bg-transparent" });
                       setTempGroupId(id);
                     }}
                   >
