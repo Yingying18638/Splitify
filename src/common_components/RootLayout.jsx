@@ -27,7 +27,7 @@ const RootLayout = ({ children }) => {
   const [sideBarClass, setSideBarClass] = useState(mobileSideBar);
   return (
     <>
-      <header className="bg-[#CABB9D] h-[5rem] fixed z-[9] top-0 w-full flex items-center gap-10 justify-center">
+      <header id='rootHeader' className="bg-[#CABB9D] h-[5rem] fixed z-[9] top-0 w-full flex items-center gap-10 justify-center">
         <div className="fixed left-5 ">
           <SignedIn>
             <Menu
@@ -45,7 +45,7 @@ const RootLayout = ({ children }) => {
           alt="logo"
           className={`${isSignedIn ? "md:ml-[160px] xl:ml-[14rem]" : ""} w-32`}
         />
-        <div className="fixed right-5 ">
+        <div className="fixed  left-[calc(100vw-60px)]">
           <SignedOut>
             <SignInButton mode="modal">
               <button>登入 / 註冊</button>

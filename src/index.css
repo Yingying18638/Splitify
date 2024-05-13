@@ -49,3 +49,10 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+/* html{
+  scrollbar-gutter: stable;
+  background-color: #fefae0;
+} */
+main, #rootHeader{
+  padding-left: calc(100vw - 100%);
+}
