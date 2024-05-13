@@ -11,7 +11,7 @@ import arrow from "../../assets/arrow.png";
 import optionsIcon from "../../assets/options.png";
 import list from "../../assets/list.png";
 import closeIcon from "../../assets/x.png";
-import { CheckCheck, ListCollapse } from "lucide-react";
+import { CheckCheck, ListCollapse ,X,BadgeDollarSign} from "lucide-react";
 // component
 import DatePicker from "./DatePicker";
 import MultiSelect from "./Multiselect";
@@ -137,15 +137,12 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
       ></div>
       <form
         method="post"
-        encType="multipart/form-data"
-        action=""
-        className={`${displayEditExpense} space-y-3 xl:space-y-5  fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px] sm:h-[90vh] p-3 px-6 rounded-lg`}
+        className={`${displayEditExpense} space-y-3 xl:space-y-5  fixed z-50 top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)]
+         bg-[#EFCEA0] h-full w-full sm:w-[360px] sm:h-auto sm:max-h-[95vh] pb-6 p-3 px-6 rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">編輯花費</h1>
-        <img
-          src={closeIcon}
-          alt="closeIcon"
+        <X
           onClick={() => {
             setDisplayEditExpense("hidden");
             setDisplayParticipantOpt("hidden");
@@ -155,7 +152,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             setShareObj(usersObj);
             setSelected(options);
           }}
-          className="absolute right-2 top-[-0.3rem] xl:top-[-0.75rem] cursor-pointer"
+          className="absolute hover:bg-[#feFae0] p-[2px] rounded-full right-2 top-[-0.3rem] xl:top-[-0.75rem] cursor-pointer"
         />
         <figure className="flex items-center">
           <img src={list} alt="icon" className="w-9 h-9 mr-9" />
@@ -174,9 +171,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
           </figcaption>
         </figure>
         <figure className="flex items-center">
-          <div className="w-9 h-9 bg-[#FEFAE0] rounded mr-9 pt-2 p-1 text-sm">
-            NTD
-          </div>
+        <BadgeDollarSign className="w-9 h-9 mr-9" strokeWidth={1}/>
           <figcaption>
             <label htmlFor="tw_amount">金額</label>
             <Input
@@ -285,21 +280,6 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             setNewExpense({ ...newExpense, note: e.target.value })
           }
         ></Textarea>
-        {/* <label htmlFor="uploadImg">圖片</label>
-        <input
-          type="file"
-          accept=".jpg, .jpeg, .png"
-          id="uploadImg"
-          // className="hidden"
-          onChange={(e) => {
-            if (e.target.files[0]) {
-              console.log(e.target.files);
-              const src = URL.createObjectURL(e.target.files[0]);
-              setImgSrc(src);
-              console.log(src);
-            }
-          }}
-        /> */}
         <div className="bg-slate-200 w-40 h-30">
           {/* {imgSrc ? <img src={imgSrc} alt="圖片預覽" className="w-25" /> : ""} */}
         </div>

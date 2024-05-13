@@ -17,6 +17,7 @@ import arrow from "../../assets/arrow.png";
 import optionsIcon from "../../assets/options.png";
 import list from "../../assets/list.png";
 import closeIcon from "../../assets/x.png";
+import { BadgeDollarSign, X, CircleHelp } from "lucide-react";
 // component
 import DatePicker from "./DatePicker";
 import MultiSelect from "./Multiselect";
@@ -177,23 +178,22 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
       ></div>
       <form
         method="post"
-        encType="multipart/form-data"
-        action=""
         className={`${displayAddExpense} space-y-3 xl:space-y-5 fixed z-50 
-        top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full sm:w-[360px]  sm:h-[90vh] p-3 px-6 rounded-lg`}
+        top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full
+         sm:w-[360px] sm:h-auto sm:max-h-[95vh] pb-6 p-3 px-6  rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">新增花費</h1>
         <span
           onClick={useAddExpGuide}
-          className="shadow-md bg-200x100  animate-gradientChange  sm:absolute cursor-pointer sm:left-[220px] 
+          className="shadow-md bg-200x100  animate-gradientChange flex flex-wrap items-center gap-1
+           sm:absolute cursor-pointer sm:left-[220px] 
           xl:top-[-0.5rem] sm:top-0 text-xs bg-gradient-linear  rounded-lg p-1 relative top-[-25px] left-[calc((100%+90px)/2)]"
         >
+          <CircleHelp className="w-4 h-4" />
           怎麼填
         </span>
-        <img
-          src={closeIcon}
-          alt="closeIcon"
+        <X
           onClick={() => {
             setDisplayAddExpense("hidden");
             setDisplayParticipantOpt("hidden");
@@ -203,7 +203,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setShareObj(usersObj);
             setDate(new Date());
           }}
-          className="absolute right-2 top-[-0.3rem] xl:top-[-0.75rem] cursor-pointer "
+          className="absolute hover:bg-[#feFae0] p-[2px] rounded-full right-2 top-[-0.3rem] xl:top-[-0.75rem] cursor-pointer "
         />
         <figure className="flex items-center">
           <img src={list} alt="icon" className="w-9 h-9 mr-9" />
@@ -222,9 +222,10 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           </figcaption>
         </figure>
         <figure className="flex items-center">
-          <div className="w-9 h-9 bg-[#FEFAE0] rounded mr-9 pt-2 p-1 text-sm">
-            NTD
-          </div>
+          <BadgeDollarSign
+            className="w-9 h-9 mr-9"
+            strokeWidth={1}
+          ></BadgeDollarSign>
           <figcaption>
             <label htmlFor="tw_amount">金額</label>
             <Input

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useStore from "../../utility/hooks/useStore";
 import closeIcon from "../../assets/x.png";
 import { Input } from "../../components/ui/input";
-import { CheckCheck ,BadgeAlert} from "lucide-react";
+import { CheckCheck ,BadgeAlert,X} from "lucide-react";
 import { Button } from "../../components/ui/button";
 const ParticipantsOptions = ({
   displayParticipantOpt,
@@ -29,13 +29,12 @@ const ParticipantsOptions = ({
       ></div>
       <section
         className={`fixed flex flex-col items-center
-        ${displayParticipantOpt} shadow-lg rounded-lg z-[51] top-[34%] right-0  md:right-[calc((100%-720px)/2)] sm:top-10 w-full h-full sm:h-[90vh] sm:w-[calc(100%-360px)] md:w-[360px] bg-[#CCB99F] pt-3 px-4`}
+        ${displayParticipantOpt} shadow-lg rounded-lg z-[51] top-[34%] right-0  md:right-[calc((100%-720px)/2)] sm:top-10 
+        w-full h-full sm:h-auto sm:max-h-[95vh] sm:w-[calc(100%-360px)] md:w-[360px] bg-[#CCB99F] pt-3 px-4`}
       >
-        <img
-          src={closeIcon}
-          alt="closeIcon"
+        <X
           onClick={() => setDisplayParticipantOpt("hidden")}
-          className="absolute right-2 top-2 cursor-pointer"
+          className="absolute hover:bg-[#feFae0] p-[2px] rounded-full right-2 top-2 cursor-pointer"
         />
         <p className="text-center">如何分擔</p>
         <p className="pt-1 text-sm text-center text-[#5b4421]">
