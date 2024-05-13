@@ -1,4 +1,4 @@
-import AddGroupForm from "./AddGroupForm";
+import useStore from "../../utility/hooks/useStore";
 import { Button } from "../../components/ui/button";
 import {
   Dialog,
@@ -21,9 +21,11 @@ import {
 import { useState } from "react";
 import { Chart } from "./Chart";
 import Result from "./Result";
-import { HandCoins, ChevronsRight } from "lucide-react";
+import { HandCoins, ChevronsRight, Smile } from "lucide-react";
 
 export default function ChartAndResult() {
+  const { group } = useStore();
+  const { users } = group;
   const [openResult, setOpenResult] = useState(false);
   const isDesktop = window.innerWidth >= 768;
   if (isDesktop) {
@@ -36,15 +38,23 @@ export default function ChartAndResult() {
         </DialogTrigger>
         <DialogContent className="min-w-[425px] max-h-[80vh] w-[50vw] block">
           <DialogHeader className="mb-5">
-            <DialogTitle className='text-center'>錢怎麼給</DialogTitle>
-            <DialogDescription className='text-center'>誰要給誰多少錢</DialogDescription>
-          </DialogHeader>  <div className="mt-12">
-            <Result></Result>
+            <DialogTitle className="text-center">錢怎麼給</DialogTitle>
+            <DialogDescription className="text-center">
+              誰要給誰多少錢
+            </DialogDescription>
+          </DialogHeader>{" "}
+          <div className="mt-12">
+            {users.length > 1 ? (
+              <Result />
+            ) : (
+              <div className="justify-center flex flex-wrap gap-1">
+                <p>群組只有一位成員</p> <Smile />
+              </div>
+            )}
           </div>
           <div className="max-w-[360px] mx-auto mt-10">
-            <Chart></Chart>
+            {users.length > 1 ? <Chart /> : ""}
           </div>
-        
         </DialogContent>
       </Dialog>
     );
@@ -62,13 +72,19 @@ export default function ChartAndResult() {
           <DrawerTitle>錢怎麼給</DrawerTitle>
           <DrawerDescription>誰要給誰多少錢</DrawerDescription>
         </DrawerHeader>
-       
-        <Result></Result> <div className="w-[360px] mx-auto mt-10">
-          <Chart></Chart>
+        {users.length > 1 ? (
+          <Result />
+        ) : (
+          <div className="justify-center flex flex-wrap gap-1">
+            <p>群組只有一位成員</p> <Smile />
+          </div>
+        )}
+        <div className="w-[360px] mx-auto mt-10">
+          {users.length > 1 ? <Chart /> : ""}
         </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="secondary">關閉</Button>
+            <Button variant="outline">關閉</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
