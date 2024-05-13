@@ -90,15 +90,15 @@ const LandingPage = () => {
         </section>
 
         <article className="w-full pb-10 sm:w-[70%] md:w-full mx-auto mt-16 md:grid md:grid-cols-3 md:items-center gap-6">
-          <div className="flex gap-2 items-center justify-center bg-[#876542] text-[#FEFAE0] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
+          <div className="flex gap-2 items-center justify-center bg-[#876542] text-[#FEFAE0] p-2 rounded-md shadow-lg  w-full md:w-auto h-24 mt-4">
             <CircleDollarSign></CircleDollarSign>
             <p className="tracking-wide">介面直覺簡潔，分帳不再是難事</p>
           </div>
-          <div className="flex gap-2 items-center justify-center bg-[#876542] text-[#FEFAE0] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
+          <div className="flex gap-2 items-center justify-center bg-[#876542] text-[#FEFAE0] p-2 rounded-md shadow-lg  w-full md:w-auto h-24 mt-4">
             <Users></Users>
             <p className="tracking-wide">多群組無縫切換，涵蓋生活所需</p>
           </div>
-          <div className="flex gap-2 items-center justify-center bg-[#876542] text-[#FEFAE0] p-2 rounded shadow-lg  w-full md:w-auto h-24 mt-4">
+          <div className="flex gap-2 items-center justify-center bg-[#876542] text-[#FEFAE0] p-2 rounded-md shadow-lg  w-full md:w-auto h-24 mt-4">
             <PartyPopper></PartyPopper>
             <p className="tracking-wide">一站式理財，高效解決群組難題</p>
           </div>
