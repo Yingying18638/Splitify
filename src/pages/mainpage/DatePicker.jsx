@@ -22,21 +22,16 @@ const DatePicker = () => {
     setEditExpense,
   } = useStore();
   const { expenses } = group;
-  // const [date, setDate] = useState(new Date());
   useEffect(() => {
     setsomeNewExpense(format(date, "yyyyMMdd"), "date");
   }, [date]);
-  // function handleDateSelect(){
-  //   console.log(date);
-  //   setDate(date);
-  // }
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
           className={cn(
-            "w-[180px] justify-start text-left font-normal",
+            "w-[180px] justify-start text-left font-normal xl:text-[14px] xl:px-4 xl:py-2",
             !date && "text-muted-foreground"
           )}
         >
