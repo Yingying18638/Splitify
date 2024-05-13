@@ -8,7 +8,7 @@ import {
   useCheckUrlSetDialog,
 } from "../../utility/handleFirestore";
 import startGuide from "../../utility/userGuide";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 //----------------------component------------------------------------------------
 import LittleHeader from "./LittleHeader";
 import AddExpense from "./AddExpense";
@@ -25,7 +25,7 @@ import {
   TabsTrigger,
 } from "../../components/ui/tabs";
 import { Button } from "../../components/ui/button";
-import { Smile } from 'lucide-react';
+import { Smile } from "lucide-react";
 const Mainpage = ({
   isSideBarOpen,
   setIsSideBarOpen,
@@ -83,7 +83,9 @@ const Mainpage = ({
         ></SideBar>
         <Tabs
           defaultValue="account"
-          className=" mt-20 mx-auto  w-[360px] sm:w-[600px]  md:ml-[calc((100%-600px)/2+80px)] flex flex-col items-center justify-center  flex-wrap "
+          className=" mt-20 mx-auto  w-[360px] sm:w-[600px]  md:ml-[calc((100%-600px)/2+80px)] 
+          xl:w-[750px] xl:ml-[calc((100%-750px)/2+7rem)] xl:text-lg
+          flex flex-col items-center justify-center  flex-wrap "
           // className='w-[360px] sm:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap '
         >
           <section value="account" className="w-full">
@@ -101,15 +103,18 @@ const Mainpage = ({
                   children={true}
                 />
               ) : tempGroupId ? (
-                <p className="justify-center flex gap-1 p-2">目前尚無新花費<Smile/></p>
+                <p className="justify-center flex gap-1 p-2">
+                  目前尚無新花費
+                  <Smile />
+                </p>
               ) : (
                 ""
               )}
             </div>
             {clearedExpensesToRender.length !== 0 && (
               <Button
-              variant='secondary'
-                className="block w-32 tracking-wide mx-auto my-3  p-1 rounded-md cursor-pointer "
+                variant="secondary"
+                className="block  tracking-wide mx-auto my-3  p-1 rounded-md  "
                 onClick={handleDisplayHistory}
               >
                 {displayHistory?.text}已結清紀錄

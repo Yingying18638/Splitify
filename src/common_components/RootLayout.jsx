@@ -43,7 +43,7 @@ const RootLayout = ({ children }) => {
         <img
           src={logo}
           alt="logo"
-          className={`${isSignedIn ? "md:ml-[160px]" : ""} w-32`}
+          className={`${isSignedIn ? "md:ml-[160px] xl:ml-[14rem]" : ""} w-32`}
         />
         <div className="fixed right-5 ">
           <SignedOut>

@@ -8,6 +8,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
+import Loading from "./common_components/Loading.jsx"
+
 function App() {
   return (
     <Router>

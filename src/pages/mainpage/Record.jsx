@@ -104,7 +104,7 @@ const Record = ({
                     <figure className="self-center">
                       <img src={list} alt="icon" className="w-11" />
                     </figure>
-                    <figcaption className="ml-2 w-[160px] sm:w-[380px] ">
+                    <figcaption className="ml-2 w-[160px] sm:w-[380px] xl:w-[520px]">
                       <p className="w-full truncate">{item}</p>
                       <p>
                         {isSinglePayer
@@ -121,7 +121,7 @@ const Record = ({
                     className={`py-2 pl-6 sm:pl-24 pr-2 sm:pr-8 ${displayDetail?.[time] || "hidden"}`}
                   >
                     <div className="mt-3 flex justify-between items-start flex-wrap">
-                      <figcaption className="w-[240px] sm:w-[300px]">
+                      <figcaption className="w-[240px] sm:w-[300px] ">
                         <div
                           className={`my-1 ${actualPayersPair.length ? "border-b-2" : ""} border-[#CABB9D] pb-2 mb-2`}
                         >
@@ -134,15 +134,15 @@ const Record = ({
                                     key={name}
                                     className="flex items-center w-full text-sm sm:text-base py-1"
                                   >
-                                    <div className="rounded-full bg-gray-200 w-5 h-5 mr-2">
+                                    <div className="rounded-full bg-gray-200 w-5 h-5 xl:w-7 xl:h-7 mr-2">
                                       {getImg(name) ? (
                                         <img
                                           src={getImg(name)}
                                           alt=""
-                                          className="rounded-full w-5 h-5"
+                                          className="rounded-full xl:w-7 xl:h-7 w-5 h-5"
                                         />
                                       ) : (
-                                        <CircleUserRound className="w-5 h-5" />
+                                        <CircleUserRound className="w-5 h-5 xl:w-7 xl:h-7" />
                                       )}
                                     </div>
                                     <p className="max-w-[calc(100%-180px)] truncate">
@@ -160,17 +160,17 @@ const Record = ({
                             return (
                               <div
                                 key={name}
-                                className="flex items-center w-full text-sm sm:text-base py-1"
+                                className="flex items-center w-full text-sm sm:text-base xl:text-lg py-1"
                               >
-                                <div className="rounded-full bg-gray-200 w-5 h-5 mr-2">
+                                <div className="rounded-full bg-gray-200 w-5 h-5 xl:w-7 xl:h-7 mr-2">
                                   {getImg(name) ? (
                                     <img
                                       src={getImg(name)}
                                       alt=""
-                                      className="rounded-full w-5 h-5"
+                                      className="rounded-full w-5 h-5 xl:w-7 xl:h-7"
                                     />
                                   ) : (
-                                    <CircleUserRound className="w-5 h-5" />
+                                    <CircleUserRound className="w-5 h-5 xl:w-7 xl:h-7" />
                                   )}
                                 </div>
                                 <p className="max-w-[calc(100%-180px)] truncate">
@@ -188,11 +188,6 @@ const Record = ({
                           {note}
                         </p>
                       </figcaption>
-                      {/* <figure className="flex flex-wrap gap-2"> */}
-                      {/* <div className="w-40 h-20 bg-slate-200">
-                          <img alt="圖片" />
-                        </div> */}
-                      {/* </figure> */}
                       {children && (
                         <EditDeleteButtons
                           handleEditExpense={handleEditExpense}

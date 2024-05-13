@@ -64,7 +64,7 @@ const SideBar = ({
       <div
         id="sidebar"
         ref={sideBarRef}
-        className={`bg-[#653A14] w-40 h-full fixed  top-0 left-0 z-10 ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
+        className={`bg-[#653A14] w-40 h-full fixed  top-0 left-0 z-10 xl:w-56 xl:text-lg ${sideBarClass} ${isSideBarOpen ? "" : "hidden"}`}
       >
         {sideBarClass === mobileSideBar && (
           <X
@@ -78,7 +78,7 @@ const SideBar = ({
         )}
         <nav className="h-screen overflow-y-auto break-words ">
           <div className="pt-20 pr-6 pl-10 text-[#dda15e]">
-            <p className="text-[#fefae0] text-lg font-medium pb-2 border-b-2 ">
+            <p className="text-[#fefae0] text-lg xl:text-xl font-medium pb-2 border-b-2 ">
               群組
             </p>
             {isInAnyGroup &&
