@@ -92,7 +92,7 @@ const SideBar = ({
                     onClick={(e) => {
                       const { id } = e.target;
                       console.log(id);
-                      setColor({ ...bgObject, [id]: "text-[#fbf7d8]  border-[#CABB9D] bg-[#876542] hover:bg-transparent" });
+                      setColor({ ...bgObject, [id]: "text-[#fbf7d8]  border-[#CABB9D] bg-[#876542] " });
                       setTempGroupId(id);
                     }}
                   >
