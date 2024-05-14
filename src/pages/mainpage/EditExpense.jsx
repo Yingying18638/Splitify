@@ -276,6 +276,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
         <Textarea
           placeholder="備註"
           value={note}
+          className='resize-none'
           onChange={(e) =>
             setNewExpense({ ...newExpense, note: e.target.value })
           }
