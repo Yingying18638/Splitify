@@ -20,7 +20,7 @@ export const options = {
   plugins: {
     title: {
       display: true,
-      text: "看看你是總共是付款還是收款",
+      text: "看看你是總共是還款還是收款",
     },
   },
 };
