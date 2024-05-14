@@ -45,12 +45,15 @@ const RootLayout = ({ children }) => {
           alt="logo"
           className={`${isSignedIn ? "md:ml-[160px] xl:ml-[14rem]" : ""} w-32`}
         />
-        <div className="fixed  left-[calc(100vw-60px)]">
-          <SignedOut>
+         <div className="fixed md:right-20 right-5">
+         <SignedOut>
             <SignInButton mode="modal">
               <button>登入 / 註冊</button>
             </SignInButton>
           </SignedOut>
+         </div>
+          <div className="fixed  left-[calc(100vw-60px)]">
+
           <SignedIn>
             <UserButton className="right-0"></UserButton>
           </SignedIn>
