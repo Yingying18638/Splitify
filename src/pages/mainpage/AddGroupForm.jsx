@@ -85,7 +85,7 @@ const AddGroupForm = ({ className, setOpen }) => {
           required
           id="groupName"
           placeholder="吃貨群組（限15字以內）"
-          maxlength='15'
+          maxLength='15'
           value={newGroupName}
           onChange={(e) => setNewGroupName(e.target.value)}
         />
@@ -103,7 +103,7 @@ const AddGroupForm = ({ className, setOpen }) => {
             {groupUrl}
           </p>
           <Button
-            className="h-14"
+            className="h-14 xl:h-14"
             variant="outline"
             size="icon"
             onClick={(e) => {
