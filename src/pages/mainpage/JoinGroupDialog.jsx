@@ -36,7 +36,7 @@ const JoinGroupDialog = ({ isGrpDialogOpen, setIsGrpDialogOpen }) => {
   }, []);
   async function handleJoinGroup() {
     const gId = localStorage.getItem("groupIdCreated");
-    const { inGroup,  ...dataForGrp } = tempUser;
+    const { inGroup, ...dataForGrp } = tempUser;
     const dataForUsr = {
       ...tempUser,
       inGroup: { ...inGroup, [gId]: grpNameToJoin },

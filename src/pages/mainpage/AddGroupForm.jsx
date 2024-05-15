@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
 import { cn } from "../../lib/utils";
 import { Link as LinkIcon } from "lucide-react";
 import { Input } from "../../components/ui/input";
@@ -17,13 +16,13 @@ import {
 } from "../../components/ui/popover";
 const AddGroupForm = ({ className, setOpen }) => {
   const { toast } = useToast();
-
   const { tempUser, setTempUser } = useStore();
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
   const [newGroupId, setNewGroupId] = useState("");
   const [groupUrl, setGroupUrl] = useState("https:/......");
   const { inGroup, ...userForGroup } = tempUser;
+  const isNoUrl = groupUrl === "https:/......";
   const INITIANL_GROUP = {
     groupName: "",
     groupId: "",
@@ -33,9 +32,9 @@ const AddGroupForm = ({ className, setOpen }) => {
     flow: [],
     history: [],
   };
-  // useListenUsers();
   const handleCopyURL = async (hashedUrl) => {
     try {
+      if (isNoUrl) return;
       await navigator.clipboard.writeText(hashedUrl);
       setIsUrlCopied(true);
     } catch (error) {
@@ -47,7 +46,6 @@ const AddGroupForm = ({ className, setOpen }) => {
     e.preventDefault();
     const id = uuidv4();
     setNewGroupId(id);
-    console.log(window.location.origin);
     const url = `${window.location.origin}?id=${id}`;
     setGroupUrl(url);
   }
@@ -68,9 +66,9 @@ const AddGroupForm = ({ className, setOpen }) => {
       await addDocWithId(tempUser.uid, "users", newTempUser);
       await addDocWithId(newGroupId, "groups", newGroupData);
       setOpen(false);
-      toast({title:'新增成功'})
+      toast({ title: "新增成功" });
     } catch (error) {
-      toast({title:'新增失敗'})
+      toast({ title: "新增失敗" });
       console.log(error);
     }
   }
@@ -85,7 +83,7 @@ const AddGroupForm = ({ className, setOpen }) => {
           required
           id="groupName"
           placeholder="吃貨群組（限15字以內）"
-          maxLength='15'
+          maxLength="15"
           value={newGroupName}
           onChange={(e) => setNewGroupName(e.target.value)}
         />
@@ -103,6 +101,7 @@ const AddGroupForm = ({ className, setOpen }) => {
             {groupUrl}
           </p>
           <Button
+            disabled={isNoUrl}
             className="h-14 xl:h-14"
             variant="outline"
             size="icon"
@@ -116,7 +115,7 @@ const AddGroupForm = ({ className, setOpen }) => {
                 <LinkIcon className="h-4" />
               </PopoverTrigger>
               <PopoverContent className="w-[150px] text-sm">
-                {isUrlCopied ? "連結已複製" : ""}
+                {isUrlCopied ? "連結已複製" : "複製失敗"}
               </PopoverContent>
             </Popover>
           </Button>

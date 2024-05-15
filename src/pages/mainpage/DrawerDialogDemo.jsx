@@ -27,7 +27,6 @@ export function DrawerDialogDemo({ btnClass }) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          {/* <Button variant="outline" className="relative z-50 left-10"> */}
           <Button
             variant="secondary"
             className={btnClass ? "" : "relative z-50 left-10 mt-6"}
@@ -41,6 +40,9 @@ export function DrawerDialogDemo({ btnClass }) {
             e.preventDefault();
           }}
           onPointerDownOutside={(e) => {
+            e.preventDefault();
+          }}
+          onOpenAutoFocus={(e) => {
             e.preventDefault();
           }}
         >
