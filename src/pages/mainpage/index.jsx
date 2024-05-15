@@ -5,9 +5,7 @@ import getExpensesArranged from "../../utility/getExpensesArranged";
 import { useUser, useAuth } from "@clerk/clerk-react";
 import {
   useUserData,
-  useCheckUrlSetDialog,
 } from "../../utility/handleFirestore";
-import startGuide from "../../utility/userGuide";
 import { Toaster } from "@/components/ui/toaster";
 //----------------------component------------------------------------------------
 import LittleHeader from "./LittleHeader";
@@ -15,17 +13,13 @@ import AddExpense from "./AddExpense";
 import Record from "./Record";
 import EditExpense from "./EditExpense";
 import SideBar from "./SideBar";
-import { DrawerDialogDemo } from "./DrawerDialogDemo";
 import JoinGroupDialog from "./JoinGroupDialog";
 //---------------------- shadcn ui------------------------------------------------
 import {
   Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
 } from "../../components/ui/tabs";
 import { Button } from "../../components/ui/button";
-import { Smile } from "lucide-react";
+import { Smile, ChevronsDown, ChevronsUp } from "lucide-react";
 const Mainpage = ({
   isSideBarOpen,
   setIsSideBarOpen,
@@ -42,7 +36,6 @@ const Mainpage = ({
   const [displayAddExpense, setDisplayAddExpense] = useState("hidden");
   const [displayEditExpense, setDisplayEditExpense] = useState("hidden");
   const [displayDetail, setDisplayDetail] = useState(initialDetailDisplay);
-  const [imgSrc, setImgSrc] = useState("");
   const [displayHistory, setDisplayHistory] = useState({
     display: "hidden",
     text: "查看",
@@ -71,7 +64,6 @@ const Mainpage = ({
     inGroup: {},
   };
   useUserData(userId, userObj, setIsGrpDialogOpen);
-  // useCheckUrlSetDialog(setIsGrpDialogOpen);
   return (
     <>
       <main className="min-h-[calc(100vh-80px)] bg-[#fefae0] ">
@@ -116,9 +108,14 @@ const Mainpage = ({
             {clearedExpensesToRender.length !== 0 && (
               <Button
                 variant="secondary"
-                className="block  tracking-wide mx-auto my-3  rounded-md  "
+                className="flex  tracking-wide mx-auto my-3  rounded-md  "
                 onClick={handleDisplayHistory}
               >
+                {displayHistory?.text === "查看" ? (
+                  <ChevronsDown />
+                ) : (
+                  <ChevronsUp />
+                )}
                 {displayHistory?.text}已結清紀錄
               </Button>
             )}
