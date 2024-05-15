@@ -8,7 +8,7 @@ const Result = () => {
     const user = users.find((item) => item.name === name);
     return user?.img;
   }
-  if (!flow.length) return <p className="text-center mb-3">無未結清帳款！</p>;
+  if (!flow.length || !expenses.length) return <p className="text-center mb-3">無未結清帳款！</p>;
   return (
     <section className="mt-5">
       {flow.map((item, index) => {

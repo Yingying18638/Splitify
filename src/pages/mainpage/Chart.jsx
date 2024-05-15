@@ -27,9 +27,9 @@ export const options = {
 
 export function Chart() {
   const { group } = useStore();
-  const { totalBill } = group;
+  const { totalBill,expenses } = group;
   const billNames = Object.keys(totalBill);
-  if (billNames.length === 0) return;
+  if (billNames.length === 0 ||!expenses.length) return;
   const billAmounts = Object.values(totalBill);
   const data = {
     labels: billNames,
