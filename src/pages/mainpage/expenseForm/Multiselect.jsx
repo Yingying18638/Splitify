@@ -2,7 +2,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { ChevronDown, X } from "lucide-react";
 import React, { useEffect } from "react";
 import { MultiSelect } from "react-multi-select-component";
-import useStore from "../../utility/hooks/useStore";
+import useStore from "@/utility/hooks/useStore";
 const Multiselect = ({ setSelected, selected, options }) => {
   const { newExpense, setNewExpense, group, setsomeNewExpense } = useStore();
   const { participants_customized, participants } = newExpense;

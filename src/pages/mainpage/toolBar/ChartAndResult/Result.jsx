@@ -1,5 +1,5 @@
 import React from "react";
-import useStore from "../../utility/hooks/useStore";
+import useStore from "@/utility/hooks/useStore";
 import { ChevronsRight, CircleUserRound } from "lucide-react";
 const Result = () => {
   const { group, tempGroupId } = useStore();

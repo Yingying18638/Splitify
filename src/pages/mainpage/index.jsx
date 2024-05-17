@@ -1,25 +1,20 @@
 import React, { useState } from "react";
 //---------------------- functions and hooks --------------------------------
 import { Toaster } from "@/components/ui/toaster";
+import getExpensesArranged from "@/utility/getExpensesArranged";
+import { useUserData } from "@/utility/handleFirestore";
+import useStore from "@/utility/hooks/useStore";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import getExpensesArranged from "../../utility/getExpensesArranged";
-import {
-  useUserData,
-} from "../../utility/handleFirestore";
-import useStore from "../../utility/hooks/useStore";
 //----------------------component------------------------------------------------
-import AddExpense from "./AddExpense";
-import EditExpense from "./EditExpense";
-import JoinGroupDialog from "./JoinGroupDialog";
-import LittleHeader from "./LittleHeader";
-import Record from "./Record";
-import SideBar from "./SideBar";
+import Record from "./detailAndRecord/Record";
+import AddExpense from "./expenseForm/AddExpense";
+import EditExpense from "./expenseForm/EditExpense";
+import JoinGroupDialog from "./joinGroupDialog/JoinGroupDialog";
+import SideBar from "./sideBar/SideBar";
+import LittleHeader from "./toolBar";
 //---------------------- shadcn ui------------------------------------------------
+import { Button } from "@/components/ui/button";
 import { ChevronsDown, ChevronsUp, Smile } from "lucide-react";
-import { Button } from "../../components/ui/button";
-import {
-  Tabs,
-} from "../../components/ui/tabs";
 const Mainpage = ({
   isSideBarOpen,
   setIsSideBarOpen,
@@ -72,7 +67,7 @@ const Mainpage = ({
           sideBarClass={sideBarClass}
           setSideBarClass={setSideBarClass}
         ></SideBar>
-        <Tabs
+        <div
           defaultValue="account"
           className=" mt-20 mx-auto  w-[360px] sm:w-[600px]  md:ml-[calc((100%-600px)/2+80px)] 
           xl:w-[750px] xl:ml-[calc((100%-750px)/2+7rem)] xl:text-lg
@@ -125,7 +120,7 @@ const Mainpage = ({
               setDisplayEditExpense={setDisplayEditExpense}
             />
           </section>
-        </Tabs>
+        </div>
         <Toaster></Toaster>
         <AddExpense
           displayAddExpense={displayAddExpense}

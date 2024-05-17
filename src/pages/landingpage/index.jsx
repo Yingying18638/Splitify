@@ -5,7 +5,7 @@ import { TextPlugin } from "gsap/TextPlugin";
 import { CircleDollarSign, PartyPopper, Users } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import Lottie from "react-lottie";
-import animationData from "../../assets/people.json";
+import animationData from "@/assets/people.json";
 const LandingPage = () => {
   gsap.registerPlugin(useGSAP, TextPlugin);
   const mobile = { width: 300, height: 240 };

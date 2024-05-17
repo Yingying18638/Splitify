@@ -1,6 +1,6 @@
 import * as React from "react";
 import AddGroupForm from "./AddGroupForm";
-import { Button } from "../../components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -18,9 +18,9 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../../components/ui/drawer";
+} from "@/components/ui/drawer";
 
-export function DrawerDialogDemo({ btnClass }) {
+export function DrawerDialog({ btnClass }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = window.innerWidth >= 768;
   if (isDesktop) {

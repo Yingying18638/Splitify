@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import useStore from "../../utility/hooks/useStore";
+import useStore from "@/utility/hooks/useStore";
 export const options = {
   indexAxis: "y",
   elements: {

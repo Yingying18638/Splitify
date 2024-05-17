@@ -1,5 +1,4 @@
-import useStore from "../../utility/hooks/useStore";
-import { Button } from "../../components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -17,11 +16,12 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../../components/ui/drawer";
+} from "@/components/ui/drawer";
+import useStore from "@/utility/hooks/useStore";
+import { HandCoins, Smile } from "lucide-react";
 import { useState } from "react";
 import { Chart } from "./Chart";
 import Result from "./Result";
-import { HandCoins, ChevronsRight, Smile } from "lucide-react";
 
 export default function ChartAndResult() {
   const { group } = useStore();

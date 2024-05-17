@@ -1,8 +1,8 @@
 import { BadgeAlert, CheckCheck, X } from "lucide-react";
 import React from "react";
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
-import useStore from "../../utility/hooks/useStore";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import useStore from "@/utility/hooks/useStore";
 const ParticipantsOptions = ({
   displayParticipantOpt,
   setDisplayParticipantOpt,

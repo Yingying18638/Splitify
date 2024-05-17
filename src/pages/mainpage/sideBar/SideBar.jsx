@@ -1,8 +1,8 @@
 import { X } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { useListenGroups } from "../../utility/handleFirestore";
-import useStore from "../../utility/hooks/useStore";
-import { DrawerDialogDemo } from "./DrawerDialogDemo";
+import { useListenGroups } from "@/utility/handleFirestore";
+import useStore from "@/utility/hooks/useStore";
+import { DrawerDialog } from "../../../common_components/DrawerDialog";
 const SideBar = ({
   isSideBarOpen,
   setIsSideBarOpen,
@@ -53,7 +53,7 @@ const SideBar = ({
     return () => window.removeEventListener("resize", handleResize);
   }, [sideBarClass]);
   const sortedInGroup = Object.entries(inGroup).sort(function (a, b) {
-    return a[1].localeCompare(b[1])
+    return a[1].localeCompare(b[1]);
   });
   return (
     <>
@@ -90,7 +90,10 @@ const SideBar = ({
                     id={groupId}
                     onClick={(e) => {
                       const { id } = e.target;
-                      setColor({ ...bgObject, [id]: "text-[#fbf7d8]  border-[#CABB9D] bg-[#876542] " });
+                      setColor({
+                        ...bgObject,
+                        [id]: "text-[#fbf7d8]  border-[#CABB9D] bg-[#876542] ",
+                      });
                       setTempGroupId(id);
                     }}
                   >
@@ -99,7 +102,7 @@ const SideBar = ({
                 );
               })}
           </div>
-          <DrawerDialogDemo />
+          <DrawerDialog />
         </nav>
       </div>
     </>

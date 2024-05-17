@@ -2,18 +2,18 @@ import { useToast } from "@/components/ui/use-toast";
 import { Link as LinkIcon } from "lucide-react";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
-import { cn } from "../../lib/utils";
-import { addDocWithId } from "../../utility/handleFirestore";
-import useStore from "../../utility/hooks/useStore";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+import { addDocWithId } from "@/utility/handleFirestore";
+import useStore from "@/utility/hooks/useStore";
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../components/ui/popover";
+} from "@/components/ui/popover";
 const AddGroupForm = ({ className, setOpen }) => {
   const { toast } = useToast();
   const { tempUser, setTempUser } = useStore();

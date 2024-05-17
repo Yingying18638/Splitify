@@ -2,9 +2,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { format, parseISO } from "date-fns";
 import { CircleUserRound } from "lucide-react";
 import React from "react";
-import list from "../../assets/list.png";
-import { updateGroupData } from "../../utility/handleFirestore";
-import useStore from "../../utility/hooks/useStore";
+import list from "@/assets/list.png";
+import { updateGroupData } from "@/utility/handleFirestore";
+import useStore from "@/utility/hooks/useStore";
 import { EditDeleteButtons } from "./EditDeleteButtons";
 
 const Record = ({

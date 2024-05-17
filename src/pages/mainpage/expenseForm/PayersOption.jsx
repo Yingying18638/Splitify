@@ -1,7 +1,7 @@
 import { CheckCheck, X } from "lucide-react";
 import React from "react";
-import { Input } from "../../components/ui/input";
-import useStore from "../../utility/hooks/useStore";
+import { Input } from "@/components/ui/input";
+import useStore from "@/utility/hooks/useStore";
 const PayersOption = ({
   displayPayersOpt,
   setDisplayPayersOpt,
