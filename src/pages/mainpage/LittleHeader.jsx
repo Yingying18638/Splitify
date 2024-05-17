@@ -1,21 +1,7 @@
+import { useToast } from "@/components/ui/use-toast";
 import React, { useEffect, useState } from "react";
 import groupImg from "../../assets/group2.png";
-import { useToast } from "@/components/ui/use-toast";
 
-import { Button } from "../../components/ui/button";
-import useStore from "../../utility/hooks/useStore";
-import {
-  updateGroupData,
-  useListenUsers,
-  addDocWithId,
-  justGetData,
-} from "../../utility/handleFirestore";
-import { DrawerDialogDemo } from "./DrawerDialogDemo";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../../components/ui/popover";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,15 +13,28 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "../../components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../components/ui/popover";
+import {
+  addDocWithId,
+  justGetData,
+  updateGroupData,
+  useListenUsers,
+} from "../../utility/handleFirestore";
+import useStore from "../../utility/hooks/useStore";
 import ChartAndResult from "./ChartAndResult";
+import { DrawerDialogDemo } from "./DrawerDialogDemo";
 
 import {
   ArrowBigLeftDash,
   BadgeAlert,
-  Plus,
   CircleUserRound,
   Link as LinkIcon,
-  LoaderCircle,
+  Plus
 } from "lucide-react";
 
 const LittleHeader = ({ setDisplayHistory, setDisplayAddExpense }) => {
@@ -145,7 +144,6 @@ const LittleHeader = ({ setDisplayHistory, setDisplayAddExpense }) => {
           }}
         >
           <Plus className="w-5 mr-1"></Plus>花費
-          {/* <span className="text-lg font-extrabold"> ＋ </span><span>花費</span> */}
         </Button>
         <ChartAndResult></ChartAndResult>
         <Popover>

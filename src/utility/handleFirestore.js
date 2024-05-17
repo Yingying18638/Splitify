@@ -1,33 +1,29 @@
+import { initializeApp } from "firebase/app";
 import {
-  query,
-  where,
-  onSnapshot,
-  addDoc,
-  collection,
-  getFirestore,
-  getDoc,
   doc,
+  getDoc,
+  getFirestore,
+  onSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
+import { useEffect } from "react";
 import firebaseConfig from "./firebase";
-import { useEffect, useState } from "react";
 import useStore from "./hooks/useStore";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export {
-  updateGroupData,
+  addDocWithId,
   db,
   getData,
-  useUserData,
-  addDocWithId,
-  useListenUsers,
-  useListenGroups,
+  justGetData,
+  updateGroupData,
+  updateOneField,
   useCheckUrlSetDialog,
   useClerkDataToFirestore,
-  justGetData,
-  updateOneField,
+  useListenGroups,
+  useListenUsers,
+  useUserData,
 };
 async function addDocWithId(docId, collection, data) {
   try {
@@ -39,12 +35,6 @@ async function addDocWithId(docId, collection, data) {
 async function updateGroupData(groupId, newGroupData) {
   try {
     const groupRef = doc(db, "groups", groupId);
-    const docSnap = await getDoc(groupRef);
-    const oldData = docSnap?.data();
-    const { expenses, totalBill, flow } = newGroupData;
-    // const groupToSet = { ...oldData, expenses, totalBill, flow };
-    // const fieldToSet = { expenses: [...expenses], totalBill, flow: [...flow] };
-    // await setDoc(groupRef, fieldToSet, { merge: true });
     await setDoc(groupRef, newGroupData);
   } catch (err) {
     console.log(err, "上傳失敗");
@@ -64,19 +54,16 @@ function useUserData(userId, userObj, setIsGrpDialogOpen) {
         const data = docSnap.data();
         // const { inGroup } = data;
         // const firstGroupId = Object.keys(inGroup)[0];
-        console.log("文件存在:", data);
         setTempUser(data);
         // setTempGroupId(firstGroupId);
         return data;
       } else {
         await addDocWithId(userId, "users", userObj);
         setTempUser(userObj);
-        console.log("新增成功");
       }
     }
     async function getDataAndCheckUrl(userId, userObj) {
       const data = await handleClerkDataToFirestore(userId, userObj);
-      console.log(document.location, "我在哪");
       const gId = localStorage.getItem("groupIdCreated");
       // let params = new URLSearchParams(document.location.search.substring(1));
       // let gId = params.get("id");
@@ -95,34 +82,27 @@ function useUserData(userId, userObj, setIsGrpDialogOpen) {
     temp(userId, userObj);
   }, [userId]);
 }
-//監聽groups
 function useListenGroups() {
-  const { tempGroupId, setGroup} = useStore();
+  const { tempGroupId, setGroup } = useStore();
   useEffect(() => {
     if (!tempGroupId) return;
-    console.log("開始監聽或改變監聽", tempGroupId);
     const docRef = doc(db, "groups", tempGroupId);
     const unsubscribe = onSnapshot(docRef, (doc) => {
       const data = doc.data();
       setGroup(data);
-      console.log("監聽到的group data: ", data);
     });
     return () => unsubscribe();
   }, [tempGroupId]);
 }
-//監聽users
 function useListenUsers() {
   const { tempUser, setTempUser } = useStore();
   const { uid } = tempUser;
   useEffect(() => {
     if (!uid) return;
-    console.log("開始監聽user或改變監聽", uid);
-    //監聽users資料 + 設state
     const docRef = doc(db, "users", uid);
     const unsubscribe = onSnapshot(docRef, (doc) => {
       const data = doc.data();
-      setTempUser(data); // 從任一群組刪別人時要更新別人的inGroup
-      console.log("監聽到的user data: ", data);
+      setTempUser(data);
     });
     return () => unsubscribe();
   }, [tempUser.uid]);
@@ -159,14 +139,10 @@ function useClerkDataToFirestore(userId, userObj) {
       if (docSnap.exists()) {
         const data = docSnap.data();
         const { inGroup } = data;
-        const firstGroupId = Object.keys(inGroup)[0];
-        console.log("文件存在:", data);
         setTempUser(data);
-        // setTempGroupId(firstGroupId);
         return data;
       } else {
         await addDocWithId(userId, "users", userObj);
-        console.log("新增成功");
       }
     })(userId, userObj);
   }, [userId]);
@@ -186,8 +162,6 @@ function useCheckUrlSetDialog(setterFunction) {
     setterFunction(true);
   }, [tempUser.uid]);
 }
-//是否已加入 ? return : 要加入嗎
-//確定-> 更新group, user
 
 async function updateOneField(collection, docId, fieldToSet, data) {
   try {
@@ -198,7 +172,6 @@ async function updateOneField(collection, docId, fieldToSet, data) {
     const newFieldData = oldFieldData?.length
       ? [...oldFieldData, data]
       : { ...oldFieldData, data };
-    console.log(oldData, oldFieldData, newFieldData);
     await updateDoc(fieldRef, { [fieldToSet]: newFieldData });
   } catch (error) {
     console.log(error);

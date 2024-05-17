@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "../../components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog";
-import useStore from "../../utility/hooks/useStore";
+import React, { useEffect, useState } from "react";
+import { Button } from "../../components/ui/button";
 import {
-  getData,
-  justGetData,
-  db,
-  updateOneField,
   addDocWithId,
+  justGetData,
+  updateOneField
 } from "../../utility/handleFirestore";
+import useStore from "../../utility/hooks/useStore";
 const JoinGroupDialog = ({ isGrpDialogOpen, setIsGrpDialogOpen }) => {
   const { tempUser, setTempUser } = useStore();
   const { inGroup, img, uid } = tempUser;

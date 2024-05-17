@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import useStore from "../../utility/hooks/useStore";
-import { Button } from "../../components/ui/button";
-import { DrawerDialogDemo } from "./DrawerDialogDemo";
 import { X } from "lucide-react";
-import { useListenGroups, getData, db } from "../../utility/handleFirestore";
+import React, { useEffect, useRef, useState } from "react";
+import { useListenGroups } from "../../utility/handleFirestore";
+import useStore from "../../utility/hooks/useStore";
+import { DrawerDialogDemo } from "./DrawerDialogDemo";
 const SideBar = ({
   isSideBarOpen,
   setIsSideBarOpen,
@@ -91,7 +90,6 @@ const SideBar = ({
                     id={groupId}
                     onClick={(e) => {
                       const { id } = e.target;
-                      console.log(id);
                       setColor({ ...bgObject, [id]: "text-[#fbf7d8]  border-[#CABB9D] bg-[#876542] " });
                       setTempGroupId(id);
                     }}

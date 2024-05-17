@@ -1,14 +1,11 @@
-import "./App.css";
-import RootLayout from "./common_components/RootLayout";
-import LandingPage from './pages/landingpage'
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import {
+  Navigate,
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
-  Navigate,
 } from "react-router-dom";
-import { SignedIn, SignedOut } from "@clerk/clerk-react";
-import Loading from "./common_components/Loading.jsx"
+import RootLayout from "./common_components/RootLayout";
 
 function App() {
   return (
@@ -22,7 +19,6 @@ function App() {
                 <RootLayout children="signedIn" />
               </SignedIn>
               <SignedOut>
-                {/* <LandingPage /> */}
                 <RootLayout />
               </SignedOut>
             </>

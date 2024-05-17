@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 //---------------------- functions and hooks --------------------------------
-import useStore from "../../utility/hooks/useStore";
+import { Toaster } from "@/components/ui/toaster";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import getExpensesArranged from "../../utility/getExpensesArranged";
-import { useUser, useAuth } from "@clerk/clerk-react";
 import {
   useUserData,
 } from "../../utility/handleFirestore";
-import { Toaster } from "@/components/ui/toaster";
+import useStore from "../../utility/hooks/useStore";
 //----------------------component------------------------------------------------
-import LittleHeader from "./LittleHeader";
 import AddExpense from "./AddExpense";
-import Record from "./Record";
 import EditExpense from "./EditExpense";
-import SideBar from "./SideBar";
 import JoinGroupDialog from "./JoinGroupDialog";
+import LittleHeader from "./LittleHeader";
+import Record from "./Record";
+import SideBar from "./SideBar";
 //---------------------- shadcn ui------------------------------------------------
+import { ChevronsDown, ChevronsUp, Smile } from "lucide-react";
+import { Button } from "../../components/ui/button";
 import {
   Tabs,
 } from "../../components/ui/tabs";
-import { Button } from "../../components/ui/button";
-import { Smile, ChevronsDown, ChevronsUp } from "lucide-react";
 const Mainpage = ({
   isSideBarOpen,
   setIsSideBarOpen,
@@ -55,7 +55,6 @@ const Mainpage = ({
   const user = useUser()?.user;
   const { fullName, imageUrl, emailAddresses, username } = user && user;
   const email = emailAddresses[0].emailAddress;
-  console.log(user, "來自clerk");
   const userObj = {
     uid: userId,
     name: fullName || username,
@@ -78,7 +77,6 @@ const Mainpage = ({
           className=" mt-20 mx-auto  w-[360px] sm:w-[600px]  md:ml-[calc((100%-600px)/2+80px)] 
           xl:w-[750px] xl:ml-[calc((100%-750px)/2+7rem)] xl:text-lg
           flex flex-col items-center justify-center  flex-wrap "
-          // className='w-[360px] sm:w-[600px] mt-20 mx-auto md:ml-[calc((100%-600px)/2+80px)]   flex flex-col items-center justify-center  flex-wrap '
         >
           <section value="account" className="w-full">
             <LittleHeader

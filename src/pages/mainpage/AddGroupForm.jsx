@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { cn } from "../../lib/utils";
+import { useToast } from "@/components/ui/use-toast";
 import { Link as LinkIcon } from "lucide-react";
+import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { Button } from "../../components/ui/button";
-import { v4 as uuidv4 } from "uuid";
-import { addDocWithId, useListenUsers } from "../../utility/handleFirestore";
+import { cn } from "../../lib/utils";
+import { addDocWithId } from "../../utility/handleFirestore";
 import useStore from "../../utility/hooks/useStore";
-import { useToast } from "@/components/ui/use-toast";
 
 import {
   Popover,
@@ -62,7 +62,6 @@ const AddGroupForm = ({ className, setOpen }) => {
         groupName: newGroupName,
         groupId: newGroupId,
       };
-      console.log(newTempUser, "新使用者");
       await addDocWithId(tempUser.uid, "users", newTempUser);
       await addDocWithId(newGroupId, "groups", newGroupData);
       setOpen(false);

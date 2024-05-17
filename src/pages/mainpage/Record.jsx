@@ -1,11 +1,11 @@
+import { useToast } from "@/components/ui/use-toast";
+import { format, parseISO } from "date-fns";
+import { CircleUserRound } from "lucide-react";
 import React from "react";
 import list from "../../assets/list.png";
-import useStore from "../../utility/hooks/useStore";
-import { parseISO, format } from "date-fns";
-import { EditDeleteButtons } from "./EditDeleteButtons";
 import { updateGroupData } from "../../utility/handleFirestore";
-import { ChevronsRight, CircleUserRound } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import useStore from "../../utility/hooks/useStore";
+import { EditDeleteButtons } from "./EditDeleteButtons";
 
 const Record = ({
   expensesArrToRender,

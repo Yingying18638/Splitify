@@ -1,51 +1,39 @@
 //functions and hooks
-import React, { useEffect, useState } from "react";
-import useStore from "../../utility/hooks/useStore";
-import useUploadImg from "../../utility/hooks/useUploadImg";
-import { updateGroupData } from "../../utility/handleFirestore";
-import calcPaymentAverage from "../../utility/calcPaymentAverage";
-import calcFlow from "../../utility/calcFlow";
-import calcBills from "../../utility/calcBills";
-import calcSingleAve from "../../utility/calcSingleAve";
-import { parseISO, format } from "date-fns";
-import useAddExpGuide from "../../utility/useAddExpGuide";
 import { useToast } from "@/components/ui/use-toast";
-import { Toaster } from "@/components/ui/toaster";
+import { format } from "date-fns";
+import React, { useEffect, useState } from "react";
+import calcBills from "../../utility/calcBills";
+import calcFlow from "../../utility/calcFlow";
+import calcPaymentAverage from "../../utility/calcPaymentAverage";
+import calcSingleAve from "../../utility/calcSingleAve";
+import { updateGroupData } from "../../utility/handleFirestore";
+import useStore from "../../utility/hooks/useStore";
+import useAddExpGuide from "../../utility/addExpGuide";
 
 //image
-import arrow from "../../assets/arrow.png";
-import optionsIcon from "../../assets/options.png";
+import { BadgeDollarSign, CircleHelp, X } from "lucide-react";
 import list from "../../assets/list.png";
-import closeIcon from "../../assets/x.png";
-import { BadgeDollarSign, X, CircleHelp } from "lucide-react";
+import optionsIcon from "../../assets/options.png";
 // component
 import DatePicker from "./DatePicker";
 import MultiSelect from "./Multiselect";
-import PayersOption from "./PayersOption";
 import ParticipantsOptions from "./ParticipantsOptions";
+import PayersOption from "./PayersOption";
 // shadcn ui
-import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
-import { Textarea } from "../../components/ui/textarea";
+import { Input } from "../../components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
   SelectTrigger,
   SelectValue,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
 } from "../../components/ui/select";
+import { Textarea } from "../../components/ui/textarea";
 
 const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
-  // upload image
-  const {
-    imageUploaded,
-    setImageUploaded,
-    imageUrl,
-    setImageUrl,
-    uploadImage,
-  } = useUploadImg();
   const { toast } = useToast();
   const {
     newExpense,
@@ -103,9 +91,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     : [];
   const [displayPayersOpt, setDisplayPayersOpt] = useState("hidden");
   const [displayParticipantOpt, setDisplayParticipantOpt] = useState("hidden");
-  const [imgSrc, setImgSrc] = useState("");
   function handlePayersParticipantsDisplay(e) {
-    console.log(e.target);
     if (e.target.id === "participant-arrow") {
       setDisplayParticipantOpt(
         displayParticipantOpt === "hidden" ? "block" : "hidden"
@@ -126,8 +112,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     function handleGroupCalc() {
       // 0. start group calc or not
       if (expenses.length === 0) return;
-      console.log("start group calc");
-      // 3. 計算付款&平均
+      //3. 計算付款&平均
       const { payment, average } = calcPaymentAverage(expenses, users);
       const { totalBill } = calcBills(payment, average, users);
       const flow = calcFlow(totalBill);
@@ -160,7 +145,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     // setsomeNewExpense(now, "time");
     // 2. newExpense 塞入group expenses, setGroup (觸發useEffect)
     const newGrp = { ...group, expenses: [...group.expenses, expenseToAdd] };
-    // console.log(newGrp, "newGrp");
     setGroup(newGrp);
     setDisplayAddExpense("hidden");
     setDisplayParticipantOpt("hidden");
@@ -169,7 +153,6 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
     setDate(new Date());
     setShareObj(usersObj);
     setSelected(options);
-    console.log(newExpense);
   }
   return (
     <>
@@ -232,7 +215,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               required
               className="mt-1"
               placeholder="500"
-              id="tw_amount" //
+              id="tw_amount" 
               value={total_amount || ""}
               onChange={(e) => {
                 const { value } = e.target;
@@ -323,48 +306,22 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             />
           </div>
         </div>
-        {/* <div
-          className={`${cusAmountTotal ? "" : "hidden"} relative bg-white w-28 bottom-8 left-16`}
-        >
-          自訂分款
-        </div> */}
         <p
           className={`text-red-500 ${cusAmountGap !== 0 && cusAmountTotal !== 0 ? "" : "hidden"}`}
         >
           此分帳尚未完成
         </p>
-        {/* <label htmlFor="date" className="block">
-          className="block w-16"
-        </label> */}
         <div className="flex items-center gap-10">
           日期<DatePicker id="date"></DatePicker>
         </div>
         <Textarea
           placeholder="備註"
           value={note}
-          className='resize-none'
+          className="resize-none"
           onChange={(e) =>
             setNewExpense({ ...newExpense, note: e.target.value })
           }
         ></Textarea>
-        {/* <label htmlFor="uploadImg">圖片</label> */}
-        {/* <input
-          type="file"
-          accept=".jpg, .jpeg, .png"
-          id="uploadImg"
-          // className="hidden"
-          onChange={(e) => {
-            if (e.target.files[0]) {
-              console.log(e.target.files);
-              const src = URL.createObjectURL(e.target.files[0]);
-              setImgSrc(src);
-              console.log(src);
-            }
-          }}
-        /> */}
-        <div className="bg-slate-200 w-40 h-30">
-          {/* {imgSrc ? <img src={imgSrc} alt="圖片預覽" className="w-25" /> : ""} */}
-        </div>
         <Button
           type="reset"
           variant="secondary"

@@ -1,10 +1,9 @@
-import React, { useRef, useState, useEffect } from "react";
-import { CircleDollarSign, Users, PartyPopper } from "lucide-react";
-import { Button } from "../../components/ui/button";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { TextPlugin } from "gsap/TextPlugin";
 import { SignInButton } from "@clerk/clerk-react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { TextPlugin } from "gsap/TextPlugin";
+import { CircleDollarSign, PartyPopper, Users } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 import Lottie from "react-lottie";
 import animationData from "../../assets/people.json";
 const LandingPage = () => {
@@ -74,7 +73,6 @@ const LandingPage = () => {
               一個簡單的多人分帳網站
             </p>
             <SignInButton mode="modal">
-              {/* <button className="w-full h-10 px-4 py-2 rounded-md hover:animate-bounce	 shadow-md mt-8 tracking-widest text-[#714924] animate-gradientChange bg-200x100 bg-gradient-linear  font-bold" >立即登入</button> */}
               <button className="w-full h-10 px-4 py-2 rounded-md  shadow-md mt-8 tracking-widest text-[#714924]  hover:bg-[#FEFAE0] bg-[#EADDC3]  font-bold">
                 立即登入
               </button>

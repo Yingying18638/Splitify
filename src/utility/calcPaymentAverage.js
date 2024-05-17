@@ -19,14 +19,12 @@ function calcPaymentAverage(expenseData, users) {
       //payment
       if (singlePayerOnly && singlePayerOnly !== "多人付款") {
         payment.push({ [singlePayerOnly]: total_amount });
-        //其他補零
         const usersLeft = usersArr.filter((item) => item !== singlePayerOnly);
         usersLeft.forEach((item) => {
           payment[index] = { ...payment[index], [item]: 0 };
         });
       } else {
         payment.push(morePayers);
-        //其他補零
         const payersNames = Object.keys(morePayers);
         const usersLeft = usersArr.filter(
           (item) => !payersNames.includes(item)
@@ -35,7 +33,6 @@ function calcPaymentAverage(expenseData, users) {
           payment[index] = { ...payment[index], [item]: 0 };
         });
       }
-      console.log("payment", payment);
       // average
       const cusAmountTotal = Object.values(participants_customized).reduce(
         (acc, cur) => acc + cur,
@@ -55,15 +52,12 @@ function calcPaymentAverage(expenseData, users) {
         average.push(participants_customized);
       }
       const namesOfAve = Object.keys(average[index]);
-      //人數不符要補零
       if (namesOfAve.length !== usersArr.length) {
         const usersLeft = usersArr.filter((item) => !namesOfAve.includes(item));
-        // usersLeft.forEach((item) => (average[index][item] = 0));
         usersLeft.forEach((item) => {
           average[index] = { ...average[index], [item]: 0 };
         });
       }
-      console.log("average", average);
     }
   );
   return { payment, average };

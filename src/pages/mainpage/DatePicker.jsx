@@ -1,3 +1,6 @@
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import React, { useEffect } from "react";
 import { Button } from "../../components/ui/button";
 import { Calendar } from "../../components/ui/calendar";
 import {
@@ -5,23 +8,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../components/ui/popover";
-import React, { useEffect, useState } from "react";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "../../lib/utils";
 import useStore from "../../utility/hooks/useStore";
 const DatePicker = () => {
   const {
-    newExpense,
-    setNewExpense,
     setsomeNewExpense,
     group,
     date,
     setDate,
-    editExpense,
-    setEditExpense,
   } = useStore();
-  const { expenses } = group;
   useEffect(() => {
     setsomeNewExpense(format(date, "yyyyMMdd"), "date");
   }, [date]);

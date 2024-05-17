@@ -1,6 +1,5 @@
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
-import useStore from "./hooks/useStore";
 const driverObj = driver({
   showProgress: true,
   nextBtnText: '繼續',
@@ -42,6 +41,6 @@ const driverObj = driver({
     },
   ],
 });
-export default function useAddExpGuide() {
+export default function addExpGuide() {
   driverObj.drive();
 }

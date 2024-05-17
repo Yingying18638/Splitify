@@ -17,7 +17,6 @@ const RootLayout = ({ children }) => {
   const isSignedIn = useUser()?.isSignedIn;
   const groupIdCreated = searchParams.get("id");
   const isGoingToAGroup = Boolean(groupIdCreated);
-  console.log(isGoingToAGroup, "isGoingToAGroup");
   if (isGoingToAGroup) {
     localStorage.setItem("groupIdCreated", groupIdCreated);
   }

@@ -39,7 +39,6 @@ function calcFlowDetail(totalBill) {
       positives[p] = 0;
       p++;
     }
-    // console.log("still in loop");
   }
   const flow = [];
   flowMatrix.forEach((item, index) => {
@@ -53,7 +52,6 @@ function calcFlowDetail(totalBill) {
       });
     });
   });
-  console.log(flow);
   return flow;
 }
 export default calcFlowDetail;

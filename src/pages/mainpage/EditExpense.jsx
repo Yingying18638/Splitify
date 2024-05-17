@@ -1,35 +1,31 @@
 //functions and hooks
-import React, { useEffect, useState } from "react";
-import useStore from "../../utility/hooks/useStore";
-import useUploadImg from "../../utility/hooks/useUploadImg";
-import calcSingleAve from "../../utility/calcSingleAve";
 import { useToast } from "@/components/ui/use-toast";
+import React, { useState } from "react";
+import calcSingleAve from "../../utility/calcSingleAve";
+import useStore from "../../utility/hooks/useStore";
 
-import { updateGroupData } from "../../utility/handleFirestore";
 //image
-import arrow from "../../assets/arrow.png";
-import optionsIcon from "../../assets/options.png";
+import { BadgeDollarSign, X } from "lucide-react";
 import list from "../../assets/list.png";
-import closeIcon from "../../assets/x.png";
-import { CheckCheck, ListCollapse ,X,BadgeDollarSign} from "lucide-react";
+import optionsIcon from "../../assets/options.png";
 // component
 import DatePicker from "./DatePicker";
 import MultiSelect from "./Multiselect";
-import PayersOption from "./PayersOption";
 import ParticipantsOptions from "./ParticipantsOptions";
+import PayersOption from "./PayersOption";
 // shadcn ui
-import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
-import { Textarea } from "../../components/ui/textarea";
+import { Input } from "../../components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
   SelectTrigger,
   SelectValue,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
 } from "../../components/ui/select";
+import { Textarea } from "../../components/ui/textarea";
 const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
   const { toast } = useToast();
 
@@ -50,9 +46,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
     morePayers,
     total_amount,
     singlePayerOnly,
-    participants,
     note,
-    img,
     participants_customized,
   } = newExpense;
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
@@ -84,7 +78,6 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
     : [];
   const [displayPayersOpt, setDisplayPayersOpt] = useState("hidden");
   const [displayParticipantOpt, setDisplayParticipantOpt] = useState("hidden");
-  const [imgSrc, setImgSrc] = useState("");
   function handlePayersParticipantsDisplay(e) {
     if (e.target.id === "participant-arrow") {
       setDisplayParticipantOpt(
@@ -120,7 +113,6 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
       expenses: [...expenseRemain, expenseToBeUpdated],
     };
 
-    console.log(newGroupData, "abc");
     setGroup(newGroupData);
     setDisplayEditExpense("hidden");
     setDisplayParticipantOpt("hidden");
@@ -203,7 +195,6 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
               if (value !== "多人付款") {
                 setNewExpense({ ...newExpense, morePayers: {} });
               }
-              // setNewExpense({ ...newExpense, singlePayerOnly: value });
               setsomeNewExpense(value, "singlePayerOnly");
             }}
           >
@@ -281,9 +272,6 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             setNewExpense({ ...newExpense, note: e.target.value })
           }
         ></Textarea>
-        <div className="bg-slate-200 w-40 h-30">
-          {/* {imgSrc ? <img src={imgSrc} alt="圖片預覽" className="w-25" /> : ""} */}
-        </div>
         <Button
           type="reset"
           variant="secondary"

@@ -12,12 +12,10 @@ function calcBills(payment, ave, users) {
     }
     return result;
   });
-  console.log("bill", bill);
   const totalBill = usersArr?.reduce((acc, user) => {
     acc[user] = bill.reduce((sum, obj) => sum + obj[user], 0);
     return acc;
   }, {});
-  console.log("totalBill", totalBill);
   return { bill, totalBill };
 }
 export default calcBills;
