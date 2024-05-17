@@ -50,9 +50,11 @@ const Mainpage = ({
   const user = useUser()?.user;
   const { fullName, imageUrl, emailAddresses, username } = user && user;
   const email = emailAddresses[0].emailAddress;
+  const indexOfAt=email.indexOf('@')
+  const emailName = email.substring(0, indexOfAt);
   const userObj = {
     uid: userId,
-    name: fullName || username,
+    name: fullName || username || emailName,
     email,
     img: imageUrl,
     inGroup: {},
@@ -66,7 +68,7 @@ const Mainpage = ({
           setIsSideBarOpen={setIsSideBarOpen}
           sideBarClass={sideBarClass}
           setSideBarClass={setSideBarClass}
-        ></SideBar>
+        />
         <div
           defaultValue="account"
           className=" mt-20 mx-auto  w-[360px] sm:w-[600px]  md:ml-[calc((100%-600px)/2+80px)] 
@@ -121,7 +123,7 @@ const Mainpage = ({
             />
           </section>
         </div>
-        <Toaster></Toaster>
+        <Toaster/>
         <AddExpense
           displayAddExpense={displayAddExpense}
           setDisplayAddExpense={setDisplayAddExpense}
