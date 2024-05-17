@@ -168,8 +168,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
         <span
           onClick={useAddExpGuide}
           className="shadow-md bg-200x100  animate-gradientChange flex flex-wrap items-center gap-1
-           sm:absolute cursor-pointer sm:left-[220px] 
-          xl:top-[-0.5rem] sm:top-0 text-xs bg-gradient-linear  rounded-lg p-1 relative top-[-25px] left-[calc((100%+90px)/2)]"
+           sm:absolute cursor-pointer sm:left-[220px] w-[70px]
+          xl:top-[-0.5rem] sm:top-0 text-xs bg-gradient-linear  rounded-lg p-1 relative top-[-35px] left-[calc((100%+90px)/2)]"
         >
           <CircleHelp className="w-4 h-4" />
           怎麼填
