@@ -13,7 +13,8 @@ const Record = ({
   displayDetail,
   setDisplayDetail,
   displayHistory,
-  setDisplayEditExpense,
+  setDisplayAddExpense,
+  setIsEditingExpense,
   setDisplayHistory,
 }) => {
   const { toast } = useToast();
@@ -47,7 +48,8 @@ const Record = ({
     });
     setSelected(optionsSelected);
     setShareObj(usersObj);
-    setDisplayEditExpense("block");
+    setDisplayAddExpense("block");
+    setIsEditingExpense(true)
     setDisplayHistory({ display: "hidden", text: "查看" });
   }
   async function handleDeleteExpense(expenseTime) {

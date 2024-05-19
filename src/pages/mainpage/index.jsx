@@ -7,8 +7,7 @@ import useZustandStore from "@/utility/hooks/useZustandStore";
 import { useAuth, useUser } from "@clerk/clerk-react";
 //----------------------component------------------------------------------------
 import Record from "./detailAndRecord/Record";
-import AddExpense from "./expenseForm/AddExpense";
-import EditExpense from "./expenseForm/EditExpense";
+import AddExpense from "./expenseForm";
 import JoinGroupDialog from "./joinGroupDialog/JoinGroupDialog";
 import SideBar from "./sideBar/SideBar";
 import ToolBar from "./toolBar";
@@ -29,7 +28,7 @@ const Mainpage = ({
     return acc;
   }, {});
   const [displayAddExpense, setDisplayAddExpense] = useState("hidden");
-  const [displayEditExpense, setDisplayEditExpense] = useState("hidden");
+  const [isEditingExpense, setIsEditingExpense] = useState(false);
   const [displayDetail, setDisplayDetail] = useState(initialDetailDisplay);
   const [displayHistory, setDisplayHistory] = useState({
     display: "hidden",
@@ -84,11 +83,12 @@ const Mainpage = ({
             <div className="mt-24">
               {expenses.length ? (
                 <Record
+                  setIsEditingExpense={setIsEditingExpense}
                   setDisplayHistory={setDisplayHistory}
                   expensesArrToRender={expensesArrToRender}
                   displayDetail={displayDetail}
                   setDisplayDetail={setDisplayDetail}
-                  setDisplayEditExpense={setDisplayEditExpense}
+                  setDisplayAddExpense={setDisplayAddExpense}
                   children={true}
                 />
               ) : tempGroupId ? (
@@ -119,18 +119,16 @@ const Mainpage = ({
               expensesArrToRender={clearedExpensesToRender}
               displayDetail={displayDetail}
               setDisplayDetail={setDisplayDetail}
-              setDisplayEditExpense={setDisplayEditExpense}
+              setDisplayAddExpense={setDisplayAddExpense}
             />
           </section>
         </div>
         <Toaster />
         <AddExpense
+          isEditingExpense={isEditingExpense}
+          setIsEditingExpense={setIsEditingExpense}
           displayAddExpense={displayAddExpense}
           setDisplayAddExpense={setDisplayAddExpense}
-        />
-        <EditExpense
-          displayEditExpense={displayEditExpense}
-          setDisplayEditExpense={setDisplayEditExpense}
         />
         {isGrpDialogOpen ? (
           <JoinGroupDialog
