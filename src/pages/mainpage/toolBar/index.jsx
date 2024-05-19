@@ -13,9 +13,7 @@ import ChartAndResult from "./ChartAndResult/ChartAndResult";
 import ClearBtn from "./ClearBtn";
 import CopyBtn from "./CopyBtn";
 import Member from "./Member";
-
 import { ArrowBigLeftDash, Plus } from "lucide-react";
-
 const ToolBar = ({ setDisplayHistory, setDisplayAddExpense }) => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -118,17 +116,14 @@ const ToolBar = ({ setDisplayHistory, setDisplayAddExpense }) => {
         >
           <Plus className="w-5 mr-1"></Plus>花費
         </Button>
-        <ChartAndResult></ChartAndResult>
-        <CopyBtn
-          isUrlCopied={isUrlCopied}
-          handleCopyUrl={handleCopyUrl}
-        ></CopyBtn>
+        <ChartAndResult />
+        <CopyBtn isUrlCopied={isUrlCopied} handleCopyUrl={handleCopyUrl} />
         <Member
           handleRemoveMember={handleRemoveMember}
           openMember={openMember}
           setOpenMember={setOpenMember}
-        ></Member>
-        <ClearBtn handleClear={handleClear}></ClearBtn>
+        />
+        <ClearBtn handleClear={handleClear} />
       </div>
     </div>
   );
