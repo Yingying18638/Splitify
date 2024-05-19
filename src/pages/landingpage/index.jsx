@@ -73,7 +73,7 @@ const LandingPage = () => {
               一個簡單的多人分帳網站
             </p>
             <SignInButton mode="modal">
-              <button className="w-full h-10 px-4 py-2 rounded-md  shadow-md mt-8 tracking-widest text-[#714924]  hover:bg-[#FEFAE0] bg-[#EADDC3]  font-bold">
+               <button className="w-full h-10 px-4 py-2 rounded-md  shadow-md mt-8 tracking-widest text-[#714924]  hover:bg-[#FEFAE0] bg-[#EADDC3]  font-bold">
                 立即登入
               </button>
             </SignInButton>

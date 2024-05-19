@@ -1,28 +1,26 @@
 import groupImg from "@/assets/group2.png";
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "@/components/ui/popover";
-import useStore from "@/utility/hooks/useStore";
-import {
-    CircleUserRound
-} from "lucide-react";
+import useZustandStore from "@/utility/hooks/useZustandStore";
+import { CircleUserRound } from "lucide-react";
 import React from "react";
-const Member = ({ handleRemoveMember,openMember,setOpenMember}) => {
-  const { group } = useStore();
+const Member = ({ handleRemoveMember, openMember, setOpenMember }) => {
+  const { group } = useZustandStore();
   const { expenses, users } = group;
   function getImg(name) {
     const user = users.find((item) => item.name === name);

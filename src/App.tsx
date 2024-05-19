@@ -6,7 +6,6 @@ import {
   Routes,
 } from "react-router-dom";
 import RootLayout from "./common_components/RootLayout";
-
 function App() {
   return (
     <Router>

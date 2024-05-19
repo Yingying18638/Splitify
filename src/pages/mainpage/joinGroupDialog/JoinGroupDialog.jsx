@@ -4,19 +4,19 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   addDocWithId,
   justGetData,
-  updateOneField
+  updateOneField,
 } from "@/utility/handleFirestore";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 const JoinGroupDialog = ({ isGrpDialogOpen, setIsGrpDialogOpen }) => {
-  const { tempUser, setTempUser } = useStore();
-  const { inGroup, img, uid } = tempUser;
+  const { tempUser, setTempUser } = useZustandStore();
+  const { uid } = tempUser;
   const [grpNameToJoin, setGrpNameToJoin] = useState("");
   useEffect(() => {
     async function getGrpName() {

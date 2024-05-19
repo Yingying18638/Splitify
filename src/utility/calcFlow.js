@@ -55,3 +55,4 @@ function calcFlowDetail(totalBill) {
   return flow;
 }
 export default calcFlowDetail;
+// module.exports = calcFlowDetail;

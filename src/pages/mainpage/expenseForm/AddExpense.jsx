@@ -4,10 +4,11 @@ import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import calcBills from "@/utility/calcBills";
 import calcFlow from "@/utility/calcFlow";
+// const calcFlow=require("../../../utility/calcFlow");
 import calcPaymentAverage from "@/utility/calcPaymentAverage";
 import calcSingleAve from "@/utility/calcSingleAve";
 import { updateGroupData } from "@/utility/handleFirestore";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 import useAddExpGuide from "@/utility/addExpGuide";
 
 //image
@@ -36,30 +37,26 @@ import { Textarea } from "@/components/ui/textarea";
 const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
   const { toast } = useToast();
   const {
-    newExpense,
-    setNewExpense,
-    resetNewExpense,
+    tempExpense,
+    setTempExpense,
+    resetTempExpense,
     group,
     setGroup,
-    setsomeNewExpense,
+    setOnePropInTempExpense,
     selected,
     setSelected,
-    tempGroupId,
     setShareObj,
     setDate,
-  } = useStore();
+  } = useZustandStore();
   const { expenses, users } = group;
   const {
     morePayers,
     total_amount,
     singlePayerOnly,
-    participants,
     note,
-    img,
     date,
     participants_customized,
-    item,
-  } = newExpense;
+  } = tempExpense;
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
@@ -131,23 +128,23 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
       toast({ title: "請選擇付款人" });
       return;
     }
-    // 1. newExpense 算出ave
-    const ave = calcSingleAve(newExpense);
+    // 1. tempExpense 算出ave
+    const ave = calcSingleAve(tempExpense);
     const now = new Date().getTime();
     const expenseToAdd = {
-      ...newExpense,
+      ...tempExpense,
       ave,
       time: now,
       date: date ? date : format(now, "yyyyMMdd"),
     };
-    setNewExpense(expenseToAdd);
-    // 2. newExpense 塞入group expenses, setGroup (觸發useEffect)
+    setTempExpense(expenseToAdd);
+    // 2. tempExpense 塞入group expenses, setGroup (觸發useEffect)
     const newGrp = { ...group, expenses: [...group.expenses, expenseToAdd] };
     setGroup(newGrp);
     setDisplayAddExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
-    resetNewExpense();
+    resetTempExpense();
     setDate(new Date());
     setShareObj(usersObj);
     setSelected(options);
@@ -179,7 +176,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setDisplayAddExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
-            resetNewExpense();
+            resetTempExpense();
             setSelected(options);
             setShareObj(usersObj);
             setDate(new Date());
@@ -195,9 +192,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               placeholder="晚餐"
               required
               id="item"
-              value={newExpense.item}
+              value={tempExpense.item}
               onChange={(e) =>
-                setNewExpense({ ...newExpense, item: e.target.value })
+                setTempExpense({ ...tempExpense, item: e.target.value })
               }
             ></Input>
           </figcaption>
@@ -219,8 +216,8 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
                 const { value } = e.target;
                 const num = Number(value);
                 if ((!num && value != "") || num < 0 || num % 1) return;
-                setNewExpense({
-                  ...newExpense,
+                setTempExpense({
+                  ...tempExpense,
                   total_amount: num ? num : 0,
                 });
               }}
@@ -237,9 +234,9 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
               id="payer"
               onValueChange={(value) => {
                 if (value !== "多人付款") {
-                  setNewExpense({ ...newExpense, morePayers: {} });
+                  setTempExpense({ ...tempExpense, morePayers: {} });
                 }
-                setsomeNewExpense(value, "singlePayerOnly");
+                setOnePropInTempExpense(value, "singlePayerOnly");
               }}
             >
               <SelectTrigger className="w-[180px]">
@@ -317,7 +314,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
           value={note}
           className="resize-none"
           onChange={(e) =>
-            setNewExpense({ ...newExpense, note: e.target.value })
+            setTempExpense({ ...tempExpense, note: e.target.value })
           }
         ></Textarea>
         <Button
@@ -328,7 +325,7 @@ const AddExpense = ({ setDisplayAddExpense, displayAddExpense }) => {
             setDisplayAddExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
-            resetNewExpense();
+            resetTempExpense();
             setSelected(options);
             setShareObj(usersObj);
             setDate(new Date());

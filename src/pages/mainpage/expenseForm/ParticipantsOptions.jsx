@@ -2,7 +2,7 @@ import { BadgeAlert, CheckCheck, X } from "lucide-react";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 const ParticipantsOptions = ({
   displayParticipantOpt,
   setDisplayParticipantOpt,
@@ -10,13 +10,13 @@ const ParticipantsOptions = ({
   usersObj,
   participants_customNames,
 }) => {
-  const { newExpense, setNewExpense, group, shareObj, setShareObj } =
-    useStore();
-  const { total_amount, participants_customized } = newExpense;
+  const { tempExpense, setTempExpense, group, shareObj, setShareObj } =
+    useZustandStore();
+  const { total_amount, participants_customized } = tempExpense;
   function clearParticipantCus(e) {
     e.preventDefault();
-    setNewExpense({
-      ...newExpense,
+    setTempExpense({
+      ...tempExpense,
       participants_customized: {},
     });
     setShareObj(usersObj);
@@ -49,8 +49,7 @@ const ParticipantsOptions = ({
           <p>金額</p>
         </div>
         <form action="">
-
-          {group?.users?.map(({ name }, index) => {
+          {group?.users?.map(({ name }) => {
             return (
               <div
                 className="flex justify-center gap-1 items-center mt-2 relative"
@@ -87,8 +86,8 @@ const ParticipantsOptions = ({
                         ...participants_customized,
                         [name]: "",
                       };
-                      setNewExpense({
-                        ...newExpense,
+                      setTempExpense({
+                        ...tempExpense,
                         participants_customized: newParticipantsCustom,
                       });
                     }
@@ -105,8 +104,8 @@ const ParticipantsOptions = ({
                       const amount = (share / shareTotal) * total_amount || 0;
                       amountObj[key] = Math.round(amount * 100) / 100;
                     }
-                    setNewExpense({
-                      ...newExpense,
+                    setTempExpense({
+                      ...tempExpense,
                       participants_customized: { ...amountObj },
                     });
                     // }
@@ -121,8 +120,8 @@ const ParticipantsOptions = ({
                     const num = Number(value);
                     if ((!num && value != "") || num < 0 || num % 1) return;
                     setShareObj({ ...shareObj, [name]: "" });
-                    setNewExpense({
-                      ...newExpense,
+                    setTempExpense({
+                      ...tempExpense,
                       participants_customized: {
                         ...participants_customized,
                         [name]: num ? num : 0,
@@ -133,7 +132,6 @@ const ParticipantsOptions = ({
               </div>
             );
           })}
-         
         </form>
         <Button
           className="h-9 my-5 sm:ml-[calc(100%-165px)] sm:static relative left-20 "

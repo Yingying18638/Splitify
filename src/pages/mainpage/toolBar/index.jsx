@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import useListenUsers from "@/utility/hooks/useListenUsers";
 import {
   addDocWithId,
   justGetData,
   updateGroupData,
-  useListenUsers,
 } from "@/utility/handleFirestore";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 import React, { useEffect, useState } from "react";
 import { DrawerDialog } from "../../../common_components/DrawerDialog";
 import ChartAndResult from "./ChartAndResult/ChartAndResult";
@@ -22,7 +22,7 @@ const LittleHeader = ({ setDisplayHistory, setDisplayAddExpense }) => {
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [openMember, setOpenMember] = useState(false);
   const { group, tempGroupId, tempUser, setTempGroupId, resetGroup } =
-    useStore();
+    useZustandStore();
   const { inGroup } = tempUser;
   const { users, groupId } = group;
   const { groupName, expenses, history } = group;
@@ -119,7 +119,10 @@ const LittleHeader = ({ setDisplayHistory, setDisplayAddExpense }) => {
           <Plus className="w-5 mr-1"></Plus>花費
         </Button>
         <ChartAndResult></ChartAndResult>
-        <CopyBtn isUrlCopied={isUrlCopied} handleCopyUrl={handleCopyUrl}></CopyBtn>
+        <CopyBtn
+          isUrlCopied={isUrlCopied}
+          handleCopyUrl={handleCopyUrl}
+        ></CopyBtn>
         <Member
           handleRemoveMember={handleRemoveMember}
           openMember={openMember}

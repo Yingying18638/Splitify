@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 export const options = {
   indexAxis: "y",
   elements: {
@@ -26,10 +26,10 @@ export const options = {
 };
 
 export function Chart() {
-  const { group } = useStore();
-  const { totalBill,expenses } = group;
+  const { group } = useZustandStore();
+  const { totalBill, expenses } = group;
   const billNames = Object.keys(totalBill);
-  if (billNames.length === 0 ||!expenses.length) return;
+  if (billNames.length === 0 || !expenses.length) return;
   const billAmounts = Object.values(totalBill);
   const data = {
     labels: billNames,

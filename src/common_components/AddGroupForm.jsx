@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { addDocWithId } from "@/utility/handleFirestore";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 
 import {
   Popover,
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/popover";
 const AddGroupForm = ({ className, setOpen }) => {
   const { toast } = useToast();
-  const { tempUser, setTempUser } = useStore();
+  const { tempUser, setTempUser } = useZustandStore();
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
   const [newGroupId, setNewGroupId] = useState("");

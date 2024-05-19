@@ -9,16 +9,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 const DatePicker = () => {
-  const {
-    setsomeNewExpense,
-    group,
-    date,
-    setDate,
-  } = useStore();
+  const { setOnePropInTempExpense, date, setDate } = useZustandStore();
   useEffect(() => {
-    setsomeNewExpense(format(date, "yyyyMMdd"), "date");
+    setOnePropInTempExpense(format(date, "yyyyMMdd"), "date");
   }, [date]);
   return (
     <Popover>
@@ -36,7 +31,7 @@ const DatePicker = () => {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
-          mode="single"    
+          mode="single"
           selected={date}
           onSelect={setDate}
           initialFocus

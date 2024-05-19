@@ -2,17 +2,17 @@ import { useToast } from "@/components/ui/use-toast";
 import { ChevronDown, X } from "lucide-react";
 import React, { useEffect } from "react";
 import { MultiSelect } from "react-multi-select-component";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 const Multiselect = ({ setSelected, selected, options }) => {
-  const { newExpense, setNewExpense, group, setsomeNewExpense } = useStore();
-  const { participants_customized, participants } = newExpense;
+  const { tempExpense, setOnePropInTempExpense } = useZustandStore();
+  const { participants_customized } = tempExpense;
   const cusAmountArr = Object.values(participants_customized);
   const cusAmountTotal = cusAmountArr.reduce((acc, cur) => acc + cur, 0);
   const { toast } = useToast();
 
   useEffect(() => {
     const newArr = selected?.map((item) => item.value);
-    setsomeNewExpense(newArr, "participants");
+    setOnePropInTempExpense(newArr, "participants");
   }, [selected]);
   const customValueRenderer = (selected) => {
     if (cusAmountTotal > 0) return "自訂";

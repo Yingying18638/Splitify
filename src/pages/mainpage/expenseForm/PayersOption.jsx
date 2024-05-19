@@ -1,15 +1,15 @@
 import { CheckCheck, X } from "lucide-react";
 import React from "react";
 import { Input } from "@/components/ui/input";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 const PayersOption = ({
   displayPayersOpt,
   setDisplayPayersOpt,
   payersAmountGap,
   morePayersNames,
 }) => {
-  const { newExpense, setNewExpense, group } = useStore();
-  const { morePayers } = newExpense;
+  const { tempExpense, setTempExpense, group } = useZustandStore();
+  const { morePayers } = tempExpense;
   return (
     <>
       <div
@@ -64,8 +64,8 @@ const PayersOption = ({
                     ...morePayers,
                     [name]: num ? num : 0,
                   };
-                  setNewExpense({
-                    ...newExpense,
+                  setTempExpense({
+                    ...tempExpense,
                     morePayers: newMorePayers,
                     singlePayerOnly: "多人付款",
                   });

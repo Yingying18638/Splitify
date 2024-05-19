@@ -17,14 +17,14 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 import { HandCoins, Smile } from "lucide-react";
 import { useState } from "react";
 import { Chart } from "./Chart";
 import Result from "./Result";
 
 export default function ChartAndResult() {
-  const { group } = useStore();
+  const { group } = useZustandStore();
   const { users } = group;
   const [openResult, setOpenResult] = useState(false);
   const isDesktop = window.innerWidth >= 768;

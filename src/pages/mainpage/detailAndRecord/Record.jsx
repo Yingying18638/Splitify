@@ -4,7 +4,7 @@ import { CircleUserRound } from "lucide-react";
 import React from "react";
 import list from "@/assets/list.png";
 import { updateGroupData } from "@/utility/handleFirestore";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 import { EditDeleteButtons } from "./EditDeleteButtons";
 
 const Record = ({
@@ -14,20 +14,19 @@ const Record = ({
   setDisplayDetail,
   displayHistory,
   setDisplayEditExpense,
-  setDisplayHistory
-  
+  setDisplayHistory,
 }) => {
   const { toast } = useToast();
 
   const {
-    newExpense,
-    setNewExpense,
+    tempExpense,
+    setTempExpense,
     group,
     setDate,
     setSelected,
     tempGroupId,
     setShareObj,
-  } = useStore();
+  } = useZustandStore();
   const { expenses, users } = group;
 
   const usersObj = group.users?.reduce((acc, user) => {
@@ -38,7 +37,7 @@ const Record = ({
     const expenseToEdit = expenses.filter(
       (item) => item.time === expenseTime
     )[0];
-    setNewExpense(expenseToEdit);
+    setTempExpense(expenseToEdit);
     const { participants, date } = expenseToEdit;
     const parsedDate = date && parseISO(date);
     const unixTimestamp = parsedDate.getTime();
@@ -49,13 +48,12 @@ const Record = ({
     setSelected(optionsSelected);
     setShareObj(usersObj);
     setDisplayEditExpense("block");
-    setDisplayHistory({ display: "hidden", text: "查看" })
-
+    setDisplayHistory({ display: "hidden", text: "查看" });
   }
   async function handleDeleteExpense(expenseTime) {
     const expensesRemain = expenses.filter((item) => item.time !== expenseTime);
     await updateGroupData(tempGroupId, { ...group, expenses: expensesRemain });
-    toast({title:"刪除成功"});
+    toast({ title: "刪除成功" });
   }
   function getImg(name) {
     const user = users.find((item) => item.name === name);
@@ -195,7 +193,6 @@ const Record = ({
                       </figcaption>
                       {children && (
                         <EditDeleteButtons
-
                           handleEditExpense={handleEditExpense}
                           handleDeleteExpense={handleDeleteExpense}
                           time={time}

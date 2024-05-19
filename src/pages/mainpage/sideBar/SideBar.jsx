@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { useListenGroups } from "@/utility/handleFirestore";
-import useStore from "@/utility/hooks/useStore";
+import useListenGroups from "@/utility/hooks/useListenGroups";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 import { DrawerDialog } from "../../../common_components/DrawerDialog";
 const SideBar = ({
   isSideBarOpen,
@@ -23,7 +23,7 @@ const SideBar = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  const { tempUser, setGroup, tempGroupId, setTempGroupId } = useStore();
+  const { tempUser, setGroup, tempGroupId, setTempGroupId } = useZustandStore();
   const { inGroup } = tempUser;
   const groupIds = Object.keys(inGroup).length ? Object.keys(inGroup) : [];
   const bgObject = groupIds.length

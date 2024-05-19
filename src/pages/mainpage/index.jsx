@@ -2,8 +2,8 @@ import React, { useState } from "react";
 //---------------------- functions and hooks --------------------------------
 import { Toaster } from "@/components/ui/toaster";
 import getExpensesArranged from "@/utility/getExpensesArranged";
-import { useUserData } from "@/utility/handleFirestore";
-import useStore from "@/utility/hooks/useStore";
+import useUserData from "@/utility/hooks/useUserData";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 import { useAuth, useUser } from "@clerk/clerk-react";
 //----------------------component------------------------------------------------
 import Record from "./detailAndRecord/Record";
@@ -21,7 +21,7 @@ const Mainpage = ({
   sideBarClass,
   setSideBarClass,
 }) => {
-  const { group, setTempUser, setTempGroupId, tempGroupId } = useStore();
+  const { group, tempGroupId } = useZustandStore();
   const { expenses, history } = group;
   const initialDetailDisplay = expenses?.reduce((acc, cur) => {
     const { time } = cur;
@@ -50,7 +50,7 @@ const Mainpage = ({
   const user = useUser()?.user;
   const { fullName, imageUrl, emailAddresses, username } = user && user;
   const email = emailAddresses[0].emailAddress;
-  const indexOfAt=email.indexOf('@')
+  const indexOfAt = email.indexOf("@");
   const emailName = email.substring(0, indexOfAt);
   const userObj = {
     uid: userId,
@@ -123,7 +123,7 @@ const Mainpage = ({
             />
           </section>
         </div>
-        <Toaster/>
+        <Toaster />
         <AddExpense
           displayAddExpense={displayAddExpense}
           setDisplayAddExpense={setDisplayAddExpense}

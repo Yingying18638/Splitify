@@ -13,9 +13,9 @@ import { Button } from "@/components/ui/button";
 import { BadgeAlert } from "lucide-react";
 import React from "react";
 
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 const ClearBtn = ({ handleClear }) => {
-  const { group } = useStore();
+  const { group } = useZustandStore();
   const { expenses } = group;
   return (
     <AlertDialog>

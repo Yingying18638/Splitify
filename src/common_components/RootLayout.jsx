@@ -12,7 +12,7 @@ import {
 import Mainpage from "../pages/mainpage";
 import LandingPage from "../pages/landingpage";
 import { useSearchParams } from "react-router-dom";
-const RootLayout = ({ children }) => {
+const RootLayout = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const isSignedIn = useUser()?.isSignedIn;
   const groupIdCreated = searchParams.get("id");
@@ -22,11 +22,13 @@ const RootLayout = ({ children }) => {
   }
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const mobileSideBar = "md:hidden";
-  const desktopSideBar = "hidden md:block";
   const [sideBarClass, setSideBarClass] = useState(mobileSideBar);
   return (
     <>
-      <header id='rootHeader' className="bg-[#CABB9D] h-[5rem] fixed z-[9] top-0 w-full flex items-center gap-10 justify-center">
+      <header
+        id="rootHeader"
+        className="bg-[#CABB9D] h-[5rem] fixed z-[9] top-0 w-full flex items-center gap-10 justify-center"
+      >
         <div className="fixed left-5 ">
           <SignedIn>
             <Menu
@@ -44,15 +46,14 @@ const RootLayout = ({ children }) => {
           alt="logo"
           className={`${isSignedIn ? "md:ml-[160px] xl:ml-[14rem]" : ""} w-32`}
         />
-         <div className="fixed md:right-20 right-5">
-         <SignedOut>
+        <div className="fixed md:right-20 right-5">
+          <SignedOut>
             <SignInButton mode="modal">
               <button>登入 / 註冊</button>
             </SignInButton>
           </SignedOut>
-         </div>
-          <div className="fixed  left-[calc(100vw-60px)]">
-
+        </div>
+        <div className="fixed  left-[calc(100vw-60px)]">
           <SignedIn>
             <UserButton className="right-0"></UserButton>
           </SignedIn>
@@ -67,8 +68,9 @@ const RootLayout = ({ children }) => {
         />
       </SignedIn>
       <SignedOut>
-        <div className="bg-[#FEFAE0] min-h-screen"> 
-        {isGoingToAGroup ? <SignIn /> : <LandingPage />}</div>
+        <div className="bg-[#FEFAE0] min-h-screen">
+          {isGoingToAGroup ? <SignIn /> : <LandingPage />}
+        </div>
       </SignedOut>
     </>
   );

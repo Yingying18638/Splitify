@@ -2,7 +2,7 @@
 import { useToast } from "@/components/ui/use-toast";
 import React, { useState } from "react";
 import calcSingleAve from "@/utility/calcSingleAve";
-import useStore from "@/utility/hooks/useStore";
+import useZustandStore from "@/utility/hooks/useZustandStore";
 
 //image
 import { BadgeDollarSign, X } from "lucide-react";
@@ -30,17 +30,17 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
   const { toast } = useToast();
 
   const {
-    newExpense,
-    setNewExpense,
-    resetNewExpense,
+    tempExpense,
+    setTempExpense,
+    resetTempExpense,
     group,
     setGroup,
-    setsomeNewExpense,
+    setOnePropInTempExpense,
     selected,
     setSelected,
     setShareObj,
     setDate,
-  } = useStore();
+  } = useZustandStore();
   const { expenses, users } = group;
   const {
     morePayers,
@@ -48,7 +48,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
     singlePayerOnly,
     note,
     participants_customized,
-  } = newExpense;
+  } = tempExpense;
   const morePayersNames = morePayers ? Object.keys(morePayers) : [];
   const options = group?.users?.map(({ name }) => {
     return { label: name, value: name };
@@ -101,12 +101,12 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
       return;
     }
     // 1. editExpense 算出ave
-    const ave = calcSingleAve(newExpense);
-    const expenseToBeUpdated = { ...newExpense, ave };
-    setsomeNewExpense(ave, "ave");
+    const ave = calcSingleAve(tempExpense);
+    const expenseToBeUpdated = { ...tempExpense, ave };
+    setOnePropInTempExpense(ave, "ave");
     // 2. editExpense 更新group expenses, setGroup (觸發useEffect)
     const expenseRemain = expenses.filter(
-      (item) => item.time !== newExpense.time
+      (item) => item.time !== tempExpense.time
     );
     const newGroupData = {
       ...group,
@@ -117,7 +117,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
     setDisplayEditExpense("hidden");
     setDisplayParticipantOpt("hidden");
     setDisplayPayersOpt("hidden");
-    resetNewExpense();
+    resetTempExpense();
     setSelected(options);
     setDate(new Date());
     setShareObj(usersObj);
@@ -139,7 +139,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             setDisplayEditExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
-            resetNewExpense();
+            resetTempExpense();
             setDate(new Date());
             setShareObj(usersObj);
             setSelected(options);
@@ -154,10 +154,10 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
               placeholder="晚餐"
               id="item"
               className=""
-              value={newExpense.item}
+              value={tempExpense.item}
               required
               onChange={(e) =>
-                setNewExpense({ ...newExpense, item: e.target.value })
+                setTempExpense({ ...tempExpense, item: e.target.value })
               }
             ></Input>
           </figcaption>
@@ -175,8 +175,8 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
                 const { value } = e.target;
                 const num = Number(value);
                 if ((!num && value != "") || num < 0 || num % 1) return;
-                setNewExpense({
-                  ...newExpense,
+                setTempExpense({
+                  ...tempExpense,
                   total_amount: num ? num : 0,
                 });
               }}
@@ -193,9 +193,9 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             required
             onValueChange={(value) => {
               if (value !== "多人付款") {
-                setNewExpense({ ...newExpense, morePayers: {} });
+                setTempExpense({ ...tempExpense, morePayers: {} });
               }
-              setsomeNewExpense(value, "singlePayerOnly");
+              setOnePropInTempExpense(value, "singlePayerOnly");
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -269,7 +269,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
           value={note}
           className="resize-none"
           onChange={(e) =>
-            setNewExpense({ ...newExpense, note: e.target.value })
+            setTempExpense({ ...tempExpense, note: e.target.value })
           }
         ></Textarea>
         <Button
@@ -280,7 +280,7 @@ const EditExpense = ({ displayEditExpense, setDisplayEditExpense }) => {
             setDisplayEditExpense("hidden");
             setDisplayParticipantOpt("hidden");
             setDisplayPayersOpt("hidden");
-            resetNewExpense();
+            resetTempExpense();
             setDate(new Date());
             setShareObj(usersObj);
             setSelected(options);
