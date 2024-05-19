@@ -14,7 +14,6 @@ const db = getFirestore(app);
 export {
   addDocWithId,
   db,
-  getData,
   justGetData,
   updateGroupData,
   updateOneField,
@@ -34,16 +33,6 @@ async function updateGroupData(groupId, newGroupData) {
     await setDoc(groupRef, newGroupData);
   } catch (err) {
     console.log(err, "上傳失敗");
-  }
-}
-async function getData(db, collection, docId, setterFunction) {
-  try {
-    const docRef = doc(db, collection, docId);
-    const docSnap = await getDoc(docRef);
-    const data = docSnap?.data();
-    setterFunction(data);
-  } catch (e) {
-    console.log(e);
   }
 }
 async function justGetData(collection, docId) {
