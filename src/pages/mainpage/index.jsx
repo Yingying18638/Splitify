@@ -11,7 +11,7 @@ import AddExpense from "./expenseForm/AddExpense";
 import EditExpense from "./expenseForm/EditExpense";
 import JoinGroupDialog from "./joinGroupDialog/JoinGroupDialog";
 import SideBar from "./sideBar/SideBar";
-import LittleHeader from "./toolBar";
+import ToolBar from "./toolBar";
 //---------------------- shadcn ui------------------------------------------------
 import { Button } from "@/components/ui/button";
 import { ChevronsDown, ChevronsUp, Smile } from "lucide-react";
@@ -76,7 +76,7 @@ const Mainpage = ({
           flex flex-col items-center justify-center  flex-wrap "
         >
           <section value="account" className="w-full">
-            <LittleHeader
+            <ToolBar
               displayHistory={displayHistory}
               setDisplayHistory={setDisplayHistory}
               setDisplayAddExpense={setDisplayAddExpense}

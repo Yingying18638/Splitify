@@ -16,7 +16,7 @@ import Member from "./Member";
 
 import { ArrowBigLeftDash, Plus } from "lucide-react";
 
-const LittleHeader = ({ setDisplayHistory, setDisplayAddExpense }) => {
+const ToolBar = ({ setDisplayHistory, setDisplayAddExpense }) => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [isUrlCopied, setIsUrlCopied] = useState(false);
@@ -134,4 +134,4 @@ const LittleHeader = ({ setDisplayHistory, setDisplayAddExpense }) => {
   );
 };
 
-export default LittleHeader;
+export default ToolBar;
