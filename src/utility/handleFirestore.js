@@ -6,9 +6,7 @@ import {
   setDoc,
   updateDoc
 } from "firebase/firestore";
-import { useEffect } from "react";
 import firebaseConfig from "./firebase";
-import useZustandStore from "./hooks/useZustandStore";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export {
@@ -16,9 +14,7 @@ export {
   db,
   justGetData,
   updateGroupData,
-  updateOneField,
-  useCheckUrlSetDialog,
-  useClerkDataToFirestore,
+  updateOneField
 };
 async function addDocWithId(docId, collection, data) {
   try {
@@ -45,40 +41,6 @@ async function justGetData(collection, docId) {
     console.log(e);
   }
 }
-function useClerkDataToFirestore(userId, userObj) {
-  const { setTempUser } = useZustandStore();
-  useEffect(() => {
-    (async function handleData(userId, userObj) {
-      //get user from firestore
-      const docRef = doc(db, "users", userId);
-      const docSnap = await getDoc(docRef);
-      //if user not exist in firestore, add it
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setTempUser(data);
-        return data;
-      } else {
-        await addDocWithId(userId, "users", userObj);
-      }
-    })(userId, userObj);
-  }, [userId]);
-}
-//input: url,userId
-//output:
-function useCheckUrlSetDialog(setterFunction) {
-  const { tempUser } = useZustandStore();
-  const { inGroup } = tempUser;
-  useEffect(() => {
-    let params = new URLSearchParams(document.location.search.substring(1));
-    let gId = params.get("id");
-    if (!gId) return;
-
-    const isAlreadyInGroup = Object.keys(inGroup).find((item) => item === gId);
-    if (isAlreadyInGroup) return;
-    setterFunction(true);
-  }, [tempUser.uid]);
-}
-
 async function updateOneField(collection, docId, fieldToSet, data) {
   try {
     const fieldRef = doc(db, collection, docId);

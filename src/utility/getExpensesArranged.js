@@ -1,10 +1,10 @@
 // input: expenses
 // output: sorted+grouped expenses
 function getExpensesArranged(expenses) {
-  //依照time排序
+  //sorted by time
   const temp = [...expenses];
   const sortedExpenses = temp.sort((a, b) => b.time - a.time);
-  //依照date分類
+  //grouped by date
   const groupedExpensesObj = sortedExpenses.reduce((acc, cur) => {
     const { date } = cur;
     if (!acc[date]) {

@@ -29,7 +29,6 @@ input[type="checkbox"] {
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
-  /* display: none; */
 }
 ::-webkit-scrollbar-track {
   background: #e9e0c5;
@@ -49,10 +48,6 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-/* html{
-  scrollbar-gutter: stable;
-  background-color: #fefae0;
-} */
 main, #rootHeader{
   padding-left: calc(100vw - 100%);
 }
