@@ -1,4 +1,4 @@
-const calcFlow = require("../calcFlow");
+import calcFlow from '../calcFlow'
 describe("flow", () => {
   test("calc totalBill { a: -100.0, b: 150.0, d: -250, c: 200 } to be", () => {
     expect(calcFlow({ a: -100.0, b: 150.0, d: -250, c: 200 })).toStrictEqual([

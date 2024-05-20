@@ -20,7 +20,6 @@ const Record = ({
   const { toast } = useToast();
 
   const {
-    tempExpense,
     setTempExpense,
     group,
     setDate,
@@ -80,7 +79,7 @@ const Record = ({
                 note,
                 img,
                 ave,
-                creater,
+                creator,
               } = exp;
               const isSinglePayer = singlePayerOnly !== "多人付款";
               const payersPair = morePayers && Object.entries(morePayers);
@@ -187,7 +186,7 @@ const Record = ({
                           })}
 
                         <p className="text-slate-500 text-sm pt-2">
-                          {creater}在{format(time, "yyyyMMdd")}建立
+                          {creator}在{format(time, "yyyyMMdd")}建立
                         </p>
                         <p className="text-slate-500 text-sm w-full truncate">
                           {note}

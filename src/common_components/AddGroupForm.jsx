@@ -23,7 +23,7 @@ const AddGroupForm = ({ className, setOpen }) => {
   const [groupUrl, setGroupUrl] = useState("https:/......");
   const { inGroup, ...userForGroup } = tempUser;
   const isNoUrl = groupUrl === "https:/......";
-  const INITIANL_GROUP = {
+  const INITIAL_GROUP = {
     groupName: "",
     groupId: "",
     users: [userForGroup],
@@ -58,7 +58,7 @@ const AddGroupForm = ({ className, setOpen }) => {
       };
       setTempUser(newTempUser);
       const newGroupData = {
-        ...INITIANL_GROUP,
+        ...INITIAL_GROUP,
         groupName: newGroupName,
         groupId: newGroupId,
       };

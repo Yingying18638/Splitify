@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-const INITIANL_TEMP_EXPENSE = {
+const INITIAL_TEMP_EXPENSE = {
   date: "",
   time: "",
   item: "",
-  creater: "",
+  creator: "",
   icon: "",
   total_amount: 0,
   foreign_amount: 0,
@@ -25,7 +25,7 @@ const INITIANL_TEMP_EXPENSE = {
   img: "",
   ave: {},
 };
-const INITIANL_GROUP = {
+const INITIAL_GROUP = {
   groupName: "",
   groupId: "",
   users: [
@@ -106,7 +106,7 @@ const useZustandStore = create(
     tempGroupId: "",
     setTempGroupId: (data) => set({ tempGroupId: data }),
 
-    tempExpense: INITIANL_TEMP_EXPENSE,
+    tempExpense: INITIAL_TEMP_EXPENSE,
     setTempExpense: (data) => set({ tempExpense: data }),
     setOnePropInTempExpense: (value, property) =>
       set((state) => {
@@ -114,11 +114,11 @@ const useZustandStore = create(
       }),
     resetTempExpense: () =>
       set({
-        tempExpense: INITIANL_TEMP_EXPENSE,
+        tempExpense: INITIAL_TEMP_EXPENSE,
       }),
-    group: INITIANL_GROUP,
+    group: INITIAL_GROUP,
     setGroup: (data) => set({ group: data }),
-    resetGroup: () => set({ group: INITIANL_GROUP }),
+    resetGroup: () => set({ group: INITIAL_GROUP }),
     date: new Date(),
     setDate: (data) => set({ date: data }),
     selected: [],

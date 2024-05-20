@@ -6,7 +6,8 @@ function calcSingleAve(tempExpense) {
     (acc, cur) => acc + cur,
     0
   );
-  if (!cusAmountTotal) {
+  const isDistributedEven = !cusAmountTotal;
+  if (isDistributedEven) {
     const ptcptNumber = participants.length;
     const ave = Math.round((total_amount / ptcptNumber) * 100) / 100;
     const obj = participants.reduce((acc, cur) => {
