@@ -3,7 +3,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import calcBills from "@/utility/calcBills";
-import calcFlow from "@/utility/calcFlow2";
+import calcFlow from "@/utility/calcFlow";
 // const calcFlow=require("../../../utility/calcFlow");
 import calcPaymentAverage from "@/utility/calcPaymentAverage";
 import calcSingleAve from "@/utility/calcSingleAve";
