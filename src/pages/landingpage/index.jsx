@@ -1,4 +1,4 @@
-import { SignInButton } from "@clerk/clerk-react";
+import { SignInButton, SignIn } from "@clerk/clerk-react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
@@ -6,7 +6,10 @@ import { CircleDollarSign, PartyPopper, Users } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import Lottie from "react-lottie";
 import animationData from "@/assets/people.json";
+import SignInStep from "./TestUser";
 const LandingPage = () => {
+  const [isGuest, setIsGuest] = useState(false);
+
   gsap.registerPlugin(useGSAP, TextPlugin);
   const mobile = { width: 300, height: 240 };
   const desktop = { width: 400, height: 320 };
@@ -73,10 +76,14 @@ const LandingPage = () => {
               一個簡單的多人分帳網站
             </p>
             <SignInButton mode="modal">
-               <button className="w-full h-10 px-4 py-2 rounded-md  shadow-md mt-8 tracking-widest text-[#714924]  hover:bg-[#FEFAE0] bg-[#EADDC3]  font-bold">
+              <button className="w-full h-10 px-4 py-2 rounded-md  shadow-md mt-8 tracking-widest text-[#714924]  hover:bg-[#FEFAE0] bg-[#EADDC3]  font-bold">
                 立即登入
               </button>
             </SignInButton>
+            <div className="">
+              <SignInStep isGuest={isGuest} />
+              <button onClick={() => setIsGuest(true)}>click</button>
+            </div>
           </div>
           <div className="self-center mx-auto md:pl-12">
             <Lottie
