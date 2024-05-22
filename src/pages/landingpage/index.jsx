@@ -1,15 +1,15 @@
-import { SignInButton, SignIn } from "@clerk/clerk-react";
+import animationData from "@/assets/people.json";
+import { SignInButton } from "@clerk/clerk-react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { CircleDollarSign, PartyPopper, Users } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import Lottie from "react-lottie";
-import animationData from "@/assets/people.json";
 import SignInStep from "./TestUser";
+import { Button } from "@/components/ui/button";
 const LandingPage = () => {
   const [isGuest, setIsGuest] = useState(false);
-
   gsap.registerPlugin(useGSAP, TextPlugin);
   const mobile = { width: 300, height: 240 };
   const desktop = { width: 400, height: 320 };
@@ -50,7 +50,7 @@ const LandingPage = () => {
   return (
     <>
       <div
-        className="w-full min-h-screen px-10 sm:px-12  xl:px-60 bg-[#714924] flex flex-col justify-center"
+        className="w-full min-h-screen px-10 sm:px-12  xl:px-60 bg-[#653A14] flex flex-col justify-center"
         ref={container}
       >
         <section className="grid grid-rows-2 md:grid-cols-2 md:grid-rows-none items-center w-full pt-[80px] md:pt-0">
@@ -75,14 +75,20 @@ const LandingPage = () => {
             >
               一個簡單的多人分帳網站
             </p>
-            <SignInButton mode="modal">
-              <button className="w-full h-10 px-4 py-2 rounded-md  shadow-md mt-8 tracking-widest text-[#714924]  hover:bg-[#FEFAE0] bg-[#EADDC3]  font-bold">
-                立即登入
-              </button>
-            </SignInButton>
-            <div className="">
+            <div className="flex flex-wrap">
+              <SignInButton mode="modal">
+                <button className="w-[40%] h-10 px-4 py-2 rounded-md mx-4 shadow-md mt-8 tracking-widest text-[#714924]  hover:bg-[#FEFAE0] bg-[#EADDC3]  font-bold">
+                  立即登入
+                </button>
+              </SignInButton>
               <SignInStep isGuest={isGuest} />
-              <button onClick={() => setIsGuest(true)}>click</button>
+              <Button
+                className="w-[40%] h-10 text-base px-4 bg-[#653A14] hover:bg-[#876642] border-[#FEFAE0] border-2 hover:text-[#FEFae0] text-[#FEFAE0] py-2 mt-8 tracking-widest font-bold"
+                variant="outline"
+                onClick={() => setIsGuest(true)}
+              >
+                訪客試用
+              </Button>
             </div>
           </div>
           <div className="self-center mx-auto md:pl-12">
