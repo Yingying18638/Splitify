@@ -127,7 +127,7 @@ const Record = ({
                     <div className="mt-3 flex justify-between items-start flex-wrap">
                       <figcaption className="w-[240px] sm:w-[300px] ">
                         <div
-                          className={`my-1 ${actualPayersPair.length ? "border-b-2" : ""} border-[#CABB9D] pb-2 mb-2`}
+                          className={` ${actualPayersPair.length ? "border-b-2 my-1 border-[#CABB9D] pb-2 mb-2" : ""} `}
                         >
                           {payersPair &&
                             payersPair.map(([name, amount]) => {
