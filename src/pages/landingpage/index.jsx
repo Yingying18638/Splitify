@@ -67,7 +67,7 @@ const LandingPage = () => {
               id="slogan"
               className="tracking-wider  text-2xl md:text-3xl pl-2 text-[#CABB9D] font-semibold mt-3 h-9"
             >
-              Simplify your bill split.
+              Simplify your bill-split.
             </p>
             <p
               id="cnSlogan"
