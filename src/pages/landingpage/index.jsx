@@ -8,6 +8,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Lottie from "react-lottie";
 import SignInStep from "./TestUser";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 const LandingPage = () => {
   const [isGuest, setIsGuest] = useState(false);
   gsap.registerPlugin(useGSAP, TextPlugin);
@@ -87,7 +88,7 @@ const LandingPage = () => {
                 variant="outline"
                 onClick={() => setIsGuest(true)}
               >
-                訪客試用
+                <Link to="/guest">訪客試用</Link>
               </Button>
             </div>
           </div>

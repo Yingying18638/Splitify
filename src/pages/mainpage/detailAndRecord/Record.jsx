@@ -62,7 +62,7 @@ const Record = ({
   }
   return (
     <section
-      className={`${displayHistory?.display} max-h-[700px]  overflow-y-auto  rounded-md p-1 `}
+      className={`${displayHistory?.display} max-h-[58vh]  overflow-y-auto  rounded-md p-1 `}
     >
       {expensesArrToRender.map(([date, expenses]) => {
         return (

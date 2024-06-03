@@ -1,4 +1,3 @@
-import { SignIn, SignedIn, SignedOut } from "@clerk/clerk-react";
 import {
   Navigate,
   Route,
@@ -11,6 +10,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<RootLayout />}></Route>
+        <Route path="/guest" element={<RootLayout />}></Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
