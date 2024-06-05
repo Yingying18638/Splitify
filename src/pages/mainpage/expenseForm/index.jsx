@@ -171,9 +171,9 @@ const AddExpense = ({
       ></div>
       <form
         method="post"
-        className={`${displayAddExpense} space-y-3 xl:space-y-5 fixed z-50 
+        className={`${displayAddExpense} space-y-2 sm:space-y-3 xl:space-y-5 fixed z-50 
         top-0 left-0 sm:top-10 md:left-[calc((100%-720px)/2)] bg-[#EFCEA0] h-full w-full
-         sm:w-[360px] sm:h-auto sm:max-h-[95vh] pb-6 p-3 px-6  rounded-lg`}
+         sm:w-[360px] sm:h-auto sm:max-h-[95vh] pb-6 p-[8px] sm:p-3   sm:px-6  rounded-lg`}
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="text-center">
