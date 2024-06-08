@@ -48,7 +48,7 @@ const Record = ({
     setSelected(optionsSelected);
     setShareObj(usersObj);
     setDisplayAddExpense("block");
-    setIsEditingExpense(true)
+    setIsEditingExpense(true);
     setDisplayHistory({ display: "hidden", text: "查看" });
   }
   async function handleDeleteExpense(expenseTime) {
@@ -77,7 +77,6 @@ const Record = ({
                 singlePayerOnly,
                 morePayers,
                 note,
-                img,
                 ave,
                 creator,
               } = exp;
@@ -89,7 +88,7 @@ const Record = ({
               return (
                 <fieldset key={time} id={time}>
                   <div
-                    className="flex flex-wrap mt-2 cursor-pointer  pl-[10px]
+                    className="flex flex-wrap justify-between mt-2 cursor-pointer  pl-[10px]
                     rounded-md  py-2 pr-3 hover:shadow-xl "
                     onClick={() => {
                       if (displayDetail?.[time] === "block") {
@@ -105,20 +104,22 @@ const Record = ({
                       }
                     }}
                   >
-                    <figure className="mt-1">
-                      <img src={list} alt="icon" className="w-11 xl:w-12" />
-                    </figure>
-                    <figcaption className="ml-2 w-[160px] sm:w-[380px] xl:w-[520px]">
-                      <p className="w-full truncate">{item}</p>
-                      <p>
-                        {isSinglePayer
-                          ? `${singlePayerOnly}先付${total_amount}元`
-                          : `${actualPayersPair && actualPayersPair.length}人先付${total_amount}元`}
-                      </p>
-                      <p className="text-xs text-slate-400">{date}</p>
-                    </figcaption>
-                    <div className="ml-[15px] sm:ml-[calc(100%-520px)] xl:ml-[calc(100%-680px)] ">
-                      NT {total_amount}元
+                    <div className="flex">
+                      <figure className="mt-1">
+                        <img src={list} alt="icon" className="w-11 xl:w-12" />
+                      </figure>
+                      <figcaption className="ml-2">
+                        <p className="w-full truncate">{item}</p>
+                        <p>
+                          {isSinglePayer
+                            ? `${singlePayerOnly}先付${total_amount}元`
+                            : `${actualPayersPair && actualPayersPair.length}人先付${total_amount}元`}
+                        </p>
+                        <p className="text-xs text-slate-400">{date}</p>
+                      </figcaption>
+                    </div>
+                    <div className=" sm:ml-[calc(100%-520px)] xl:ml-[calc(100%-680px)] ">
+                      {total_amount}元
                     </div>
                   </div>
                   <article
