@@ -16,7 +16,6 @@ import Member from "./Member";
 import { ArrowBigLeftDash, Plus } from "lucide-react";
 const ToolBar = ({ setDisplayHistory, setDisplayAddExpense }) => {
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
   const [isUrlCopied, setIsUrlCopied] = useState(false);
   const [openMember, setOpenMember] = useState(false);
   const { group, tempGroupId, tempUser, setTempGroupId, resetGroup } =
@@ -59,7 +58,6 @@ const ToolBar = ({ setDisplayHistory, setDisplayAddExpense }) => {
   }
   async function handleRemoveMember(name, uid) {
     try {
-      setIsLoading(true);
       const isTempUserLeaving = uid === tempUser.uid;
       const newGroupData = {
         ...group,
@@ -77,6 +75,7 @@ const ToolBar = ({ setDisplayHistory, setDisplayAddExpense }) => {
     try {
       const removedUser = await justGetData("users", uid);
       const { inGroup } = removedUser;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [tempGroupId]: _, ...newInGroup } = inGroup;
       const newRemovedUser = { ...removedUser, inGroup: newInGroup };
       await addDocWithId(uid, "users", newRemovedUser);
@@ -85,8 +84,6 @@ const ToolBar = ({ setDisplayHistory, setDisplayAddExpense }) => {
     } catch (error) {
       toast({ title: "移除失敗" });
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   }
 
@@ -102,7 +99,7 @@ const ToolBar = ({ setDisplayHistory, setDisplayAddExpense }) => {
     );
   }
   return (
-    <div className="mx-auto w-full ">
+    <div className="mx-auto  ">
       <h1 className=" rounded-md inline-block shadow-md bg-[#FBECCC] px-3 py-1 mt-4 text-md font-medium max-w-full truncate">
         群組｜{groupName}
       </h1>

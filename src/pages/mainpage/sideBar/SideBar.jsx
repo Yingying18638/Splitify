@@ -23,7 +23,7 @@ const SideBar = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  const { tempUser, setGroup, tempGroupId, setTempGroupId } = useZustandStore();
+  const { tempUser, setTempGroupId } = useZustandStore();
   const { inGroup } = tempUser;
   const groupIds = Object.keys(inGroup).length ? Object.keys(inGroup) : [];
   const bgObject = groupIds.length

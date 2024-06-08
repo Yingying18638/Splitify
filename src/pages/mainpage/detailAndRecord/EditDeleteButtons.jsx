@@ -14,14 +14,14 @@ import {
 
 function EditDeleteButtons({ handleEditExpense, handleDeleteExpense, time }) {
   return (
-    <div className="left-36 items-start flex-wrap sm:left-48 flex flex-col sm:flex-row gap-2">
-      <Button variant="secondary" className='lg:h-9 lg:text-[14px] lg:px-6 xl:h-9 xl:text-[14px] xl:px-6'  onClick={() => handleEditExpense(time)}>
+    <div className="left-36 items-start flex-wrap sm:left-48 flex flex-row xs:flex-col sm:flex-row gap-2">
+      <Button variant="secondary" className='px-2 sm:px-4 lg:h-9 lg:text-[14px]  xl:h-9 xl:text-[14px] xl:px-6'  onClick={() => handleEditExpense(time)}>
         編輯
       </Button>
      
       <AlertDialog>
         <AlertDialogTrigger>
-          <Button variant="destructive" className='' >刪除</Button>
+          <Button variant="destructive" className='px-2 sm:px-4' >刪除</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

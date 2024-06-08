@@ -69,12 +69,11 @@ const Mainpage = ({
           setSideBarClass={setSideBarClass}
         />
         <div
-          defaultValue="account"
-          className=" mt-20 mx-auto sm:w-[600px]  md:ml-[calc((100%-600px)/2+80px)] 
+          className=" mt-20 mx-auto w-[99%] xs:w-[340px] sm:w-[600px]  md:ml-[calc((100%-600px)/2+80px)] 
           xl:w-[750px] xl:ml-[calc((100%-750px)/2+7rem)] xl:text-lg
           flex flex-col items-center justify-center  flex-wrap "
         >
-          <section value="account" className="w-full">
+          <section className="w-full">
             <ToolBar
               displayHistory={displayHistory}
               setDisplayHistory={setDisplayHistory}

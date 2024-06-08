@@ -2,7 +2,7 @@ import React from "react";
 import useZustandStore from "@/utility/hooks/useZustandStore";
 import { ChevronsRight, CircleUserRound } from "lucide-react";
 const Result = () => {
-  const { group, tempGroupId } = useZustandStore();
+  const { group } = useZustandStore();
   const { expenses, flow, users } = group;
   function getImg(name) {
     const user = users.find((item) => item.name === name);
