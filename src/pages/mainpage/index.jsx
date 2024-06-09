@@ -7,7 +7,7 @@ import useZustandStore from "@/utility/hooks/useZustandStore";
 import { useAuth, useUser } from "@clerk/clerk-react";
 //----------------------component------------------------------------------------
 import Record from "./detailAndRecord/Record";
-import AddExpense from "./expenseForm";
+import ExpenseForm from "./expenseForm";
 import JoinGroupDialog from "./joinGroupDialog/JoinGroupDialog";
 import SideBar from "./sideBar/SideBar";
 import ToolBar from "./toolBar";
@@ -123,7 +123,7 @@ const Mainpage = ({
           </section>
         </div>
         <Toaster />
-        <AddExpense
+        <ExpenseForm
           isEditingExpense={isEditingExpense}
           setIsEditingExpense={setIsEditingExpense}
           displayAddExpense={displayAddExpense}

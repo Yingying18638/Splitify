@@ -31,7 +31,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-const AddExpense = ({
+const ExpenseForm = ({
   setDisplayAddExpense,
   displayAddExpense,
   isEditingExpense,
@@ -233,7 +233,7 @@ const AddExpense = ({
               onChange={(e) => {
                 const { value } = e.target;
                 const num = Number(value);
-                if ((!num && value != "") || num < 0 || num % 1) return;
+                if ((!num && value != "") || num < 0 || num % 1|| num>99991) return;
                 setTempExpense({
                   ...tempExpense,
                   total_amount: num ? num : 0,
@@ -380,4 +380,4 @@ const AddExpense = ({
     </>
   );
 };
-export default AddExpense;
+export default ExpenseForm;
