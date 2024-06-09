@@ -2,10 +2,10 @@
 import { useToast } from "@/components/ui/use-toast";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
-import calcBills from "@/utility/calcBills";
-import calcFlow from "@/utility/calcFlow2";
-import calcPaymentAverage from "@/utility/calcPaymentAverage";
-import calcSingleAve from "@/utility/calcSingleAve";
+import calcBills from "@/utility/calcs/calcBills";
+import calcFlow from "@/utility/calcs/calcFlow2";
+import calcPaymentAverage from "@/utility/calcs/calcPaymentAverage";
+import calcSingleAve from "@/utility/calcs/calcSingleAve";
 import { updateGroupData } from "@/utility/handleFirestore";
 import useZustandStore from "@/utility/hooks/useZustandStore";
 import useAddExpGuide from "@/utility/addExpGuide";
