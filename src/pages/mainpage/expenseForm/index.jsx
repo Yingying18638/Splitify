@@ -223,7 +223,7 @@ const ExpenseForm = ({
             strokeWidth={1}
           ></BadgeDollarSign>
           <figcaption>
-            <label htmlFor="tw_amount">金額</label>
+            <label htmlFor="tw_amount">金額（100,000以下）</label>
             <Input
               required
               className="mt-1"
@@ -233,7 +233,8 @@ const ExpenseForm = ({
               onChange={(e) => {
                 const { value } = e.target;
                 const num = Number(value);
-                if ((!num && value != "") || num < 0 || num % 1|| num>99991) return;
+                if ((!num && value != "") || num < 0 || num % 1 || num > 100000)
+                  return;
                 setTempExpense({
                   ...tempExpense,
                   total_amount: num ? num : 0,

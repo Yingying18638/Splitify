@@ -1,5 +1,5 @@
 //input: payment, users, ave
-//ouput: bill, totalBill
+//output: bill, totalBill
 
 function calcBills(payment, ave, users) {
   const usersArr = users.map((user) => user.name);
